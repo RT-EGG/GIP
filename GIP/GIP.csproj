@@ -33,8 +33,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenTK, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK.3.1.0\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK.GLControl.3.1.0\lib\net20\OpenTK.GLControl.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveProperty, Version=0.0.0.0, Culture=neutral, PublicKeyToken=910d1732782c71cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReactiveProperty.7.0.0-ci20200503102823\lib\netstandard2.0\ReactiveProperty.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveProperty.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=910d1732782c71cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReactiveProperty.Core.7.0.0-ci20200503102823\lib\netstandard2.0\ReactiveProperty.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Reactive, Version=4.4.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.4.4.1\lib\net46\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,16 +73,127 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Common\ComboBoxExtensions.cs" />
+    <Compile Include="Common\DisposableObject.cs" />
+    <Compile Include="Common\Exception.cs" />
+    <Compile Include="Common\ListViewExtensions.cs" />
+    <Compile Include="Common\StringExtensions.cs" />
+    <Compile Include="Controls\ComputeShaderCodeBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ComputeShaderCodeBox.Designer.cs">
+      <DependentUpon>ComputeShaderCodeBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Ctrl_GlobalTextureListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Ctrl_GlobalTextureListView.Designer.cs">
+      <DependentUpon>Ctrl_GlobalTextureListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Ctrl_GLTextureView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Ctrl_GLTextureView.Designer.cs">
+      <DependentUpon>Ctrl_GLTextureView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Ctrl_ListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Ctrl_ListView.Designer.cs">
+      <DependentUpon>Ctrl_ListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Ctrl_ShaderVariables.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Ctrl_ShaderVariables.Designer.cs">
+      <DependentUpon>Ctrl_ShaderVariables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Ctrl_GLControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Ctrl_GLControl.Designer.cs">
+      <DependentUpon>Ctrl_GLControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Ctrl_TextureInfoView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Ctrl_TextureInfoView.Designer.cs">
+      <DependentUpon>Ctrl_TextureInfoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Ctrl_UniformVariableInfoView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Ctrl_UniformVariableInfoView.Designer.cs">
+      <DependentUpon>Ctrl_UniformVariableInfoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Ctrl_UniformVariableListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Ctrl_UniformVariableListView.Designer.cs">
+      <DependentUpon>Ctrl_UniformVariableListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UniformVariableValues\Ctrl_UniformVariableTextureValueView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\UniformVariableValues\Ctrl_UniformVariableTextureValueView.Designer.cs">
+      <DependentUpon>Ctrl_UniformVariableTextureValueView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UniformVariableValues\Ctrl_UniformVariableValueView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\UniformVariableValues\Ctrl_UniformVariableValueView.Designer.cs">
+      <DependentUpon>Ctrl_UniformVariableValueView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\ImageProcessTask.cs" />
+    <Compile Include="Core\ImageProcessTaskRunner.cs" />
+    <Compile Include="Core\ShaderResourceInitializers.cs" />
+    <Compile Include="Core\ShaderResources.cs" />
+    <Compile Include="Core\TextureInitializerList.cs" />
+    <Compile Include="Core\TexturePixelInitializer.cs" />
+    <Compile Include="Core\TextureInitializer.cs" />
+    <Compile Include="Core\Uniforms\UniformIntVariable.cs" />
+    <Compile Include="Core\Uniforms\UniformTextureVariable.cs" />
+    <Compile Include="Core\Uniforms\UniformVariable.cs" />
+    <Compile Include="Core\Uniforms\UniformVariableList.cs" />
+    <Compile Include="Core\Uniforms\UniformVariableValue.cs" />
+    <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\Ctrl_GlobalTextureListView.resx">
+      <DependentUpon>Ctrl_GlobalTextureListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Ctrl_GLTextureView.resx">
+      <DependentUpon>Ctrl_GLTextureView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Ctrl_ListView.resx">
+      <DependentUpon>Ctrl_ListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Ctrl_ShaderVariables.resx">
+      <DependentUpon>Ctrl_ShaderVariables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Ctrl_TextureInfoView.resx">
+      <DependentUpon>Ctrl_TextureInfoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Ctrl_UniformVariableInfoView.resx">
+      <DependentUpon>Ctrl_UniformVariableInfoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Ctrl_UniformVariableListView.resx">
+      <DependentUpon>Ctrl_UniformVariableListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UniformVariableValues\Ctrl_UniformVariableTextureValueView.resx">
+      <DependentUpon>Ctrl_UniformVariableTextureValueView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -63,6 +203,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="OpenTK.dll.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -75,6 +217,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\csOpenGL\rtUtility\rtUtility.csproj">
+      <Project>{268f27dc-3165-4553-b9c0-cc79867fb656}</Project>
+      <Name>rtUtility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
