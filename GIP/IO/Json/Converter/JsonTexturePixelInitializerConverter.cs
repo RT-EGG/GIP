@@ -3,9 +3,9 @@ using Newtonsoft.Json;
 using GIP.IO.Project;
 using Newtonsoft.Json.Linq;
 
-namespace GIP.IO.JsonConverter
+namespace GIP.IO.Json.Converter
 {
-    class JsonTexturePixelInitializerConverter : Newtonsoft.Json.JsonConverter
+    class JsonTexturePixelInitializerConverter : JsonConverter
     {
         public override bool CanConvert(Type inType)
         {

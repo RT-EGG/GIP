@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using GIP.IO.JsonConverter;
+using GIP.IO.Json;
+using GIP.IO.Json.Converter;
 
 namespace GIP.IO.Project
 {

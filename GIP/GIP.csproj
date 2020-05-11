@@ -152,9 +152,9 @@
     </Compile>
     <Compile Include="Core\ImageProcessTask.cs" />
     <Compile Include="Core\ImageProcessTaskRunner.cs" />
-    <Compile Include="IO\JsonConverter\JsonTexturePixelInitializerConverter.cs" />
-    <Compile Include="IO\JsonSerializable.cs" />
-    <Compile Include="IO\NewtonsoftJsonExtensions.cs" />
+    <Compile Include="IO\Json\Converter\JsonTexturePixelInitializerConverter.cs" />
+    <Compile Include="IO\Json\JsonSerializable.cs" />
+    <Compile Include="IO\Json\NewtonsoftJsonExtensions.cs" />
     <Compile Include="IO\Project\JsonProjectFile.cs" />
     <Compile Include="IO\Project\JsonTextureInitializer.cs" />
     <Compile Include="IO\Project\JsonTexturePixelInitializer.cs" />

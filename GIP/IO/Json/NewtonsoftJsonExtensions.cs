@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace GIP.IO
+namespace GIP.IO.Json
 {
     public static class NewtonsoftJsonExtensions
     {

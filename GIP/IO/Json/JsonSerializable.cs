@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 
-namespace GIP.IO
+namespace GIP.IO.Json
 {
     public abstract class JsonSerializable
     {
