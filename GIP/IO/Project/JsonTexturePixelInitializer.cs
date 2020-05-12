@@ -10,7 +10,7 @@ namespace GIP.IO.Project
     {
         public static JsonTexturePixelInitializer ReadJson(JObject inObject)
         {
-            switch ((string)inObject["InitializerType"]) {
+            switch (inObject.Get<string>("InitializerType")) {
                 case "Color":
                     return new JsonTexturePixelColorInitializer();
                 case "File":
