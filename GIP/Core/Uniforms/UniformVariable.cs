@@ -1,5 +1,4 @@
-﻿using System;
-using Reactive.Bindings;
+﻿using Reactive.Bindings;
 using OpenTK.Graphics.OpenGL;
 using GIP.Common;
 
