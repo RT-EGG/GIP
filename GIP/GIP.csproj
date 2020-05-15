@@ -53,6 +53,7 @@
       <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive, Version=4.4.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reactive.4.4.1\lib\net46\System.Reactive.dll</HintPath>
@@ -76,6 +77,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=3.0.6.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <HintPath>..\packages\DockPanelSuite.3.0.6\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +142,36 @@
     <Compile Include="Controls\Ctrl_UniformVariableListView.Designer.cs">
       <DependentUpon>Ctrl_UniformVariableListView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DockFormCodeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\DockFormCodeEditor.Designer.cs">
+      <DependentUpon>DockFormCodeEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DockFormCompile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\DockFormCompile.Designer.cs">
+      <DependentUpon>DockFormCompile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DockFormTextureList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\DockFormTextureList.Designer.cs">
+      <DependentUpon>DockFormTextureList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DockFormTextureView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\DockFormTextureView.Designer.cs">
+      <DependentUpon>DockFormTextureView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DockFormUniformVariable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\DockFormUniformVariable.Designer.cs">
+      <DependentUpon>DockFormUniformVariable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\UniformVariableValues\Ctrl_UniformVariableTextureValueView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -152,6 +186,8 @@
     </Compile>
     <Compile Include="Core\ImageProcessTask.cs" />
     <Compile Include="Core\ImageProcessTaskRunner.cs" />
+    <Compile Include="Core\Project.cs" />
+    <Compile Include="Core\ShaderCompiler.cs" />
     <Compile Include="IO\Json\Converter\JsonTexturePixelInitializerConverter.cs" />
     <Compile Include="IO\Json\Converter\JsonUniformVariableValueConverter.cs" />
     <Compile Include="IO\Json\JsonSerializable.cs" />
@@ -201,6 +237,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Ctrl_UniformVariableListView.resx">
       <DependentUpon>Ctrl_UniformVariableListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DockFormCodeEditor.resx">
+      <DependentUpon>DockFormCodeEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DockFormCompile.resx">
+      <DependentUpon>DockFormCompile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DockFormTextureList.resx">
+      <DependentUpon>DockFormTextureList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DockFormTextureView.resx">
+      <DependentUpon>DockFormTextureView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DockFormUniformVariable.resx">
+      <DependentUpon>DockFormUniformVariable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UniformVariableValues\Ctrl_UniformVariableTextureValueView.resx">
       <DependentUpon>Ctrl_UniformVariableTextureValueView.cs</DependentUpon>

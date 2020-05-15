@@ -1,7 +1,8 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using OpenTK;
-using OpenTK.Graphics.OpenGL4;
 
 namespace GIP.Controls
 {
@@ -12,6 +13,23 @@ namespace GIP.Controls
         public Ctrl_GLControl()
         {
             InitializeComponent();
+
+            m_ControlList.Add(this);
+            return;
+        }
+
+        ~Ctrl_GLControl()
+        {
+            m_ControlList.Remove(this);
+            return;
+        }
+
+        public static void MakeCurrentSomeone()
+        {
+            if (m_ControlList.Count > 0) {
+                m_ControlList.First().MakeCurrent();
+            }
+            return;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -33,6 +51,7 @@ namespace GIP.Controls
         }
 
         public event GLControlEvent OnGLPaint;
+        private static List<Ctrl_GLControl> m_ControlList = new List<Ctrl_GLControl>();
 
         public new bool DesignMode => GetDesignMode(this);
         private bool GetDesignMode(Control inControl)

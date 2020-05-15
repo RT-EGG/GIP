@@ -16,6 +16,9 @@ namespace GIP.Common
             foreach (var line in inLines) {
                 result += line + inConnector;
             }
+            if (result.Length == 0) {
+                return "";
+            }
             result = result.Substring(0, result.Length - inConnector.Length);
             return result;
         }

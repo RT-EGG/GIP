@@ -5,12 +5,24 @@ using GIP.Core.Uniforms;
 
 namespace GIP.Core
 {
-    class ImageProcessTask
+    public class ImageProcessTask
     {
         public ImageProcessTask(ShaderResourceInitializers inResources)
         {
             Resources = inResources;
             return;
+        }
+
+        //TODO remove lator
+        public void SetSourceCode(string inCode)
+        {
+            SourceCode = inCode;
+            return;
+        }
+
+        public bool CompileAndLink()
+        {
+            return CompileAndLink(SourceCode);
         }
 
         public bool CompileAndLink(IEnumerable<string> inLines)
@@ -27,6 +39,7 @@ namespace GIP.Core
             CreateShader();
             m_Errors.Clear();
 
+            SourceCode = inLines;
             GL.ShaderSource(ShaderID, inLines);
             GL.CompileShader(ShaderID);
 
@@ -78,6 +91,10 @@ namespace GIP.Core
         public UniformVariableList UniformVariables
         { get; } = new UniformVariableList();
 
+        public string Name
+        { get; set; } = "";
+        public string SourceCode
+        { get; private set; } = "";
         public int DispatchGroupSizeX
         { get; set; } = 64;
         public int DispatchGroupSizeY

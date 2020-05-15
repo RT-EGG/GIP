@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.IO;
 using GIP.Core;
 using GIP.Common;
+using GIP.Controls;
 
 namespace GIP
 {
@@ -12,37 +13,31 @@ namespace GIP
         {
             InitializeComponent();
             ProcessTask = new ImageProcessTask(Resources);
+
+            Compiler.OnBeforeCompile += Compiler_OnBeforeCompile;
+            Compiler.OnAfterCompile += Compiler_OnAfterCompile;
+            ProcessTaskRunner.OnBeforeRun += ProcessTaskRunner_OnBeforeRun;
+            ProcessTaskRunner.OnAfterRun += ProcessTaskRunner_OnAfterRun;
+
+            ProcessTaskRunner.ResourceInitializers = Resources;
+
             return;
         }
 
-        private bool Compile()
-        {
-            CtrlTextureView.MakeCurrent();
-            if (ProcessTask.CompileAndLink(TextBoxCode.Text)) {
-                TextBoxCompileState.Text = "Compile successed.";
-                return true;
-            } else {
-                TextBoxCompileState.Text = ProcessTask.Error.Linearize();
-                return false;
-            }            
-        }
+        //private void Compile()
+        //{
+        //    FormCompile.Compiler.Compile();
+        //    return;
+        //}
 
-        private bool CompileAndRun()
-        {
-            if (!Compile()) {
-                return false;
-            }
-
-            CtrlTextureView.Resources = null;
-
-            ProcessTask.DispatchGroupSizeX = (int)UdDispatchSizeX.Value;
-            ProcessTask.DispatchGroupSizeY = (int)UdDispatchSizeY.Value;
-            ProcessTask.DispatchGroupSizeZ = (int)UdDispatchSizeZ.Value;
-            ProcessTaskRunnner.GLDispose();
-            ProcessTaskRunnner.Run(ProcessTask);
-            CtrlTextureView.Resources = ProcessTaskRunnner.Resources;
-            return true;
-        }
+        //private void CompileAndRun()
+        //{
+        //    Compile();
+        //    //TODO check compile result before run
+        //    ProcessTaskRunner.GLDispose();
+        //    ProcessTaskRunner.Run();
+        //    return;
+        //}
 
         private void OpenShaderFile()
         {
@@ -60,7 +55,9 @@ namespace GIP
         private void OpenShaderFile(string inPath)
         {
             using (StreamReader reader = new StreamReader(new FileStream(inPath, FileMode.Open, FileAccess.Read))) {
-                TextBoxCode.Text = reader.ReadToEnd();
+                ProcessTask.SetSourceCode(reader.ReadToEnd());
+                FormCodeEditor.Task = null;
+                FormCodeEditor.Task = ProcessTask;
             }
             return;
         }
@@ -81,27 +78,62 @@ namespace GIP
         private void SaveShaderFile(string inPath)
         {
             using (StreamWriter writer = new StreamWriter(new FileStream(inPath, FileMode.OpenOrCreate, FileAccess.Write))) {
-                writer.Write(TextBoxCode.Text);
+                writer.Write(ProcessTask.SourceCode);
             }
+            return;
+        }
+
+        private void Compiler_OnBeforeCompile(ShaderCompiler inCompiler)
+        {
+            FormTextureView.Resources = null;
+            return;
+        }
+
+        private void Compiler_OnAfterCompile(ShaderCompiler inCompiler)
+        {
+            FormTextureView.Resources = ProcessTaskRunner.Resources;
+            return;
+        }
+
+        private void ProcessTaskRunner_OnBeforeRun(ImageProcessTaskRunner inRunner)
+        {
+            FormTextureView.Resources = null;
+            return;
+        }
+
+        private void ProcessTaskRunner_OnAfterRun(ImageProcessTaskRunner inRunner)
+        {
+            FormTextureView.Resources = ProcessTaskRunner.Resources;
+            return;
+        }
+
+        private void FormMain_Load(object sender, EventArgs e)
+        { 
+            FormCodeEditor = new DockFormCodeEditor();
+            FormTextureView = new DockFormTextureView();
+            FormTextureList = new DockFormTextureList();
+            FormUniformVariable = new DockFormUniformVariable();
+            FormCompile = new DockFormCompile(Compiler, ProcessTaskRunner);
+
+            FormCodeEditor.Show(PanelDockMain);
+            FormCompile.Show(PanelDockMain);
+            FormTextureView.Show(PanelDockMain);
+            FormTextureList.Show(PanelDockMain);
+            FormUniformVariable.Show(PanelDockMain);
+
+            FormCodeEditor.Task = ProcessTask;
+            FormTextureList.Data = Resources.Textures;
+            FormUniformVariable.SetShaderVariables(Resources, ProcessTask.UniformVariables);
+
+            ProcessTaskRunner.Tasks.Add(ProcessTask);
+            Project.ProcessTasks.Add(ProcessTask);
+            Compiler.Project = Project;
             return;
         }
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
-            CtrlTextureView.MakeCurrent();
-            CtrlShaderVariables.SetShaderVariables(Resources, ProcessTask.UniformVariables);
-            return;
-        }
-
-        private void ButtonCompile_Click(object sender, EventArgs e)
-        {
-            Compile();
-            return;
-        }
-
-        private void ButtonCompileAndRun_Click(object sender, EventArgs e)
-        {
-            CompileAndRun();
+            Ctrl_GLControl.MakeCurrentSomeone();
             return;
         }
 
@@ -121,7 +153,22 @@ namespace GIP
         { get; } = new ShaderResourceInitializers();
         private ImageProcessTask ProcessTask
         { get; } = null;
-        private ImageProcessTaskRunner ProcessTaskRunnner
+        private ImageProcessTaskRunner ProcessTaskRunner
         { get; } = new ImageProcessTaskRunner();
+        private Project Project
+        { get; } = new Project();
+        private ShaderCompiler Compiler
+        { get; } = new ShaderCompiler();
+
+        private DockFormCodeEditor FormCodeEditor
+        { get; set; } = null;
+        private DockFormCompile FormCompile
+        { get; set; } = null;
+        private DockFormTextureView FormTextureView
+        { get; set; } = null;
+        private DockFormTextureList FormTextureList
+        { get; set; } = null;
+        private DockFormUniformVariable FormUniformVariable
+        { get; set; } = null;
     }
 }

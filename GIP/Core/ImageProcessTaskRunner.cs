@@ -1,9 +1,15 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using System.Collections.Generic;
+using OpenTK.Graphics.OpenGL4;
 
 namespace GIP.Core
 {
-    class ImageProcessTaskRunner
+    public delegate void ImageProcessTaskRunnerEvent(ImageProcessTaskRunner inRunner);
+
+    public class ImageProcessTaskRunner
     {
+        public event ImageProcessTaskRunnerEvent OnBeforeRun;
+        public event ImageProcessTaskRunnerEvent OnAfterRun;
+
         public void GLDispose()
         {
             foreach (var texture in Resources.Textures.Values) {
@@ -13,42 +19,57 @@ namespace GIP.Core
             return;
         }
 
-        public void Run(ImageProcessTask inTask)
+        public void Run()
         {
+            OnBeforeRun?.Invoke(this);
+
             try {
-                foreach (var initializer in inTask.Resources.Textures) {
-                    if (!Resources.Textures.TryGetValue(initializer, out int texture)) {
-                        texture = GL.GenTexture();
-                        Resources.Textures.Add(initializer, texture);
+                try {
+                    if (ResourceInitializers != null) {
+                        foreach (var initializer in ResourceInitializers.Textures) {
+                            if (!Resources.Textures.TryGetValue(initializer, out int texture)) {
+                                texture = GL.GenTexture();
+                                Resources.Textures.Add(initializer, texture);
+                            }
+                            GL.BindTexture(TextureTarget.Texture2D, texture);
+                            initializer.GlTexImage2D();
+                            GL.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, new int[] { (int)All.ClampToBorder });
+                            GL.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, new int[] { (int)All.ClampToBorder });
+                            GL.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, new int[] { (int)All.Nearest });
+                            GL.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, new int[] { (int)All.Nearest });
+                        }
                     }
-                    GL.BindTexture(TextureTarget.Texture2D, texture);
-                    initializer.GlTexImage2D();
-                    GL.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, new int[] { (int)All.ClampToBorder });
-                    GL.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, new int[] { (int)All.ClampToBorder });
-                    GL.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, new int[] { (int)All.Nearest });
-                    GL.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, new int[] { (int)All.Nearest });
-                }
-            } finally {
-                GL.BindTexture(TextureTarget.Texture2D, 0);
-            }
 
-            GL.UseProgram(inTask.ProgramID);
-            try {
-                foreach (var variable in inTask.UniformVariables) {
-                    variable.Bind(inTask.ProgramID, Resources);
+                } finally {
+                    GL.BindTexture(TextureTarget.Texture2D, 0);
                 }
 
-                ErrorCode error = GL.GetError();
-                GL.DispatchCompute(inTask.DispatchGroupSizeX, inTask.DispatchGroupSizeY, inTask.DispatchGroupSizeZ);
-                error = GL.GetError();
+                foreach (var task in Tasks) {
+                    GL.UseProgram(task.ProgramID);
+                    try {
+                        foreach (var variable in task.UniformVariables) {
+                            variable.Bind(task.ProgramID, Resources);
+                        }
 
+                        ErrorCode error = GL.GetError();
+                        GL.DispatchCompute(task.DispatchGroupSizeX, task.DispatchGroupSizeY, task.DispatchGroupSizeZ);
+                        error = GL.GetError();
+
+                    } finally {
+                        GL.UseProgram(0);
+                    }
+                }
             } finally {
-                GL.UseProgram(0);
+                OnAfterRun?.Invoke(this);
             }
             return;
         }
 
         public ShaderResources Resources
         { get; } = new ShaderResources();
+        public ShaderResourceInitializers ResourceInitializers
+        { get; set; } = null;
+        public IList<ImageProcessTask> Tasks
+        { get; } = new List<ImageProcessTask>();
     }
 }
