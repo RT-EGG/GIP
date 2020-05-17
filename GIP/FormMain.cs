@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
+using WeifenLuo.WinFormsUI.Docking;
 using GIP.Core;
-using GIP.Common;
 using GIP.Controls;
 
 namespace GIP
@@ -14,8 +14,6 @@ namespace GIP
             InitializeComponent();
             ProcessTask = new ImageProcessTask(Resources);
 
-            Compiler.OnBeforeCompile += Compiler_OnBeforeCompile;
-            Compiler.OnAfterCompile += Compiler_OnAfterCompile;
             ProcessTaskRunner.OnBeforeRun += ProcessTaskRunner_OnBeforeRun;
             ProcessTaskRunner.OnAfterRun += ProcessTaskRunner_OnAfterRun;
 
@@ -23,21 +21,6 @@ namespace GIP
 
             return;
         }
-
-        //private void Compile()
-        //{
-        //    FormCompile.Compiler.Compile();
-        //    return;
-        //}
-
-        //private void CompileAndRun()
-        //{
-        //    Compile();
-        //    //TODO check compile result before run
-        //    ProcessTaskRunner.GLDispose();
-        //    ProcessTaskRunner.Run();
-        //    return;
-        //}
 
         private void OpenShaderFile()
         {
@@ -56,8 +39,9 @@ namespace GIP
         {
             using (StreamReader reader = new StreamReader(new FileStream(inPath, FileMode.Open, FileAccess.Read))) {
                 ProcessTask.SetSourceCode(reader.ReadToEnd());
-                FormCodeEditor.Task = null;
-                FormCodeEditor.Task = ProcessTask;
+                var dockCodeEditor = m_DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor);
+                dockCodeEditor.Task = null;
+                dockCodeEditor.Task = ProcessTask;
             }
             return;
         }
@@ -83,57 +67,53 @@ namespace GIP
             return;
         }
 
-        private void Compiler_OnBeforeCompile(ShaderCompiler inCompiler)
-        {
-            FormTextureView.Resources = null;
-            return;
-        }
-
-        private void Compiler_OnAfterCompile(ShaderCompiler inCompiler)
-        {
-            FormTextureView.Resources = ProcessTaskRunner.Resources;
-            return;
-        }
-
         private void ProcessTaskRunner_OnBeforeRun(ImageProcessTaskRunner inRunner)
         {
-            FormTextureView.Resources = null;
+            m_DockForms.Get<DockFormTextureView>(MainDockFormType.TextureView).Resources = null;
             return;
         }
 
         private void ProcessTaskRunner_OnAfterRun(ImageProcessTaskRunner inRunner)
         {
-            FormTextureView.Resources = ProcessTaskRunner.Resources;
+            m_DockForms.Get<DockFormTextureView>(MainDockFormType.TextureView).Resources = ProcessTaskRunner.Resources;
             return;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
-        { 
-            FormCodeEditor = new DockFormCodeEditor();
-            FormTextureView = new DockFormTextureView();
-            FormTextureList = new DockFormTextureList();
-            FormUniformVariable = new DockFormUniformVariable();
-            FormCompile = new DockFormCompile(Compiler, ProcessTaskRunner);
-
-            FormCodeEditor.Show(PanelDockMain);
-            FormCompile.Show(PanelDockMain);
-            FormTextureView.Show(PanelDockMain);
-            FormTextureList.Show(PanelDockMain);
-            FormUniformVariable.Show(PanelDockMain);
-
-            FormCodeEditor.Task = ProcessTask;
-            FormTextureList.Data = Resources.Textures;
-            FormUniformVariable.SetShaderVariables(Resources, ProcessTask.UniformVariables);
+        {
+            m_DockForms = new MainDockForms();
+            var dockCompile = m_DockForms.Get<DockFormCompile>(MainDockFormType.Compile);
+            dockCompile.SetCompiler(Compiler);
+            dockCompile.SetTaskRunner(ProcessTaskRunner);
+            var dockCodeEditor = m_DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor);
+            dockCodeEditor.Task = ProcessTask;
+            var dockTextureList = m_DockForms.Get<DockFormTextureList>(MainDockFormType.Textures);
+            dockTextureList.Data = Resources.Textures;
+            var dockUniformVariables = m_DockForms.Get<DockFormUniformVariable>(MainDockFormType.UniformVariables);
+            dockUniformVariables.SetShaderVariables(Resources, ProcessTask.UniformVariables);
 
             ProcessTaskRunner.Tasks.Add(ProcessTask);
             Project.ProcessTasks.Add(ProcessTask);
             Compiler.Project = Project;
+
+            if (File.Exists("layout.xml")) {
+                PanelDockMain.LoadFromXml("layout.xml", new DeserializeDockContent(m_DockForms.Find));
+            } else {
+                m_DockForms.ShowAll(PanelDockMain);
+            }
+
             return;
         }
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
             Ctrl_GLControl.MakeCurrentSomeone();
+            return;
+        }
+
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            PanelDockMain.SaveAsXml("layout.xml");
             return;
         }
 
@@ -160,15 +140,7 @@ namespace GIP
         private ShaderCompiler Compiler
         { get; } = new ShaderCompiler();
 
-        private DockFormCodeEditor FormCodeEditor
-        { get; set; } = null;
-        private DockFormCompile FormCompile
-        { get; set; } = null;
-        private DockFormTextureView FormTextureView
-        { get; set; } = null;
-        private DockFormTextureList FormTextureList
-        { get; set; } = null;
-        private DockFormUniformVariable FormUniformVariable
+        private MainDockForms m_DockForms
         { get; set; } = null;
     }
 }

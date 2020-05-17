@@ -16,5 +16,10 @@ namespace GIP.Controls
             CtrlUniformVariableListView.Data = inVariables;
             return;
         }
+
+        protected override string GetPersistString()
+        {
+            return MainDockFormType.UniformVariables.ToPersistString();
+        }
     }
 }

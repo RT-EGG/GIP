@@ -5,15 +5,35 @@ namespace GIP.Controls
 {
     public partial class DockFormCompile : WeifenLuo.WinFormsUI.Docking.DockContent
     {
-        public DockFormCompile(ShaderCompiler inCompiler, ImageProcessTaskRunner inRunner)
+        public DockFormCompile()
         {
             InitializeComponent();
+        }
 
-            Compiler = inCompiler;
-            Compiler.OnBeforeCompile += Compiler_OnBeforeCompile;
-            Compiler.OnAfterCompile += Compiler_OnAfterCompile;
+        public void SetCompiler(ShaderCompiler inValue)
+        {
+            if (Compiler == inValue) {
+                return;
+            }
+            if (Compiler != null) {
+                Compiler.OnBeforeCompile -= Compiler_OnBeforeCompile;
+                Compiler.OnAfterCompile -= Compiler_OnAfterCompile;
+            }
+            Compiler = inValue;
+            if (Compiler != null) {
+                Compiler.OnBeforeCompile += Compiler_OnBeforeCompile;
+                Compiler.OnAfterCompile += Compiler_OnAfterCompile;
+            }
+            return;
+        }
 
-            TaskRunner = inRunner;
+        public void SetTaskRunner(ImageProcessTaskRunner inValue)
+        {
+            if (TaskRunner == inValue) {
+                return;
+            }
+
+            TaskRunner = inValue;
             return;
         }
 
@@ -21,6 +41,11 @@ namespace GIP.Controls
         { get; private set; } = null;
         public ImageProcessTaskRunner TaskRunner
         { get; private set; } = null;
+
+        protected override string GetPersistString()
+        {
+            return MainDockFormType.Compile.ToPersistString();
+        }
 
         private void Compiler_OnBeforeCompile(ShaderCompiler inCompiler)
         {

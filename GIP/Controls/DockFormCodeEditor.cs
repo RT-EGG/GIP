@@ -43,6 +43,11 @@ namespace GIP.Controls
         public string Code
         { get => TextBoxCodeEditor.Text; }
 
+        protected override string GetPersistString()
+        {
+            return MainDockFormType.CodeEditor.ToPersistString();
+        }
+
         private ImageProcessTask m_Task = null;
     }
 }

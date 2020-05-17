@@ -172,6 +172,7 @@
     <Compile Include="Controls\DockFormUniformVariable.Designer.cs">
       <DependentUpon>DockFormUniformVariable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MainDockForms.cs" />
     <Compile Include="Controls\UniformVariableValues\Ctrl_UniformVariableTextureValueView.cs">
       <SubType>UserControl</SubType>
     </Compile>

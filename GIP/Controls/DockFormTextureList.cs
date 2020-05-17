@@ -17,5 +17,10 @@ namespace GIP.Controls
                 return;
             }
         }
+
+        protected override string GetPersistString()
+        {
+            return MainDockFormType.Textures.ToPersistString();
+        }
     }
 }
