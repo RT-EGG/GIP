@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Common\ComboBoxExtensions.cs" />
     <Compile Include="Common\DisposableObject.cs" />
+    <Compile Include="Common\DockPanelSuiteExtensions.cs" />
     <Compile Include="Common\Exception.cs" />
     <Compile Include="Common\ListViewExtensions.cs" />
     <Compile Include="Common\StringExtensions.cs" />

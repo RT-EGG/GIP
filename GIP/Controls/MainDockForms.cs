@@ -12,7 +12,7 @@ namespace GIP.Controls
     { 
         CodeEditor,
         Compile,
-        Textures,
+        TextureList,
         UniformVariables,
         TextureView
     }
@@ -26,7 +26,7 @@ namespace GIP.Controls
                     return "CodeEditor";
                 case MainDockFormType.Compile:
                     return "Compile";
-                case MainDockFormType.Textures:
+                case MainDockFormType.TextureList:
                     return "Textures";
                 case MainDockFormType.UniformVariables:
                     return "UniformVariables";
@@ -44,9 +44,13 @@ namespace GIP.Controls
         {
             m_FormList.Add(MainDockFormType.CodeEditor, new DockFormCodeEditor());
             m_FormList.Add(MainDockFormType.Compile, new DockFormCompile());
-            m_FormList.Add(MainDockFormType.Textures, new DockFormTextureList());
+            m_FormList.Add(MainDockFormType.TextureList, new DockFormTextureList());
             m_FormList.Add(MainDockFormType.TextureView, new DockFormTextureView());
             m_FormList.Add(MainDockFormType.UniformVariables, new DockFormUniformVariable());
+
+            foreach (var form in m_FormList.Values) {
+                form.HideOnClose = true;
+            }
             return;
         }
 

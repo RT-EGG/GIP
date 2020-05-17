@@ -20,7 +20,7 @@ namespace GIP.Controls
 
         protected override string GetPersistString()
         {
-            return MainDockFormType.Textures.ToPersistString();
+            return MainDockFormType.TextureList.ToPersistString();
         }
     }
 }

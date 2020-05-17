@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
+using System.Linq;
 using WeifenLuo.WinFormsUI.Docking;
 using GIP.Core;
+using GIP.Common;
 using GIP.Controls;
 
 namespace GIP
@@ -87,7 +89,7 @@ namespace GIP
             dockCompile.SetTaskRunner(ProcessTaskRunner);
             var dockCodeEditor = m_DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor);
             dockCodeEditor.Task = ProcessTask;
-            var dockTextureList = m_DockForms.Get<DockFormTextureList>(MainDockFormType.Textures);
+            var dockTextureList = m_DockForms.Get<DockFormTextureList>(MainDockFormType.TextureList);
             dockTextureList.Data = Resources.Textures;
             var dockUniformVariables = m_DockForms.Get<DockFormUniformVariable>(MainDockFormType.UniformVariables);
             dockUniformVariables.SetShaderVariables(Resources, ProcessTask.UniformVariables);
@@ -126,6 +128,36 @@ namespace GIP
         private void MenuItem_SaveShaderFile_Click(object sender, EventArgs e)
         {
             SaveShaderFile();
+            return;
+        }
+
+        private void MenuItem_ShowWindow_Click(object sender, EventArgs e)
+        {
+            if (sender == MenuItem_Code) {
+                ShowWindow(m_DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor));
+            } else if (sender == MenuItem_Compile) {
+                ShowWindow(m_DockForms.Get<DockFormCompile>(MainDockFormType.Compile));
+            } else if (sender == MenuItem_TextureList) {
+                ShowWindow(m_DockForms.Get<DockFormTextureList>(MainDockFormType.TextureList));
+            } else if (sender == MenuItem_UniformVariables) {
+                ShowWindow(m_DockForms.Get<DockFormUniformVariable>(MainDockFormType.UniformVariables));
+            } else if (sender == MenuItem_TextureView) {
+                ShowWindow(m_DockForms.Get<DockFormTextureView>(MainDockFormType.TextureView));
+            }
+            return;
+        }
+
+        private void ShowWindow(DockContent inContent)
+        {
+            if (inContent.Visible) {
+                return;
+            }
+            
+            inContent.Show(PanelDockMain);
+            if (inContent.IsAutoHiding()) {
+                inContent.DockPanel.ActiveAutoHideContent = inContent;
+                inContent.Activate();
+            }
             return;
         }
 
