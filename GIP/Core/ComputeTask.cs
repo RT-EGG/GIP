@@ -15,6 +15,7 @@ namespace GIP.Core
             }
 
             try {
+                Shader.NextBindableTextureUnit = 0;
                 foreach (var uniform in UniformVariables) {
                     uniform.Bind(Shader);
                 }
