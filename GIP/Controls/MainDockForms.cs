@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.ComponentModel; 
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -10,10 +6,12 @@ namespace GIP.Controls
 {
     public enum MainDockFormType
     { 
+        ProjectFiles,
         CodeEditor,
-        Compile,
-        TextureList,
-        UniformVariables,
+        Console,
+        TaskSequence,
+        TaskEditor,
+        VariableList,
         TextureView
     }
 
@@ -22,14 +20,18 @@ namespace GIP.Controls
         public static string ToPersistString(this MainDockFormType inType)
         {
             switch (inType) {
+                case MainDockFormType.ProjectFiles:
+                    return "ProjectFiles";
                 case MainDockFormType.CodeEditor:
                     return "CodeEditor";
-                case MainDockFormType.Compile:
+                case MainDockFormType.TaskSequence:
+                    return "TaskSequence";
+                case MainDockFormType.TaskEditor:
+                    return "TaskEditor";
+                case MainDockFormType.Console:
                     return "Compile";
-                case MainDockFormType.TextureList:
-                    return "Textures";
-                case MainDockFormType.UniformVariables:
-                    return "UniformVariables";
+                case MainDockFormType.VariableList:
+                    return "Variables";
                 case MainDockFormType.TextureView:
                     return "TextureView";
                 default:
@@ -42,11 +44,13 @@ namespace GIP.Controls
     {
         public MainDockForms()
         {
+            m_FormList.Add(MainDockFormType.ProjectFiles, new DockFormProjectFileView());
             m_FormList.Add(MainDockFormType.CodeEditor, new DockFormCodeEditor());
-            m_FormList.Add(MainDockFormType.Compile, new DockFormCompile());
-            m_FormList.Add(MainDockFormType.TextureList, new DockFormTextureList());
+            m_FormList.Add(MainDockFormType.TaskSequence, new DockFormTaskSequence());
+            m_FormList.Add(MainDockFormType.TaskEditor, new DockFormTaskEditor());
+            m_FormList.Add(MainDockFormType.Console, new DockFormConsole());
+            m_FormList.Add(MainDockFormType.VariableList, new DockFormVariableList());
             m_FormList.Add(MainDockFormType.TextureView, new DockFormTextureView());
-            m_FormList.Add(MainDockFormType.UniformVariables, new DockFormUniformVariable());
 
             foreach (var form in m_FormList.Values) {
                 form.HideOnClose = true;

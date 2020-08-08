@@ -29,17 +29,21 @@
         {
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.MenuItem_File = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_NewProject = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_OpenFIle = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_OpenShaderFile = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_SaveFile = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_SaveShaderFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.PanelDockMain = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.MenuItem_View = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_ProjectFiles = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_Code = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_TaskEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_TaskSequence = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_Compile = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuItem_TextureList = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_VariableList = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_UniformVariables = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_TextureView = new System.Windows.Forms.ToolStripMenuItem();
+            this.PanelDockMain = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,18 +61,26 @@
             // MenuItem_File
             // 
             this.MenuItem_File.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItem_NewProject,
             this.MenuItem_OpenFIle,
             this.MenuItem_SaveFile});
             this.MenuItem_File.Name = "MenuItem_File";
             this.MenuItem_File.Size = new System.Drawing.Size(37, 20);
             this.MenuItem_File.Text = "File";
             // 
+            // MenuItem_NewProject
+            // 
+            this.MenuItem_NewProject.Name = "MenuItem_NewProject";
+            this.MenuItem_NewProject.Size = new System.Drawing.Size(138, 22);
+            this.MenuItem_NewProject.Text = "New project";
+            this.MenuItem_NewProject.Click += new System.EventHandler(this.MenuItem_NewProject_Click);
+            // 
             // MenuItem_OpenFIle
             // 
             this.MenuItem_OpenFIle.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuItem_OpenShaderFile});
             this.MenuItem_OpenFIle.Name = "MenuItem_OpenFIle";
-            this.MenuItem_OpenFIle.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_OpenFIle.Size = new System.Drawing.Size(138, 22);
             this.MenuItem_OpenFIle.Text = "Open";
             // 
             // MenuItem_OpenShaderFile
@@ -83,7 +95,7 @@
             this.MenuItem_SaveFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuItem_SaveShaderFile});
             this.MenuItem_SaveFile.Name = "MenuItem_SaveFile";
-            this.MenuItem_SaveFile.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_SaveFile.Size = new System.Drawing.Size(138, 22);
             this.MenuItem_SaveFile.Text = "Save";
             // 
             // MenuItem_SaveShaderFile
@@ -93,26 +105,27 @@
             this.MenuItem_SaveShaderFile.Text = "Shader file...";
             this.MenuItem_SaveShaderFile.Click += new System.EventHandler(this.MenuItem_SaveShaderFile_Click);
             // 
-            // PanelDockMain
-            // 
-            this.PanelDockMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PanelDockMain.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
-            this.PanelDockMain.Location = new System.Drawing.Point(0, 24);
-            this.PanelDockMain.Name = "PanelDockMain";
-            this.PanelDockMain.Size = new System.Drawing.Size(1306, 524);
-            this.PanelDockMain.TabIndex = 4;
-            // 
             // MenuItem_View
             // 
             this.MenuItem_View.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItem_ProjectFiles,
             this.MenuItem_Code,
+            this.MenuItem_TaskEditor,
+            this.MenuItem_TaskSequence,
             this.MenuItem_Compile,
-            this.MenuItem_TextureList,
+            this.MenuItem_VariableList,
             this.MenuItem_UniformVariables,
             this.MenuItem_TextureView});
             this.MenuItem_View.Name = "MenuItem_View";
             this.MenuItem_View.Size = new System.Drawing.Size(44, 20);
             this.MenuItem_View.Text = "View";
+            // 
+            // MenuItem_ProjectFiles
+            // 
+            this.MenuItem_ProjectFiles.Name = "MenuItem_ProjectFiles";
+            this.MenuItem_ProjectFiles.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_ProjectFiles.Text = "Files";
+            this.MenuItem_ProjectFiles.Click += new System.EventHandler(this.MenuItem_ShowWindow_Click);
             // 
             // MenuItem_Code
             // 
@@ -121,6 +134,20 @@
             this.MenuItem_Code.Text = "Code";
             this.MenuItem_Code.Click += new System.EventHandler(this.MenuItem_ShowWindow_Click);
             // 
+            // MenuItem_TaskEditor
+            // 
+            this.MenuItem_TaskEditor.Name = "MenuItem_TaskEditor";
+            this.MenuItem_TaskEditor.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_TaskEditor.Text = "TaskEditor";
+            this.MenuItem_TaskEditor.Click += new System.EventHandler(this.MenuItem_ShowWindow_Click);
+            // 
+            // MenuItem_TaskSequence
+            // 
+            this.MenuItem_TaskSequence.Name = "MenuItem_TaskSequence";
+            this.MenuItem_TaskSequence.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_TaskSequence.Text = "TaskSequence";
+            this.MenuItem_TaskSequence.Click += new System.EventHandler(this.MenuItem_ShowWindow_Click);
+            // 
             // MenuItem_Compile
             // 
             this.MenuItem_Compile.Name = "MenuItem_Compile";
@@ -128,12 +155,12 @@
             this.MenuItem_Compile.Text = "Compile";
             this.MenuItem_Compile.Click += new System.EventHandler(this.MenuItem_ShowWindow_Click);
             // 
-            // MenuItem_TextureList
+            // MenuItem_VariableList
             // 
-            this.MenuItem_TextureList.Name = "MenuItem_TextureList";
-            this.MenuItem_TextureList.Size = new System.Drawing.Size(180, 22);
-            this.MenuItem_TextureList.Text = "TextureList";
-            this.MenuItem_TextureList.Click += new System.EventHandler(this.MenuItem_ShowWindow_Click);
+            this.MenuItem_VariableList.Name = "MenuItem_VariableList";
+            this.MenuItem_VariableList.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_VariableList.Text = "Variable list";
+            this.MenuItem_VariableList.Click += new System.EventHandler(this.MenuItem_ShowWindow_Click);
             // 
             // MenuItem_UniformVariables
             // 
@@ -148,6 +175,15 @@
             this.MenuItem_TextureView.Size = new System.Drawing.Size(180, 22);
             this.MenuItem_TextureView.Text = "TextureView";
             this.MenuItem_TextureView.Click += new System.EventHandler(this.MenuItem_ShowWindow_Click);
+            // 
+            // PanelDockMain
+            // 
+            this.PanelDockMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PanelDockMain.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
+            this.PanelDockMain.Location = new System.Drawing.Point(0, 24);
+            this.PanelDockMain.Name = "PanelDockMain";
+            this.PanelDockMain.Size = new System.Drawing.Size(1306, 524);
+            this.PanelDockMain.TabIndex = 4;
             // 
             // FormMain
             // 
@@ -180,9 +216,13 @@
         private System.Windows.Forms.ToolStripMenuItem MenuItem_View;
         private System.Windows.Forms.ToolStripMenuItem MenuItem_Code;
         private System.Windows.Forms.ToolStripMenuItem MenuItem_Compile;
-        private System.Windows.Forms.ToolStripMenuItem MenuItem_TextureList;
+        private System.Windows.Forms.ToolStripMenuItem MenuItem_VariableList;
         private System.Windows.Forms.ToolStripMenuItem MenuItem_UniformVariables;
         private System.Windows.Forms.ToolStripMenuItem MenuItem_TextureView;
+        private System.Windows.Forms.ToolStripMenuItem MenuItem_NewProject;
+        private System.Windows.Forms.ToolStripMenuItem MenuItem_ProjectFiles;
+        private System.Windows.Forms.ToolStripMenuItem MenuItem_TaskEditor;
+        private System.Windows.Forms.ToolStripMenuItem MenuItem_TaskSequence;
     }
 }
 

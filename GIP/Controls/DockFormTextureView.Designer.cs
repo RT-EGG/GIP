@@ -35,7 +35,6 @@
             this.CtrlTextureView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CtrlTextureView.Location = new System.Drawing.Point(0, 0);
             this.CtrlTextureView.Name = "CtrlTextureView";
-            this.CtrlTextureView.Resources = null;
             this.CtrlTextureView.Size = new System.Drawing.Size(548, 530);
             this.CtrlTextureView.TabIndex = 0;
             // 

@@ -1,6 +1,6 @@
-﻿namespace GIP.Controls
+﻿namespace GIP.Controls.VariableValues
 {
-    partial class Ctrl_TextureInfoView
+    partial class Ctrl_TextureVariableView
     {
         /// <summary> 
         /// 必要なデザイナー変数です。
@@ -33,8 +33,6 @@
             this.LabelFormat = new System.Windows.Forms.Label();
             this.ComboFormat = new System.Windows.Forms.ComboBox();
             this.LabelDataType = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.TextBoxName = new System.Windows.Forms.TextBox();
             this.PanelSource = new System.Windows.Forms.Panel();
             this.ComboSource = new System.Windows.Forms.ComboBox();
             this.LabelSource = new System.Windows.Forms.Label();
@@ -59,21 +57,18 @@
             this.PanelInitializeInfo.ColumnCount = 2;
             this.PanelInitializeInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.PanelInitializeInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.PanelInitializeInfo.Controls.Add(this.ComboDataType, 1, 2);
-            this.PanelInitializeInfo.Controls.Add(this.LabelFormat, 0, 1);
-            this.PanelInitializeInfo.Controls.Add(this.ComboFormat, 1, 1);
-            this.PanelInitializeInfo.Controls.Add(this.LabelDataType, 0, 2);
-            this.PanelInitializeInfo.Controls.Add(this.label1, 0, 0);
-            this.PanelInitializeInfo.Controls.Add(this.TextBoxName, 1, 0);
+            this.PanelInitializeInfo.Controls.Add(this.ComboDataType, 1, 1);
+            this.PanelInitializeInfo.Controls.Add(this.LabelFormat, 0, 0);
+            this.PanelInitializeInfo.Controls.Add(this.ComboFormat, 1, 0);
+            this.PanelInitializeInfo.Controls.Add(this.LabelDataType, 0, 1);
             this.PanelInitializeInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelInitializeInfo.Location = new System.Drawing.Point(0, 0);
+            this.PanelInitializeInfo.Location = new System.Drawing.Point(3, 22);
             this.PanelInitializeInfo.Name = "PanelInitializeInfo";
-            this.PanelInitializeInfo.RowCount = 3;
-            this.PanelInitializeInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.PanelInitializeInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.PanelInitializeInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.PanelInitializeInfo.RowCount = 2;
+            this.PanelInitializeInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.PanelInitializeInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.PanelInitializeInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.PanelInitializeInfo.Size = new System.Drawing.Size(353, 76);
+            this.PanelInitializeInfo.Size = new System.Drawing.Size(347, 56);
             this.PanelInitializeInfo.TabIndex = 5;
             // 
             // ComboDataType
@@ -83,9 +78,9 @@
             this.ComboDataType.FormattingEnabled = true;
             this.ComboDataType.Items.AddRange(new object[] {
             "Unsigned byte"});
-            this.ComboDataType.Location = new System.Drawing.Point(70, 53);
+            this.ComboDataType.Location = new System.Drawing.Point(70, 31);
             this.ComboDataType.Name = "ComboDataType";
-            this.ComboDataType.Size = new System.Drawing.Size(280, 20);
+            this.ComboDataType.Size = new System.Drawing.Size(274, 20);
             this.ComboDataType.TabIndex = 3;
             this.ComboDataType.SelectedValueChanged += new System.EventHandler(this.ComboDataType_SelectedValueChanged);
             // 
@@ -93,9 +88,9 @@
             // 
             this.LabelFormat.AutoSize = true;
             this.LabelFormat.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LabelFormat.Location = new System.Drawing.Point(3, 25);
+            this.LabelFormat.Location = new System.Drawing.Point(3, 0);
             this.LabelFormat.Name = "LabelFormat";
-            this.LabelFormat.Size = new System.Drawing.Size(47, 25);
+            this.LabelFormat.Size = new System.Drawing.Size(47, 28);
             this.LabelFormat.TabIndex = 0;
             this.LabelFormat.Text = "Format :";
             this.LabelFormat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -108,9 +103,9 @@
             this.ComboFormat.Items.AddRange(new object[] {
             "RGB",
             "RGBA"});
-            this.ComboFormat.Location = new System.Drawing.Point(70, 28);
+            this.ComboFormat.Location = new System.Drawing.Point(70, 3);
             this.ComboFormat.Name = "ComboFormat";
-            this.ComboFormat.Size = new System.Drawing.Size(280, 20);
+            this.ComboFormat.Size = new System.Drawing.Size(274, 20);
             this.ComboFormat.TabIndex = 1;
             this.ComboFormat.SelectedValueChanged += new System.EventHandler(this.ComboFormat_SelectedValueChanged);
             // 
@@ -118,41 +113,21 @@
             // 
             this.LabelDataType.AutoSize = true;
             this.LabelDataType.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LabelDataType.Location = new System.Drawing.Point(3, 50);
+            this.LabelDataType.Location = new System.Drawing.Point(3, 28);
             this.LabelDataType.Name = "LabelDataType";
-            this.LabelDataType.Size = new System.Drawing.Size(61, 26);
+            this.LabelDataType.Size = new System.Drawing.Size(61, 28);
             this.LabelDataType.TabIndex = 2;
             this.LabelDataType.Text = "Data type :";
             this.LabelDataType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 25);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Name :";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // TextBoxName
-            // 
-            this.TextBoxName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TextBoxName.Location = new System.Drawing.Point(70, 3);
-            this.TextBoxName.Name = "TextBoxName";
-            this.TextBoxName.Size = new System.Drawing.Size(280, 19);
-            this.TextBoxName.TabIndex = 5;
-            this.TextBoxName.TextChanged += new System.EventHandler(this.TextBoxName_TextChanged);
             // 
             // PanelSource
             // 
             this.PanelSource.Controls.Add(this.ComboSource);
             this.PanelSource.Controls.Add(this.LabelSource);
             this.PanelSource.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelSource.Location = new System.Drawing.Point(0, 76);
+            this.PanelSource.Location = new System.Drawing.Point(3, 78);
             this.PanelSource.Name = "PanelSource";
-            this.PanelSource.Size = new System.Drawing.Size(353, 28);
+            this.PanelSource.Size = new System.Drawing.Size(347, 28);
             this.PanelSource.TabIndex = 6;
             // 
             // ComboSource
@@ -185,10 +160,10 @@
             this.PanelSourceColorOptions.Controls.Add(this.ButtonColorInitializeRGB);
             this.PanelSourceColorOptions.Controls.Add(this.LabelColorInitializeRGB);
             this.PanelSourceColorOptions.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelSourceColorOptions.Location = new System.Drawing.Point(0, 104);
+            this.PanelSourceColorOptions.Location = new System.Drawing.Point(3, 106);
             this.PanelSourceColorOptions.Name = "PanelSourceColorOptions";
             this.PanelSourceColorOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.PanelSourceColorOptions.Size = new System.Drawing.Size(353, 25);
+            this.PanelSourceColorOptions.Size = new System.Drawing.Size(347, 25);
             this.PanelSourceColorOptions.TabIndex = 7;
             // 
             // UdColorInitializeAlpha
@@ -243,10 +218,10 @@
             this.PanelSourceFileOptions.Controls.Add(this.ButtonFileInitializeChoosePath);
             this.PanelSourceFileOptions.Controls.Add(this.LabelFileInitializeFile);
             this.PanelSourceFileOptions.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelSourceFileOptions.Location = new System.Drawing.Point(0, 129);
+            this.PanelSourceFileOptions.Location = new System.Drawing.Point(3, 131);
             this.PanelSourceFileOptions.Name = "PanelSourceFileOptions";
             this.PanelSourceFileOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.PanelSourceFileOptions.Size = new System.Drawing.Size(353, 27);
+            this.PanelSourceFileOptions.Size = new System.Drawing.Size(347, 27);
             this.PanelSourceFileOptions.TabIndex = 8;
             // 
             // TextBoxFileInitializePath
@@ -254,13 +229,13 @@
             this.TextBoxFileInitializePath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TextBoxFileInitializePath.Location = new System.Drawing.Point(41, 3);
             this.TextBoxFileInitializePath.Name = "TextBoxFileInitializePath";
-            this.TextBoxFileInitializePath.Size = new System.Drawing.Size(280, 19);
+            this.TextBoxFileInitializePath.Size = new System.Drawing.Size(274, 19);
             this.TextBoxFileInitializePath.TabIndex = 2;
             // 
             // ButtonFileInitializeChoosePath
             // 
             this.ButtonFileInitializeChoosePath.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ButtonFileInitializeChoosePath.Location = new System.Drawing.Point(321, 3);
+            this.ButtonFileInitializeChoosePath.Location = new System.Drawing.Point(315, 3);
             this.ButtonFileInitializeChoosePath.Name = "ButtonFileInitializeChoosePath";
             this.ButtonFileInitializeChoosePath.Size = new System.Drawing.Size(29, 21);
             this.ButtonFileInitializeChoosePath.TabIndex = 3;
@@ -277,7 +252,7 @@
             this.LabelFileInitializeFile.Text = "File :";
             this.LabelFileInitializeFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Ctrl_TextureInfoView
+            // Ctrl_TextureVariableView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -286,8 +261,12 @@
             this.Controls.Add(this.PanelSourceColorOptions);
             this.Controls.Add(this.PanelSource);
             this.Controls.Add(this.PanelInitializeInfo);
-            this.Name = "Ctrl_TextureInfoView";
+            this.Name = "Ctrl_TextureVariableView";
             this.Size = new System.Drawing.Size(353, 348);
+            this.Controls.SetChildIndex(this.PanelInitializeInfo, 0);
+            this.Controls.SetChildIndex(this.PanelSource, 0);
+            this.Controls.SetChildIndex(this.PanelSourceColorOptions, 0);
+            this.Controls.SetChildIndex(this.PanelSourceFileOptions, 0);
             this.PanelInitializeInfo.ResumeLayout(false);
             this.PanelInitializeInfo.PerformLayout();
             this.PanelSource.ResumeLayout(false);
@@ -297,6 +276,7 @@
             this.PanelSourceFileOptions.ResumeLayout(false);
             this.PanelSourceFileOptions.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -319,7 +299,5 @@
         private System.Windows.Forms.TextBox TextBoxFileInitializePath;
         private System.Windows.Forms.Button ButtonFileInitializeChoosePath;
         private System.Windows.Forms.Label LabelFileInitializeFile;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox TextBoxName;
     }
 }

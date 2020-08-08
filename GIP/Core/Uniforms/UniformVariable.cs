@@ -9,16 +9,16 @@ namespace GIP.Core.Uniforms
         public UniformVariable()
         { return; }
 
-        public void Bind(int inProgramID, ShaderResources inResources)
+        public void Bind(ComputeShader inShader)
         {
-            int location = GL.GetUniformLocation(inProgramID, UniformName.Value);
+            int location = GL.GetUniformLocation(inShader.ProgramID, UniformName.Value);
             if (location < 0) {
                 throw new UniformVariableNotFoundException(UniformName.Value);
             }
             if (Variable.Value == null) {
                 throw new UniformVariableNotAssignedException(UniformName.Value);
             }
-            Variable.Value.Bind(location, inResources);
+            Variable.Value.Bind(location, inShader);
             return;
         }
 

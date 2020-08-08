@@ -10,7 +10,7 @@ namespace GIP.Core.Uniforms
             return;
         }
 
-        public abstract void Bind(int inLocation, ShaderResources inResources);
+        public abstract void Bind(int inLocation, ComputeShader inTarget);
 
         public abstract string TypeString
         { get; }

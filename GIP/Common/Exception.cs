@@ -29,4 +29,15 @@ namespace GIP.Common
             : base ($"Texture \"{inTextureName}\" not found..")
         { }
     }
+
+    public class GLApiErrorException : Exception
+    {
+        public GLApiErrorException(OpenTK.Graphics.OpenGL.ErrorCode inCode, string inApiName)
+            : base ($"GL error \"{inCode}\" on \"{inApiName}\".")
+        { }
+
+        public GLApiErrorException(OpenTK.Graphics.OpenGL4.ErrorCode inCode, string inApiName)
+            : base($"GL error \"{inCode}\" on \"{inApiName}\".")
+        { }
+    }
 }

@@ -29,18 +29,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.TextBoxCodeEditor = new GIP.Controls.ComputeShaderCodeBox(this.components);
-            this.PanelDispatchSize = new System.Windows.Forms.TableLayoutPanel();
-            this.UdDispatchSizeZ = new rtUtility.rtControl.CustomNumericUpDown(this.components);
-            this.LabelDispatchSizeZ = new System.Windows.Forms.Label();
-            this.UdDispatchSizeY = new rtUtility.rtControl.CustomNumericUpDown(this.components);
-            this.LabelDispatchSizeY = new System.Windows.Forms.Label();
-            this.LabelDispatchSizeX = new System.Windows.Forms.Label();
-            this.LabelDispatchGroupSize = new System.Windows.Forms.Label();
-            this.UdDispatchSizeX = new rtUtility.rtControl.CustomNumericUpDown(this.components);
-            this.PanelDispatchSize.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.UdDispatchSizeZ)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UdDispatchSizeY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UdDispatchSizeX)).BeginInit();
+            this.PanelCompile = new System.Windows.Forms.Panel();
+            this.ButtonCompile = new System.Windows.Forms.Button();
+            this.PanelCompile.SuspendLayout();
             this.SuspendLayout();
             // 
             // TextBoxCodeEditor
@@ -50,132 +41,39 @@
             this.TextBoxCodeEditor.Location = new System.Drawing.Point(0, 0);
             this.TextBoxCodeEditor.Multiline = true;
             this.TextBoxCodeEditor.Name = "TextBoxCodeEditor";
-            this.TextBoxCodeEditor.Size = new System.Drawing.Size(328, 295);
+            this.TextBoxCodeEditor.Size = new System.Drawing.Size(328, 266);
             this.TextBoxCodeEditor.TabIndex = 0;
+            this.TextBoxCodeEditor.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TextBoxCodeEditor_KeyUp);
             // 
-            // PanelDispatchSize
+            // PanelCompile
             // 
-            this.PanelDispatchSize.ColumnCount = 7;
-            this.PanelDispatchSize.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.PanelDispatchSize.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.PanelDispatchSize.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.PanelDispatchSize.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.PanelDispatchSize.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.PanelDispatchSize.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.PanelDispatchSize.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.PanelDispatchSize.Controls.Add(this.UdDispatchSizeZ, 6, 0);
-            this.PanelDispatchSize.Controls.Add(this.LabelDispatchSizeZ, 5, 0);
-            this.PanelDispatchSize.Controls.Add(this.UdDispatchSizeY, 4, 0);
-            this.PanelDispatchSize.Controls.Add(this.LabelDispatchSizeY, 3, 0);
-            this.PanelDispatchSize.Controls.Add(this.LabelDispatchSizeX, 1, 0);
-            this.PanelDispatchSize.Controls.Add(this.LabelDispatchGroupSize, 0, 0);
-            this.PanelDispatchSize.Controls.Add(this.UdDispatchSizeX, 2, 0);
-            this.PanelDispatchSize.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PanelDispatchSize.Location = new System.Drawing.Point(0, 269);
-            this.PanelDispatchSize.Name = "PanelDispatchSize";
-            this.PanelDispatchSize.RowCount = 1;
-            this.PanelDispatchSize.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.PanelDispatchSize.Size = new System.Drawing.Size(328, 26);
-            this.PanelDispatchSize.TabIndex = 3;
+            this.PanelCompile.Controls.Add(this.ButtonCompile);
+            this.PanelCompile.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.PanelCompile.Location = new System.Drawing.Point(0, 266);
+            this.PanelCompile.Name = "PanelCompile";
+            this.PanelCompile.Padding = new System.Windows.Forms.Padding(3);
+            this.PanelCompile.Size = new System.Drawing.Size(328, 29);
+            this.PanelCompile.TabIndex = 1;
             // 
-            // UdDispatchSizeZ
+            // ButtonCompile
             // 
-            this.UdDispatchSizeZ.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.UdDispatchSizeZ.Location = new System.Drawing.Point(273, 3);
-            this.UdDispatchSizeZ.Name = "UdDispatchSizeZ";
-            this.UdDispatchSizeZ.Size = new System.Drawing.Size(52, 19);
-            this.UdDispatchSizeZ.TabIndex = 6;
-            this.UdDispatchSizeZ.Tail = "";
-            this.UdDispatchSizeZ.Value = new decimal(new int[] {
-            64,
-            0,
-            0,
-            0});
-            // 
-            // LabelDispatchSizeZ
-            // 
-            this.LabelDispatchSizeZ.AutoSize = true;
-            this.LabelDispatchSizeZ.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LabelDispatchSizeZ.Location = new System.Drawing.Point(251, 0);
-            this.LabelDispatchSizeZ.Name = "LabelDispatchSizeZ";
-            this.LabelDispatchSizeZ.Size = new System.Drawing.Size(16, 26);
-            this.LabelDispatchSizeZ.TabIndex = 5;
-            this.LabelDispatchSizeZ.Text = "z :";
-            this.LabelDispatchSizeZ.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // UdDispatchSizeY
-            // 
-            this.UdDispatchSizeY.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.UdDispatchSizeY.Location = new System.Drawing.Point(193, 3);
-            this.UdDispatchSizeY.Name = "UdDispatchSizeY";
-            this.UdDispatchSizeY.Size = new System.Drawing.Size(52, 19);
-            this.UdDispatchSizeY.TabIndex = 4;
-            this.UdDispatchSizeY.Tail = "";
-            this.UdDispatchSizeY.Value = new decimal(new int[] {
-            64,
-            0,
-            0,
-            0});
-            // 
-            // LabelDispatchSizeY
-            // 
-            this.LabelDispatchSizeY.AutoSize = true;
-            this.LabelDispatchSizeY.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LabelDispatchSizeY.Location = new System.Drawing.Point(170, 0);
-            this.LabelDispatchSizeY.Name = "LabelDispatchSizeY";
-            this.LabelDispatchSizeY.Size = new System.Drawing.Size(17, 26);
-            this.LabelDispatchSizeY.TabIndex = 3;
-            this.LabelDispatchSizeY.Text = "y :";
-            this.LabelDispatchSizeY.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // LabelDispatchSizeX
-            // 
-            this.LabelDispatchSizeX.AutoSize = true;
-            this.LabelDispatchSizeX.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LabelDispatchSizeX.Location = new System.Drawing.Point(89, 0);
-            this.LabelDispatchSizeX.Name = "LabelDispatchSizeX";
-            this.LabelDispatchSizeX.Size = new System.Drawing.Size(17, 26);
-            this.LabelDispatchSizeX.TabIndex = 1;
-            this.LabelDispatchSizeX.Text = "x :";
-            this.LabelDispatchSizeX.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // LabelDispatchGroupSize
-            // 
-            this.LabelDispatchGroupSize.AutoSize = true;
-            this.LabelDispatchGroupSize.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LabelDispatchGroupSize.Location = new System.Drawing.Point(3, 0);
-            this.LabelDispatchGroupSize.Name = "LabelDispatchGroupSize";
-            this.LabelDispatchGroupSize.Size = new System.Drawing.Size(80, 26);
-            this.LabelDispatchGroupSize.TabIndex = 0;
-            this.LabelDispatchGroupSize.Text = "Dispatch size :";
-            this.LabelDispatchGroupSize.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // UdDispatchSizeX
-            // 
-            this.UdDispatchSizeX.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.UdDispatchSizeX.Location = new System.Drawing.Point(112, 3);
-            this.UdDispatchSizeX.Name = "UdDispatchSizeX";
-            this.UdDispatchSizeX.Size = new System.Drawing.Size(52, 19);
-            this.UdDispatchSizeX.TabIndex = 2;
-            this.UdDispatchSizeX.Tail = "";
-            this.UdDispatchSizeX.Value = new decimal(new int[] {
-            64,
-            0,
-            0,
-            0});
+            this.ButtonCompile.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ButtonCompile.Location = new System.Drawing.Point(3, 3);
+            this.ButtonCompile.Name = "ButtonCompile";
+            this.ButtonCompile.Size = new System.Drawing.Size(75, 23);
+            this.ButtonCompile.TabIndex = 0;
+            this.ButtonCompile.Text = "Compile";
+            this.ButtonCompile.UseVisualStyleBackColor = true;
+            this.ButtonCompile.Click += new System.EventHandler(this.ButtonCompile_Click);
             // 
             // DockFormCodeEditor
             // 
             this.ClientSize = new System.Drawing.Size(328, 295);
-            this.Controls.Add(this.PanelDispatchSize);
             this.Controls.Add(this.TextBoxCodeEditor);
+            this.Controls.Add(this.PanelCompile);
             this.Name = "DockFormCodeEditor";
             this.Text = "CodeEditor";
-            this.PanelDispatchSize.ResumeLayout(false);
-            this.PanelDispatchSize.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.UdDispatchSizeZ)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UdDispatchSizeY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UdDispatchSizeX)).EndInit();
+            this.PanelCompile.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -184,13 +82,7 @@
         #endregion
 
         private ComputeShaderCodeBox TextBoxCodeEditor;
-        private System.Windows.Forms.TableLayoutPanel PanelDispatchSize;
-        private rtUtility.rtControl.CustomNumericUpDown UdDispatchSizeZ;
-        private System.Windows.Forms.Label LabelDispatchSizeZ;
-        private rtUtility.rtControl.CustomNumericUpDown UdDispatchSizeY;
-        private System.Windows.Forms.Label LabelDispatchSizeY;
-        private System.Windows.Forms.Label LabelDispatchSizeX;
-        private System.Windows.Forms.Label LabelDispatchGroupSize;
-        private rtUtility.rtControl.CustomNumericUpDown UdDispatchSizeX;
+        private System.Windows.Forms.Panel PanelCompile;
+        private System.Windows.Forms.Button ButtonCompile;
     }
 }

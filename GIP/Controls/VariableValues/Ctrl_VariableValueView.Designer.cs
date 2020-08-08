@@ -1,6 +1,6 @@
-﻿namespace GIP.Controls
+﻿namespace GIP.Controls.VariableValues
 {
-    partial class Ctrl_GlobalTextureListView
+    partial class Ctrl_VariableValueView
     {
         /// <summary> 
         /// 必要なデザイナー変数です。
@@ -27,34 +27,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.CtrlTextureInfoView = new GIP.Controls.Ctrl_TextureInfoView();
+            this.TextBoxName = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // CtrlTextureInfoView
+            // TextBoxName
             // 
-            this.CtrlTextureInfoView.AutoSize = true;
-            this.CtrlTextureInfoView.Data = null;
-            this.CtrlTextureInfoView.Dock = System.Windows.Forms.DockStyle.Top;
-            this.CtrlTextureInfoView.Location = new System.Drawing.Point(0, 99);
-            this.CtrlTextureInfoView.Name = "CtrlTextureInfoView";
-            this.CtrlTextureInfoView.Size = new System.Drawing.Size(469, 129);
-            this.CtrlTextureInfoView.TabIndex = 6;
+            this.TextBoxName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TextBoxName.Location = new System.Drawing.Point(3, 3);
+            this.TextBoxName.Name = "TextBoxName";
+            this.TextBoxName.Size = new System.Drawing.Size(473, 19);
+            this.TextBoxName.TabIndex = 0;
+            this.TextBoxName.TextChanged += new System.EventHandler(this.TextBoxName_TextChanged);
             // 
-            // Ctrl_GlobalTextureListView
+            // Ctrl_VariableValueView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.Controls.Add(this.CtrlTextureInfoView);
-            this.Name = "Ctrl_GlobalTextureListView";
-            this.Size = new System.Drawing.Size(469, 245);
-            this.Controls.SetChildIndex(this.CtrlTextureInfoView, 0);
+            this.Controls.Add(this.TextBoxName);
+            this.Name = "Ctrl_VariableValueView";
+            this.Padding = new System.Windows.Forms.Padding(3);
+            this.Size = new System.Drawing.Size(479, 119);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private Ctrl_TextureInfoView CtrlTextureInfoView;
+
+        private System.Windows.Forms.TextBox TextBoxName;
     }
 }

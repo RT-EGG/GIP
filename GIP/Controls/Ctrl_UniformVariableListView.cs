@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using GIP.Core;
 using GIP.Core.Uniforms;
+using GIP.Core.Variables;
 
 namespace GIP.Controls
 {
@@ -12,30 +13,37 @@ namespace GIP.Controls
             InitializeComponent();
         }
 
-        public ShaderResourceInitializers Resources
+        public VariableList Variables
         {
-            get => m_Resources;
-            set {
-                if (m_Resources == value) {
-                    return;
-                }
-
-                m_Resources = value;
-                return;
-            }
+            get => CtrlVariableInfoView.Variables;
+            set => CtrlVariableInfoView.Variables = value;
         }
 
         public UniformVariableList Data
         {
             get => m_Data;
             set {
-                if (m_Data == value) {
-                    return;
-                }
+                try {
+                    if (m_Data == value) {
+                        return;
+                    }
 
-                m_Data = value;
-                foreach (var data in m_Data) {
-                    AddNew(new ListItem(Table, data));
+                    m_Data = value;
+                    m_SetFromSelf = true;
+                    Clear();
+                    if (m_Data != null) {
+                        foreach (var data in m_Data) {
+                            AddNew(new ListItem(Table, data));
+                        }
+                    }
+
+                } catch (Exception e) {
+                    m_Data = null;
+                    throw e;
+
+                } finally {
+                    m_SetFromSelf = false;
+                    this.Enabled = m_Data != null;
                 }
                 return;
             }
@@ -53,7 +61,9 @@ namespace GIP.Controls
         protected override void NewItemAdded(VirtualListItem inNewItem)
         {
             base.NewItemAdded(inNewItem);
-            m_Data.Add((inNewItem as ListItem).Data);
+            if (!m_SetFromSelf) {
+                m_Data.Add((inNewItem as ListItem).Data);
+            }
 
             return;
         }
@@ -65,19 +75,20 @@ namespace GIP.Controls
 
         protected override void RemoveItem(VirtualListItem inItem) 
         {
-            m_Data.Remove((inItem as ListItem).Data);
+            if (!m_SetFromSelf) {
+                m_Data?.Remove((inItem as ListItem).Data);
+            }
             return;
         }
 
         protected override void OnItemSelected(VirtualListItem inItem) 
         {
-            CtrlVariableInfoView.Resources = m_Resources;
             CtrlVariableInfoView.Data = (inItem == null) ? null : (inItem as ListItem).Data;
             return;
         }
 
-        private ShaderResourceInitializers m_Resources = null;
         private UniformVariableList m_Data = null;
+        private bool m_SetFromSelf = false;
 
         private class ListItem : VirtualListItem
         {

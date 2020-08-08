@@ -6,12 +6,13 @@ using OpenTK.Graphics.OpenGL4;
 using rtUtility.rtMath;
 using GIP.Core;
 using GIP.Common;
+using GIP.Core.Variables;
 
-namespace GIP.Controls
+namespace GIP.Controls.VariableValues
 {
-    public partial class Ctrl_TextureInfoView : UserControl
+    public partial class Ctrl_TextureVariableView : Ctrl_VariableValueView
     {
-        public Ctrl_TextureInfoView()
+        public Ctrl_TextureVariableView()
         {
             InitializeComponent();
 
@@ -30,38 +31,43 @@ namespace GIP.Controls
             return;
         }
 
-        public TextureInitializer Data
+        public new TextureVariable Data
         {
-            get => m_DataModel;
-            set {
-                if (m_DataModel == value) {
-                    return;
-                }
-                m_DataModel = value;
+            get => base.Data as TextureVariable;
+            set => base.Data = value;
+        }
 
-                m_IsDataSetting = true;
-                try {
-                    if (m_DataModel == null) {
-                        SetEnableAll(false);
-                    } else {
-                        SetEnableAll(true);
-                        TextBoxName.Text = value.Name.Value;
-                        ComboFormat.Select((object inItem) => {
-                            return ((TexturePixelFormat)inItem).Format == value.Format.Value;
-                        });
-                        ComboDataType.Select((object inItem) => {
-                            return ((TextureDataType)inItem).Type == value.DataType.Value;
-                        });
-                        if (value.PixelInitializer is TexturePixelInitializer.Color) {
-                            SetColorInitializer(value.PixelInitializer as TexturePixelInitializer.Color);
-                        } else if (value.PixelInitializer is TexturePixelInitializer.File) {
-                            SetFileInitializer(value.PixelInitializer as TexturePixelInitializer.File);
-                        }
+        public override Type VariableType => typeof(TextureVariable);
+
+        protected override void SetData(VariableBase inData)
+        {
+            base.SetData(inData);
+
+            var data = inData as TextureVariable;
+
+            m_IsDataSetting = true;
+            try {
+                if (Data == null) {
+                    SetEnabledAll(false);
+                } else {
+                    SetEnabledAll(true);
+                    //TextBoxName.Text = value.Name.Value;
+                    ComboFormat.Select((object inItem) => {
+                        return ((TexturePixelFormat)inItem).Format == data.Format.Value;
+                    });
+                    ComboDataType.Select((object inItem) => {
+                        return ((TextureDataType)inItem).Type == data.DataType.Value;
+                    });
+                    if (data.PixelInitializer is TexturePixelInitializer.Color) {
+                        SetColorInitializer(data.PixelInitializer as TexturePixelInitializer.Color);
+                    } else if (data.PixelInitializer is TexturePixelInitializer.File) {
+                        SetFileInitializer(data.PixelInitializer as TexturePixelInitializer.File);
                     }
-                } finally {
-                    m_IsDataSetting = false;
                 }
+            } finally {
+                m_IsDataSetting = false;
             }
+            return;
         }
 
         private void SetColorInitializer(TexturePixelInitializer.Color inValue)
@@ -79,9 +85,10 @@ namespace GIP.Controls
             return;
         }
 
-        private void SetEnableAll(bool inEnabled)
+        protected override void SetEnabledAll(bool inEnabled)
         {
-            TextBoxName.Enabled = inEnabled;
+            base.SetEnabledAll(inEnabled);
+
             ComboFormat.Enabled = inEnabled;
             ComboDataType.Enabled = inEnabled;
             ComboSource.Enabled = inEnabled;
@@ -89,14 +96,6 @@ namespace GIP.Controls
             UdColorInitializeAlpha.Enabled = inEnabled;
             TextBoxFileInitializePath.Enabled = inEnabled;
             ButtonFileInitializeChoosePath.Enabled = inEnabled;
-            return;
-        }
-
-        private void TextBoxName_TextChanged(object sender, EventArgs e)
-        {
-            if ((!m_IsDataSetting) && (Data != null)) {
-                Data.Name.Value = TextBoxName.Text;
-            }
             return;
         }
 
@@ -160,7 +159,6 @@ namespace GIP.Controls
             return;
         }
 
-        private TextureInitializer m_DataModel = null;
         private bool m_IsDataSetting = false;
 
         private class TexturePixelFormat

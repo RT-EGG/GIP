@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
-using System.Linq;
 using WeifenLuo.WinFormsUI.Docking;
 using GIP.Core;
 using GIP.Common;
@@ -14,13 +13,29 @@ namespace GIP
         public FormMain()
         {
             InitializeComponent();
-            ProcessTask = new ImageProcessTask(Resources);
+            return;
+        }
 
-            ProcessTaskRunner.OnBeforeRun += ProcessTaskRunner_OnBeforeRun;
-            ProcessTaskRunner.OnAfterRun += ProcessTaskRunner_OnAfterRun;
+        private void NewProject()
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Title = "New project";
+            dialog.Filter = "GIP project file(*.gip)|*.gip";
+            dialog.FilterIndex = 0;
 
-            ProcessTaskRunner.ResourceInitializers = Resources;
+            if (dialog.ShowDialog() == DialogResult.OK) {
+                NewProject(dialog.FileName);
+            }
+            return;
+        }
 
+        private void NewProject(string inPath)
+        {
+            if (false) {
+                // query save if have not saved yet.
+            }
+
+            Project = new Project(inPath);
             return;
         }
 
@@ -40,10 +55,7 @@ namespace GIP
         private void OpenShaderFile(string inPath)
         {
             using (StreamReader reader = new StreamReader(new FileStream(inPath, FileMode.Open, FileAccess.Read))) {
-                ProcessTask.SetSourceCode(reader.ReadToEnd());
-                var dockCodeEditor = m_DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor);
-                dockCodeEditor.Task = null;
-                dockCodeEditor.Task = ProcessTask;
+                //ProcessTask.SetSourceCode(reader.ReadToEnd());
             }
             return;
         }
@@ -64,39 +76,14 @@ namespace GIP
         private void SaveShaderFile(string inPath)
         {
             using (StreamWriter writer = new StreamWriter(new FileStream(inPath, FileMode.OpenOrCreate, FileAccess.Write))) {
-                writer.Write(ProcessTask.SourceCode);
+                //writer.Write(ProcessTask.SourceCode);
             }
-            return;
-        }
-
-        private void ProcessTaskRunner_OnBeforeRun(ImageProcessTaskRunner inRunner)
-        {
-            m_DockForms.Get<DockFormTextureView>(MainDockFormType.TextureView).Resources = null;
-            return;
-        }
-
-        private void ProcessTaskRunner_OnAfterRun(ImageProcessTaskRunner inRunner)
-        {
-            m_DockForms.Get<DockFormTextureView>(MainDockFormType.TextureView).Resources = ProcessTaskRunner.Resources;
             return;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
         {
             m_DockForms = new MainDockForms();
-            var dockCompile = m_DockForms.Get<DockFormCompile>(MainDockFormType.Compile);
-            dockCompile.SetCompiler(Compiler);
-            dockCompile.SetTaskRunner(ProcessTaskRunner);
-            var dockCodeEditor = m_DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor);
-            dockCodeEditor.Task = ProcessTask;
-            var dockTextureList = m_DockForms.Get<DockFormTextureList>(MainDockFormType.TextureList);
-            dockTextureList.Data = Resources.Textures;
-            var dockUniformVariables = m_DockForms.Get<DockFormUniformVariable>(MainDockFormType.UniformVariables);
-            dockUniformVariables.SetShaderVariables(Resources, ProcessTask.UniformVariables);
-
-            ProcessTaskRunner.Tasks.Add(ProcessTask);
-            Project.ProcessTasks.Add(ProcessTask);
-            Compiler.Project = Project;
 
             if (File.Exists("layout.xml")) {
                 PanelDockMain.LoadFromXml("layout.xml", new DeserializeDockContent(m_DockForms.Find));
@@ -104,6 +91,8 @@ namespace GIP
                 m_DockForms.ShowAll(PanelDockMain);
             }
 
+            UIEventBridge.Register(m_DockForms);
+            Logger.DefaultLogger.Add(m_DockForms.Get<DockFormConsole>(MainDockFormType.Console));
             return;
         }
 
@@ -116,6 +105,12 @@ namespace GIP
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             PanelDockMain.SaveAsXml("layout.xml");
+            return;
+        }
+
+        private void MenuItem_NewProject_Click(object sender, EventArgs e)
+        {
+            NewProject();
             return;
         }
 
@@ -133,14 +128,18 @@ namespace GIP
 
         private void MenuItem_ShowWindow_Click(object sender, EventArgs e)
         {
-            if (sender == MenuItem_Code) {
+            if (sender == MenuItem_ProjectFiles) {
+                ShowWindow(m_DockForms.Get<DockFormProjectFileView>(MainDockFormType.ProjectFiles));
+            } else if (sender == MenuItem_Code) {
                 ShowWindow(m_DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor));
+            } else if (sender == MenuItem_TaskEditor) {
+                ShowWindow(m_DockForms.Get<DockFormTaskEditor>(MainDockFormType.TaskEditor));
+            } else if (sender == MenuItem_TaskSequence) {
+                ShowWindow(m_DockForms.Get<DockFormTaskSequence>(MainDockFormType.TaskSequence));
             } else if (sender == MenuItem_Compile) {
-                ShowWindow(m_DockForms.Get<DockFormCompile>(MainDockFormType.Compile));
-            } else if (sender == MenuItem_TextureList) {
-                ShowWindow(m_DockForms.Get<DockFormTextureList>(MainDockFormType.TextureList));
-            } else if (sender == MenuItem_UniformVariables) {
-                ShowWindow(m_DockForms.Get<DockFormUniformVariable>(MainDockFormType.UniformVariables));
+                ShowWindow(m_DockForms.Get<DockFormConsole>(MainDockFormType.Console));
+            } else if (sender == MenuItem_VariableList) {
+                ShowWindow(m_DockForms.Get<DockFormVariableList>(MainDockFormType.VariableList));
             } else if (sender == MenuItem_TextureView) {
                 ShowWindow(m_DockForms.Get<DockFormTextureView>(MainDockFormType.TextureView));
             }
@@ -161,18 +160,28 @@ namespace GIP
             return;
         }
 
-        private ShaderResourceInitializers Resources
-        { get; } = new ShaderResourceInitializers();
-        private ImageProcessTask ProcessTask
-        { get; } = null;
-        private ImageProcessTaskRunner ProcessTaskRunner
-        { get; } = new ImageProcessTaskRunner();
         private Project Project
-        { get; } = new Project();
-        private ShaderCompiler Compiler
-        { get; } = new ShaderCompiler();
+        { 
+            get => m_Project;
+            set {
+                if (m_Project == value) {
+                    return;
+                }
+                m_Project = value;
+                m_DockForms.Get<DockFormProjectFileView>(MainDockFormType.ProjectFiles).Data = m_Project;
+                m_DockForms.Get<DockFormTaskSequence>(MainDockFormType.TaskSequence).Project = m_Project;
+                m_DockForms.Get<DockFormVariableList>(MainDockFormType.VariableList).Data = m_Project.Variables;
+                m_DockForms.Get<DockFormTaskEditor>(MainDockFormType.TaskEditor).Project = m_Project;
+                m_DockForms.Get<DockFormTextureView>(MainDockFormType.TextureView).Project = m_Project;
+
+                return;
+            } 
+        }
 
         private MainDockForms m_DockForms
         { get; set; } = null;
+        private MainFormEventBridge UIEventBridge
+        { get; set; } = new MainFormEventBridge();
+        private Project m_Project = null;
     }
 }

@@ -7,36 +7,42 @@ namespace GIP.Controls
         public DockFormCodeEditor()
         {
             InitializeComponent();
+            return;
         }
 
-        public ImageProcessTask Task
+        public ComputeShader Shader
         {
-            get => m_Task;
+            get => m_Shader;
             set {
-                if (m_Task == value) {
-                    return;
+                try {
+                    if (m_Shader == value) {
+                        return;
+                    }
+
+                    if (m_Shader != null) {
+                        if (m_Shader.Source is ShaderTextSource) {
+                            (m_Shader.Source as ShaderTextSource).SourceCode = Code;
+                        }
+                    }
+
+                    m_Shader = value;
+                    if (m_Shader == null) {
+                        TextBoxCodeEditor.Text = "";
+
+                    } else {
+                        switch (m_Shader.Source) {
+                            case ShaderTextSource text:
+                                TextBoxCodeEditor.Text = text.SourceCode;
+                                break;
+                            default:
+                                TextBoxCodeEditor.Text = "";
+                                break;
+                        }
+                    }
+
+                } finally {
+                    this.Enabled = (m_Shader != null) && (m_Shader.Source is ShaderTextSource);
                 }
-                m_Task = value;
-
-                TextBoxCodeEditor.Enabled = m_Task != null;
-                UdDispatchSizeX.Enabled = m_Task != null;
-                UdDispatchSizeY.Enabled = m_Task != null;
-                UdDispatchSizeZ.Enabled = m_Task != null;
-                if (m_Task == null) {
-                    TextBoxCodeEditor.Text = "";                    
-                    UdDispatchSizeX.Value = 0;                    
-                    UdDispatchSizeY.Value = 0;
-                    UdDispatchSizeZ.Value = 0;
-                    
-                } else {
-                    TextBoxCodeEditor.Text = m_Task.SourceCode;
-                    UdDispatchSizeX.Value = m_Task.DispatchGroupSizeX;
-                    UdDispatchSizeY.Value = m_Task.DispatchGroupSizeY;
-                    UdDispatchSizeZ.Value = m_Task.DispatchGroupSizeZ;
-
-                }
-
-                return;
             }
         }
 
@@ -48,6 +54,45 @@ namespace GIP.Controls
             return MainDockFormType.CodeEditor.ToPersistString();
         }
 
-        private ImageProcessTask m_Task = null;
+        private void TextBoxCodeEditor_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (m_Shader == null) {
+                return;
+            }
+
+            switch (e.KeyCode) {
+                case System.Windows.Forms.Keys.S:
+                    if (e.Control) {
+                        if (m_Shader.Source is ShaderTextSource) {
+                            (m_Shader.Source as ShaderTextSource).SourceCode = Code;
+                        }
+                        m_Shader.Source.SaveSource();
+                    }
+                    break;
+            }
+        }
+
+        private void TextBoxCodeEditor_TextChanged(object sender, System.EventArgs e)
+        {
+            if (m_Shader != null) {
+                if (m_Shader.Source is ShaderTextSource) {
+                    var textSource = m_Shader.Source as ShaderTextSource;
+                    textSource.SourceCode = TextBoxCodeEditor.Text;
+                }
+            }
+            return;
+        }
+
+        private void ButtonCompile_Click(object sender, System.EventArgs e)
+        {
+            if (m_Shader == null) {
+                return;
+            }
+
+            m_Shader.CompileAndLink(Logger.DefaultLogger);
+            return;
+        }
+
+        private ComputeShader m_Shader = null;
     }
 }

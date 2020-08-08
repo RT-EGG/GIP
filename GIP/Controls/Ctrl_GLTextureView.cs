@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL;
 using GIP.Core;
+using GIP.Common;
+using GIP.Core.Variables;
 
 namespace GIP.Controls
 {
@@ -94,31 +97,49 @@ namespace GIP.Controls
             return;
         }
 
-        public ShaderResources Resources
+        public Project Project
         {
-            get => m_Resources;
+            get => m_Project;
             set {
-                if (m_Resources == value) {
-                    return;
-                }
+                try {
+                    if (m_Project == value) {
+                        return;
+                    }
 
-                m_Resources = value;
-                ComboCurrentTexture.Items.Clear();
-                if (m_Resources != null) {
-                    foreach (var texture in value.Textures) {
-                        ComboCurrentTexture.Items.Add(new ComboTextureItem {
-                            Name = texture.Key.Name.Value,
-                            TextureID = texture.Value
-                        });
-                    }
-                    if (ComboCurrentTexture.Items.Count > 0) {
-                        ComboCurrentTexture.SelectedIndex = 0;
-                    }
+                    m_ProjectSubscription.DisposeAndClear();
+
+                    m_Project = value;
+                    m_Project.Variables.SubscribeCollectionChanged((sender, e) => CollectComboTexture());
+                    CollectComboTexture();
+
+                } catch (Exception e) {
+                    m_Project = null;
+                    throw e;
+
+                } finally {
+                    this.Enabled = m_Project != null;
                 }
-                
-                Invalidate();
                 return;
             }
+        }
+
+        private void CollectComboTexture()
+        {
+            var current = (ComboCurrentTexture.SelectedItem == null) ? null :
+                         (ComboCurrentTexture.SelectedItem as ComboTextureItem).Variable;
+
+            ComboCurrentTexture.Items.Clear();
+            foreach (var variable in Project.Variables) {
+                if (variable is TextureVariable) {
+                    ComboCurrentTexture.Items.Add(new ComboTextureItem(ComboCurrentTexture, variable as TextureVariable));
+
+                    if ((variable as TextureVariable) == current) {
+                        ComboCurrentTexture.SelectedIndex = ComboCurrentTexture.Items.Count - 1;
+                    }
+                }
+            }
+
+            return;
         }
 
         private void ComboCurrentTexture_SelectedValueChanged(object sender, EventArgs e)
@@ -127,14 +148,33 @@ namespace GIP.Controls
             return;
         }
 
-        private ShaderResources m_Resources = null;
+        private Project m_Project = null;
+        private List<IDisposable> m_ProjectSubscription = new List<IDisposable>();
 
         private class ComboTextureItem
         {
-            public string Name
-            { get; set; } = "";
-            public int TextureID
-            { get; set; } = 0;
+            public ComboTextureItem(ComboBox inOwner, TextureVariable inVariable)
+            {
+                Owner = inOwner;
+                Variable = inVariable;
+
+                inVariable.Name.Subscribe((n) => {
+                    var index = Owner.Items.IndexOf(this);
+                    if (index >= 0) {
+                        // to update text
+                        Owner.Items[index] = this;
+                    }
+                    return;
+                });
+                return;
+            }
+
+            private ComboBox Owner
+            { get; } = null;
+            public TextureVariable Variable
+            { get; } = null;
+            public string Name => Variable.Name.Value;
+            public int TextureID => Variable.TextureID;
 
             public override string ToString()
             {

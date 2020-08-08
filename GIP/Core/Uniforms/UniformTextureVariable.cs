@@ -3,7 +3,7 @@ using System.Reactive.Linq;
 using Reactive.Bindings;
 using OpenTK.Graphics.OpenGL4;
 using GIP.Controls.UniformVariableValues;
-using GIP.Common;
+using GIP.Core.Variables;
 
 namespace GIP.Core.Uniforms
 {
@@ -19,22 +19,18 @@ namespace GIP.Core.Uniforms
             return;
         }
 
-        public ReactiveProperty<TextureInitializer> Texture
-        { get; } = new ReactiveProperty<TextureInitializer>(initialValue:null);
+        public ReactiveProperty<TextureVariable> Texture
+        { get; } = new ReactiveProperty<TextureVariable>(initialValue:null);
         public ReactiveProperty<TextureAccess> Access
         { get; } = new ReactiveProperty<TextureAccess>(TextureAccess.ReadWrite);
         public ReactiveProperty<SizedInternalFormat> InternalFormat
         { get; } = new ReactiveProperty<SizedInternalFormat>(SizedInternalFormat.Rgba8);
         public override string TypeString => "Texture";
 
-        public override void Bind(int inLocation, ShaderResources inResources)
+        public override void Bind(int inLocation, ComputeShader inTarget)
         {
-            if (!inResources.Textures.TryGetValue(Texture.Value, out int id)) {
-                throw new UniformTextureVariableNotFoundException(Texture.Value.Name.Value);
-            }
-            
-            int unit = inResources.NextBindableTextureUnit++;
-            GL.BindImageTexture(unit, id, 0, false, 0, Access.Value, InternalFormat.Value);
+            int unit = inTarget.NextBindableTextureUnit++;
+            GL.BindImageTexture(unit, Texture.Value.TextureID, 0, false, 0, Access.Value, InternalFormat.Value);
             GL.Uniform1(inLocation, unit);
             return;
         }

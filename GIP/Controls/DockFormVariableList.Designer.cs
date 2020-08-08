@@ -1,6 +1,6 @@
 ﻿namespace GIP.Controls
 {
-    partial class DockFormTextureList
+    partial class DockFormVariableList
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -27,7 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.CtrlTextureList = new GIP.Controls.Ctrl_GlobalTextureListView();
+            this.CtrlTextureList = new GIP.Controls.VariableValues.Ctrl_VariableListView();
             this.SuspendLayout();
             // 
             // CtrlTextureList
@@ -53,6 +53,6 @@
 
         #endregion
 
-        private Ctrl_GlobalTextureListView CtrlTextureList;
+        private GIP.Controls.VariableValues.Ctrl_VariableListView CtrlTextureList;
     }
 }

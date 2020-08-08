@@ -7,6 +7,7 @@ using OpenTK.Graphics.OpenGL4;
 using GIP.Common;
 using GIP.Core;
 using GIP.Core.Uniforms;
+using GIP.Core.Variables;
 
 namespace GIP.Controls.UniformVariableValues
 {
@@ -35,25 +36,15 @@ namespace GIP.Controls.UniformVariableValues
             return;
         }
 
-        public override void SetResource(ShaderResourceInitializers inValue)
+        protected override void DoVariableCollectionChanged()
         {
-            base.SetResource(inValue);
+            base.DoVariableCollectionChanged();
 
-            if (m_Resources == inValue) {
-                return;
-            }
-            if (m_Resources != null) {
-                m_Resources.Textures.CollectionChanged -= Textures_CollectionChanged;
-            }
-            m_Resources = inValue;
-            if (m_Resources != null) {
-                m_Resources.Textures.CollectionChanged += Textures_CollectionChanged;
-            }
             UpdateTextureCombobox();
             return;
         }
 
-        public override void SetData(UniformVariableValue inValue)
+        protected override void SetData(UniformVariableValue inValue)
         {
             base.SetData(inValue);
 
@@ -85,22 +76,18 @@ namespace GIP.Controls.UniformVariableValues
         private void UpdateTextureCombobox()
         {
             ComboTexture.Items.Clear();
-            if (m_Resources == null) {
+            if (Variables == null) {
                 return;
             }
 
-            foreach (var texture in m_Resources.Textures) {
-                ComboTexture.Items.Add(new TextureNameItem(ComboTexture, texture));
+            foreach (var variable in Variables) {
+                if (variable is TextureVariable) {
+                    ComboTexture.Items.Add(new TextureNameItem(ComboTexture, variable as TextureVariable));
+                }
             }
             ComboTexture.Select((object inItem) => {
                 return (m_Data != null) && (m_Data.Texture.Value == (inItem as TextureNameItem).Texture);
             });
-            return;
-        }
-
-        private void Textures_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            UpdateTextureCombobox();
             return;
         }
 
@@ -137,12 +124,11 @@ namespace GIP.Controls.UniformVariableValues
             return;
         }
 
-        private ShaderResourceInitializers m_Resources = null;
         private UniformTextureVariable m_Data = null;
 
         private class TextureNameItem
         {
-            public TextureNameItem(ComboBox inOwner, TextureInitializer inTexture)
+            public TextureNameItem(ComboBox inOwner, TextureVariable inTexture)
             {
                 Owner = inOwner;
                 Texture = inTexture;
@@ -158,7 +144,7 @@ namespace GIP.Controls.UniformVariableValues
 
             public ComboBox Owner
             { get; } = null;
-            public TextureInitializer Texture
+            public TextureVariable Texture
             { get; } = null;
 
             public override string ToString()

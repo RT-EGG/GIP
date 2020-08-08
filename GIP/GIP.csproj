@@ -83,10 +83,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ArrayExtensions.cs" />
     <Compile Include="Common\ComboBoxExtensions.cs" />
+    <Compile Include="Common\ControlExtensions.cs" />
     <Compile Include="Common\DisposableObject.cs" />
     <Compile Include="Common\DockPanelSuiteExtensions.cs" />
     <Compile Include="Common\Exception.cs" />
+    <Compile Include="Common\FileModificationMonitor.cs" />
+    <Compile Include="Common\GLDisposable.cs" />
     <Compile Include="Common\ListViewExtensions.cs" />
     <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="Controls\ComputeShaderCodeBox.cs">
@@ -95,11 +99,23 @@
     <Compile Include="Controls\ComputeShaderCodeBox.Designer.cs">
       <DependentUpon>ComputeShaderCodeBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Ctrl_GlobalTextureListView.cs">
+    <Compile Include="Controls\ProcessTaskEditor\Ctrl_ComputeTaskEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Ctrl_GlobalTextureListView.Designer.cs">
-      <DependentUpon>Ctrl_GlobalTextureListView.cs</DependentUpon>
+    <Compile Include="Controls\ProcessTaskEditor\Ctrl_ComputeTaskEditor.Designer.cs">
+      <DependentUpon>Ctrl_ComputeTaskEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProcessTaskEditor\Ctrl_ProcessTaskEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ProcessTaskEditor\Ctrl_ProcessTaskEditor.Designer.cs">
+      <DependentUpon>Ctrl_ProcessTaskEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VariableValues\Ctrl_VariableListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\VariableValues\Ctrl_VariableListView.Designer.cs">
+      <DependentUpon>Ctrl_VariableListView.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Ctrl_GLTextureView.cs">
       <SubType>UserControl</SubType>
@@ -113,23 +129,17 @@
     <Compile Include="Controls\Ctrl_ListView.Designer.cs">
       <DependentUpon>Ctrl_ListView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Ctrl_ShaderVariables.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\Ctrl_ShaderVariables.Designer.cs">
-      <DependentUpon>Ctrl_ShaderVariables.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Ctrl_GLControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\Ctrl_GLControl.Designer.cs">
       <DependentUpon>Ctrl_GLControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Ctrl_TextureInfoView.cs">
+    <Compile Include="Controls\VariableValues\Ctrl_TextureVariableView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Ctrl_TextureInfoView.Designer.cs">
-      <DependentUpon>Ctrl_TextureInfoView.cs</DependentUpon>
+    <Compile Include="Controls\VariableValues\Ctrl_TextureVariableView.Designer.cs">
+      <DependentUpon>Ctrl_TextureVariableView.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Ctrl_UniformVariableInfoView.cs">
       <SubType>UserControl</SubType>
@@ -149,17 +159,35 @@
     <Compile Include="Controls\DockFormCodeEditor.Designer.cs">
       <DependentUpon>DockFormCodeEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DockFormCompile.cs">
+    <Compile Include="Controls\DockFormConsole.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\DockFormCompile.Designer.cs">
-      <DependentUpon>DockFormCompile.cs</DependentUpon>
+    <Compile Include="Controls\DockFormConsole.Designer.cs">
+      <DependentUpon>DockFormConsole.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DockFormTextureList.cs">
+    <Compile Include="Controls\DockFormProjectFileView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\DockFormTextureList.Designer.cs">
-      <DependentUpon>DockFormTextureList.cs</DependentUpon>
+    <Compile Include="Controls\DockFormProjectFileView.Designer.cs">
+      <DependentUpon>DockFormProjectFileView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DockFormTaskEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\DockFormTaskEditor.Designer.cs">
+      <DependentUpon>DockFormTaskEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DockFormTaskSequence.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\DockFormTaskSequence.Designer.cs">
+      <DependentUpon>DockFormTaskSequence.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DockFormVariableList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\DockFormVariableList.Designer.cs">
+      <DependentUpon>DockFormVariableList.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\DockFormTextureView.cs">
       <SubType>Form</SubType>
@@ -167,13 +195,13 @@
     <Compile Include="Controls\DockFormTextureView.Designer.cs">
       <DependentUpon>DockFormTextureView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DockFormUniformVariable.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\DockFormUniformVariable.Designer.cs">
-      <DependentUpon>DockFormUniformVariable.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\MainDockForms.cs" />
+    <Compile Include="Controls\TreeNodeComputeTask.cs" />
+    <Compile Include="Controls\TreeNodeDirectory.cs" />
+    <Compile Include="Controls\TreeNodeProcessTask.cs" />
+    <Compile Include="Controls\TreeNodeProjectFile.cs" />
+    <Compile Include="Controls\TreeNodeComputeShader.cs" />
+    <Compile Include="Controls\TreeNodeTaskSequence.cs" />
     <Compile Include="Controls\UniformVariableValues\Ctrl_UniformVariableTextureValueView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -186,10 +214,22 @@
     <Compile Include="Controls\UniformVariableValues\Ctrl_UniformVariableValueView.Designer.cs">
       <DependentUpon>Ctrl_UniformVariableValueView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core\ImageProcessTask.cs" />
-    <Compile Include="Core\ImageProcessTaskRunner.cs" />
+    <Compile Include="Controls\VariableValues\Ctrl_VariableValueView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\VariableValues\Ctrl_VariableValueView.Designer.cs">
+      <DependentUpon>Ctrl_VariableValueView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\ComputeShader.cs" />
+    <Compile Include="Core\ComputeTask.cs" />
+    <Compile Include="Core\ProcessTask.cs" />
+    <Compile Include="Core\ProcessTaskSequence.cs" />
+    <Compile Include="Core\ProcessTaskSequenceRunner.cs" />
     <Compile Include="Core\Project.cs" />
-    <Compile Include="Core\ShaderCompiler.cs" />
+    <Compile Include="Core\ShaderSource.cs" />
+    <Compile Include="Core\ShaderTextSource.cs" />
+    <Compile Include="Core\Variables\VariableBase.cs" />
+    <Compile Include="Core\Variables\VariableList.cs" />
     <Compile Include="IO\Json\Converter\JsonTexturePixelInitializerConverter.cs" />
     <Compile Include="IO\Json\Converter\JsonUniformVariableValueConverter.cs" />
     <Compile Include="IO\Json\JsonSerializable.cs" />
@@ -199,11 +239,9 @@
     <Compile Include="IO\Project\JsonProjectFile.cs" />
     <Compile Include="IO\Project\JsonTextureInitializer.cs" />
     <Compile Include="IO\Project\JsonTexturePixelInitializer.cs" />
-    <Compile Include="Core\ShaderResourceInitializers.cs" />
     <Compile Include="Core\ShaderResources.cs" />
-    <Compile Include="Core\TextureInitializerList.cs" />
     <Compile Include="Core\TexturePixelInitializer.cs" />
-    <Compile Include="Core\TextureInitializer.cs" />
+    <Compile Include="Core\Variables\TextureVariable.cs" />
     <Compile Include="Core\Uniforms\UniformIntVariable.cs" />
     <Compile Include="Core\Uniforms\UniformTextureVariable.cs" />
     <Compile Include="Core\Uniforms\UniformVariable.cs" />
@@ -217,10 +255,18 @@
     </Compile>
     <Compile Include="IO\Project\JsonUniformVariable.cs" />
     <Compile Include="IO\Project\JsonUniformVariableValue.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="MainFormEventBridge.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Controls\Ctrl_GlobalTextureListView.resx">
-      <DependentUpon>Ctrl_GlobalTextureListView.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ProcessTaskEditor\Ctrl_ComputeTaskEditor.resx">
+      <DependentUpon>Ctrl_ComputeTaskEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ProcessTaskEditor\Ctrl_ProcessTaskEditor.resx">
+      <DependentUpon>Ctrl_ProcessTaskEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\VariableValues\Ctrl_VariableListView.resx">
+      <DependentUpon>Ctrl_VariableListView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Ctrl_GLTextureView.resx">
       <DependentUpon>Ctrl_GLTextureView.cs</DependentUpon>
@@ -228,11 +274,8 @@
     <EmbeddedResource Include="Controls\Ctrl_ListView.resx">
       <DependentUpon>Ctrl_ListView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Ctrl_ShaderVariables.resx">
-      <DependentUpon>Ctrl_ShaderVariables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Ctrl_TextureInfoView.resx">
-      <DependentUpon>Ctrl_TextureInfoView.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\VariableValues\Ctrl_TextureVariableView.resx">
+      <DependentUpon>Ctrl_TextureVariableView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Ctrl_UniformVariableInfoView.resx">
       <DependentUpon>Ctrl_UniformVariableInfoView.cs</DependentUpon>
@@ -243,20 +286,29 @@
     <EmbeddedResource Include="Controls\DockFormCodeEditor.resx">
       <DependentUpon>DockFormCodeEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\DockFormCompile.resx">
-      <DependentUpon>DockFormCompile.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\DockFormConsole.resx">
+      <DependentUpon>DockFormConsole.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\DockFormTextureList.resx">
-      <DependentUpon>DockFormTextureList.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\DockFormProjectFileView.resx">
+      <DependentUpon>DockFormProjectFileView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DockFormTaskEditor.resx">
+      <DependentUpon>DockFormTaskEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DockFormTaskSequence.resx">
+      <DependentUpon>DockFormTaskSequence.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DockFormVariableList.resx">
+      <DependentUpon>DockFormVariableList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DockFormTextureView.resx">
       <DependentUpon>DockFormTextureView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\DockFormUniformVariable.resx">
-      <DependentUpon>DockFormUniformVariable.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\UniformVariableValues\Ctrl_UniformVariableTextureValueView.resx">
       <DependentUpon>Ctrl_UniformVariableTextureValueView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\VariableValues\Ctrl_VariableValueView.resx">
+      <DependentUpon>Ctrl_VariableValueView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
@@ -291,5 +343,6 @@
       <Name>rtUtility</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

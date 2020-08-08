@@ -1,15 +1,15 @@
-﻿using GIP.Core;
+﻿using GIP.Core.Variables;
 
 namespace GIP.Controls
 {
-    public partial class DockFormTextureList : WeifenLuo.WinFormsUI.Docking.DockContent
+    public partial class DockFormVariableList : WeifenLuo.WinFormsUI.Docking.DockContent
     {
-        public DockFormTextureList()
+        public DockFormVariableList()
         {
             InitializeComponent();
         }
 
-        public TextureInitializerList Data
+        public VariableList Data
         {
             get => CtrlTextureList.Data;
             set {
@@ -20,7 +20,7 @@ namespace GIP.Controls
 
         protected override string GetPersistString()
         {
-            return MainDockFormType.TextureList.ToPersistString();
+            return MainDockFormType.VariableList.ToPersistString();
         }
     }
 }

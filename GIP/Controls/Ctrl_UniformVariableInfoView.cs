@@ -3,8 +3,8 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using GIP.Common;
-using GIP.Core;
 using GIP.Core.Uniforms;
+using GIP.Core.Variables;
 using GIP.Controls.UniformVariableValues;
 
 namespace GIP.Controls
@@ -21,17 +21,17 @@ namespace GIP.Controls
             return;
         }
 
-        public ShaderResourceInitializers Resources
+        public VariableList Variables
         {
-            get => m_Resources;
+            get => m_Variables;
             set {
-                if (m_Resources == value) {
+                if (m_Variables == value) {
                     return;
                 }
 
-                m_Resources = value;
+                m_Variables = value;
                 if (m_ValueView != null) {
-                    m_ValueView.SetResource(m_Resources);
+                    m_ValueView.Variables = m_Variables;
                 }
                 return;
             }
@@ -101,14 +101,14 @@ namespace GIP.Controls
                     PanelVariableValueArea.Controls.Add(m_ValueView);
                     m_ValueView.Dock = DockStyle.Top;
                     m_ValueView.AutoSize = true;
-                    m_ValueView.SetResource(m_Resources);
-                    m_ValueView.SetData(m_Data.Variable.Value);
+                    m_ValueView.Variables = m_Variables;
+                    m_ValueView.Data = m_Data.Variable.Value;
                 }
             }
             return;
         }
 
-        private ShaderResourceInitializers m_Resources = null;
+        private VariableList m_Variables = null;
         private UniformVariable m_Data = null;
         private bool m_IsDataSetting = false;
         private Ctrl_UniformVariableValueView m_ValueView = null;

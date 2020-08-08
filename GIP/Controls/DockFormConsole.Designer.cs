@@ -1,6 +1,6 @@
 ﻿namespace GIP.Controls
 {
-    partial class DockFormUniformVariable
+    partial class DockFormConsole
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -27,31 +27,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.CtrlUniformVariableListView = new GIP.Controls.Ctrl_UniformVariableListView();
+            this.TextBoxState = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // CtrlUniformVariableListView
+            // TextBoxState
             // 
-            this.CtrlUniformVariableListView.Data = null;
-            this.CtrlUniformVariableListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CtrlUniformVariableListView.Location = new System.Drawing.Point(0, 0);
-            this.CtrlUniformVariableListView.Name = "CtrlUniformVariableListView";
-            this.CtrlUniformVariableListView.Resources = null;
-            this.CtrlUniformVariableListView.Size = new System.Drawing.Size(284, 261);
-            this.CtrlUniformVariableListView.TabIndex = 0;
+            this.TextBoxState.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TextBoxState.Location = new System.Drawing.Point(0, 0);
+            this.TextBoxState.Multiline = true;
+            this.TextBoxState.Name = "TextBoxState";
+            this.TextBoxState.ReadOnly = true;
+            this.TextBoxState.Size = new System.Drawing.Size(547, 259);
+            this.TextBoxState.TabIndex = 1;
             // 
-            // DockFormUniformVariable
+            // DockFormConsole
             // 
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.CtrlUniformVariableListView);
-            this.Name = "DockFormUniformVariable";
-            this.Text = "UniformVariables";
+            this.ClientSize = new System.Drawing.Size(547, 259);
+            this.Controls.Add(this.TextBoxState);
+            this.Name = "DockFormConsole";
+            this.Text = "Console";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private Ctrl_UniformVariableListView CtrlUniformVariableListView;
+        private System.Windows.Forms.TextBox TextBoxState;
     }
 }

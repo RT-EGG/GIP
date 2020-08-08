@@ -9,13 +9,10 @@ namespace GIP.Controls
             InitializeComponent();
         }
 
-        public ShaderResources Resources
+        public Project Project
         {
-            get => CtrlTextureView.Resources;
-            set {
-                CtrlTextureView.Resources = value;
-                return;
-            }
+            get => CtrlTextureView.Project;
+            set => CtrlTextureView.Project = value;
         }
 
         protected override string GetPersistString()

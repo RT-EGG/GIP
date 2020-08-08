@@ -1,15 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using System.IO;
+using Reactive.Bindings;
+using GIP.Core.Variables;
 
 namespace GIP.Core
 {
     public class Project
     {
-        public string FilePath
-        { get; set; } = "";
+        public Project(string inPath)
+        {
+            FilePath.Value = inPath;
 
-        public TextureInitializerList Textures
-        { get; } = new TextureInitializerList();
-        public IList<ImageProcessTask> ProcessTasks
-        { get; } = new List<ImageProcessTask>();
+            TaskSequence.Name.Value = "start";
+            return;
+        }
+
+        public ReactiveProperty<string> FilePath
+        { get; } = new ReactiveProperty<string>("");
+        public string Name
+        {
+            get {
+                return Path.GetFileNameWithoutExtension(FilePath.Value);
+            }
+        }
+
+        public ReactiveCollection<ComputeShader> ComputeShaders
+        { get; } = new ReactiveCollection<ComputeShader>();
+        public VariableList Variables
+        { get; } = new VariableList();
+        public ProcessTaskSequence TaskSequence
+        { get; } = new ProcessTaskSequence();
     }
 }
