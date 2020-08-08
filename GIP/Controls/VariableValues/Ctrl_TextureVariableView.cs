@@ -189,9 +189,9 @@ namespace GIP.Controls.VariableValues
             public Type Type;
             public string Text;
 
-            public TexturePixelInitializer CreateInstance()
+            public ITexturePixelInitializer CreateInstance()
             {
-                return (TexturePixelInitializer)Activator.CreateInstance(Type);
+                return (ITexturePixelInitializer)Activator.CreateInstance(Type);
             }
 
             public override string ToString()

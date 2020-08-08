@@ -110,7 +110,7 @@ namespace GIP.Core.Variables
         { get; } = new ReactiveProperty<PixelInternalFormat>(PixelInternalFormat.Rgb);
         public ReactiveProperty<PixelType> DataType
         { get; } = new ReactiveProperty<PixelType>(PixelType.UnsignedByte);
-        public TexturePixelInitializer PixelInitializer
+        public ITexturePixelInitializer PixelInitializer
         { get; set; } = new TexturePixelInitializer.Color();
 
         public int TextureID
