@@ -159,6 +159,15 @@ namespace GIP.Controls.VariableValues
             return;
         }
 
+        private void UdColorInitializeDimensions_ValueChanged(object sender, EventArgs e)
+        {
+            if ((!m_IsDataSetting) && (Data != null)) {
+                (Data.PixelInitializer as TexturePixelInitializer.Color).TextureWidth = ((int)UdColorInitializeWidth.Value);
+                (Data.PixelInitializer as TexturePixelInitializer.Color).TextureHeight = ((int)UdColorInitializeHeight.Value);
+            }
+            return;
+        }
+
         private bool m_IsDataSetting = false;
 
         private class TexturePixelFormat

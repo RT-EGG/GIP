@@ -37,10 +37,16 @@
             this.ComboSource = new System.Windows.Forms.ComboBox();
             this.LabelSource = new System.Windows.Forms.Label();
             this.PanelSourceColorOptions = new System.Windows.Forms.Panel();
+            this.PanelColorInitializeColors = new System.Windows.Forms.TableLayoutPanel();
+            this.LabelColorInitializeRGB = new System.Windows.Forms.Label();
             this.UdColorInitializeAlpha = new rtUtility.rtControl.CustomNumericUpDown(this.components);
             this.LabelColorInitializeAlpha = new System.Windows.Forms.Label();
             this.ButtonColorInitializeRGB = new System.Windows.Forms.Button();
-            this.LabelColorInitializeRGB = new System.Windows.Forms.Label();
+            this.PanelColorInitializeDimensions = new System.Windows.Forms.TableLayoutPanel();
+            this.UdColorInitializeHeight = new rtUtility.rtControl.CustomNumericUpDown(this.components);
+            this.LabelTextureInitializeColorHeight = new System.Windows.Forms.Label();
+            this.LabelTextureInitializeColorWidth = new System.Windows.Forms.Label();
+            this.UdColorInitializeWidth = new rtUtility.rtControl.CustomNumericUpDown(this.components);
             this.PanelSourceFileOptions = new System.Windows.Forms.Panel();
             this.TextBoxFileInitializePath = new System.Windows.Forms.TextBox();
             this.ButtonFileInitializeChoosePath = new System.Windows.Forms.Button();
@@ -48,7 +54,11 @@
             this.PanelInitializeInfo.SuspendLayout();
             this.PanelSource.SuspendLayout();
             this.PanelSourceColorOptions.SuspendLayout();
+            this.PanelColorInitializeColors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UdColorInitializeAlpha)).BeginInit();
+            this.PanelColorInitializeDimensions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.UdColorInitializeHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UdColorInitializeWidth)).BeginInit();
             this.PanelSourceFileOptions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -155,21 +165,50 @@
             // 
             // PanelSourceColorOptions
             // 
-            this.PanelSourceColorOptions.Controls.Add(this.UdColorInitializeAlpha);
-            this.PanelSourceColorOptions.Controls.Add(this.LabelColorInitializeAlpha);
-            this.PanelSourceColorOptions.Controls.Add(this.ButtonColorInitializeRGB);
-            this.PanelSourceColorOptions.Controls.Add(this.LabelColorInitializeRGB);
+            this.PanelSourceColorOptions.AutoSize = true;
+            this.PanelSourceColorOptions.Controls.Add(this.PanelColorInitializeColors);
+            this.PanelSourceColorOptions.Controls.Add(this.PanelColorInitializeDimensions);
             this.PanelSourceColorOptions.Dock = System.Windows.Forms.DockStyle.Top;
             this.PanelSourceColorOptions.Location = new System.Drawing.Point(3, 106);
             this.PanelSourceColorOptions.Name = "PanelSourceColorOptions";
             this.PanelSourceColorOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.PanelSourceColorOptions.Size = new System.Drawing.Size(347, 25);
+            this.PanelSourceColorOptions.Size = new System.Drawing.Size(347, 57);
             this.PanelSourceColorOptions.TabIndex = 7;
+            // 
+            // PanelColorInitializeColors
+            // 
+            this.PanelColorInitializeColors.ColumnCount = 4;
+            this.PanelColorInitializeColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.PanelColorInitializeColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82F));
+            this.PanelColorInitializeColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.PanelColorInitializeColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 169F));
+            this.PanelColorInitializeColors.Controls.Add(this.LabelColorInitializeRGB, 0, 0);
+            this.PanelColorInitializeColors.Controls.Add(this.UdColorInitializeAlpha, 3, 0);
+            this.PanelColorInitializeColors.Controls.Add(this.LabelColorInitializeAlpha, 2, 0);
+            this.PanelColorInitializeColors.Controls.Add(this.ButtonColorInitializeRGB, 1, 0);
+            this.PanelColorInitializeColors.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PanelColorInitializeColors.Location = new System.Drawing.Point(3, 28);
+            this.PanelColorInitializeColors.Name = "PanelColorInitializeColors";
+            this.PanelColorInitializeColors.RowCount = 1;
+            this.PanelColorInitializeColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.PanelColorInitializeColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.PanelColorInitializeColors.Size = new System.Drawing.Size(341, 26);
+            this.PanelColorInitializeColors.TabIndex = 4;
+            // 
+            // LabelColorInitializeRGB
+            // 
+            this.LabelColorInitializeRGB.Dock = System.Windows.Forms.DockStyle.Right;
+            this.LabelColorInitializeRGB.Location = new System.Drawing.Point(3, 0);
+            this.LabelColorInitializeRGB.Name = "LabelColorInitializeRGB";
+            this.LabelColorInitializeRGB.Size = new System.Drawing.Size(38, 26);
+            this.LabelColorInitializeRGB.TabIndex = 0;
+            this.LabelColorInitializeRGB.Text = "RGB :";
+            this.LabelColorInitializeRGB.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // UdColorInitializeAlpha
             // 
             this.UdColorInitializeAlpha.Dock = System.Windows.Forms.DockStyle.Left;
-            this.UdColorInitializeAlpha.Location = new System.Drawing.Point(156, 3);
+            this.UdColorInitializeAlpha.Location = new System.Drawing.Point(175, 3);
             this.UdColorInitializeAlpha.Name = "UdColorInitializeAlpha";
             this.UdColorInitializeAlpha.Size = new System.Drawing.Size(58, 19);
             this.UdColorInitializeAlpha.TabIndex = 3;
@@ -183,10 +222,11 @@
             // 
             // LabelColorInitializeAlpha
             // 
+            this.LabelColorInitializeAlpha.AutoSize = true;
             this.LabelColorInitializeAlpha.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LabelColorInitializeAlpha.Location = new System.Drawing.Point(116, 3);
+            this.LabelColorInitializeAlpha.Location = new System.Drawing.Point(129, 0);
             this.LabelColorInitializeAlpha.Name = "LabelColorInitializeAlpha";
-            this.LabelColorInitializeAlpha.Size = new System.Drawing.Size(40, 19);
+            this.LabelColorInitializeAlpha.Size = new System.Drawing.Size(40, 26);
             this.LabelColorInitializeAlpha.TabIndex = 2;
             this.LabelColorInitializeAlpha.Text = "Alpha :";
             this.LabelColorInitializeAlpha.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -194,23 +234,105 @@
             // ButtonColorInitializeRGB
             // 
             this.ButtonColorInitializeRGB.BackColor = System.Drawing.Color.White;
-            this.ButtonColorInitializeRGB.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ButtonColorInitializeRGB.Location = new System.Drawing.Point(41, 3);
+            this.ButtonColorInitializeRGB.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ButtonColorInitializeRGB.Location = new System.Drawing.Point(47, 3);
             this.ButtonColorInitializeRGB.Name = "ButtonColorInitializeRGB";
-            this.ButtonColorInitializeRGB.Size = new System.Drawing.Size(75, 19);
+            this.ButtonColorInitializeRGB.Size = new System.Drawing.Size(76, 20);
             this.ButtonColorInitializeRGB.TabIndex = 1;
             this.ButtonColorInitializeRGB.UseVisualStyleBackColor = false;
             this.ButtonColorInitializeRGB.Click += new System.EventHandler(this.ButtonColorInitializeRGB_Click);
             // 
-            // LabelColorInitializeRGB
+            // PanelColorInitializeDimensions
             // 
-            this.LabelColorInitializeRGB.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LabelColorInitializeRGB.Location = new System.Drawing.Point(3, 3);
-            this.LabelColorInitializeRGB.Name = "LabelColorInitializeRGB";
-            this.LabelColorInitializeRGB.Size = new System.Drawing.Size(38, 19);
-            this.LabelColorInitializeRGB.TabIndex = 0;
-            this.LabelColorInitializeRGB.Text = "Color :";
-            this.LabelColorInitializeRGB.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.PanelColorInitializeDimensions.ColumnCount = 5;
+            this.PanelColorInitializeDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.PanelColorInitializeDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.PanelColorInitializeDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.PanelColorInitializeDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.PanelColorInitializeDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.PanelColorInitializeDimensions.Controls.Add(this.UdColorInitializeHeight, 3, 0);
+            this.PanelColorInitializeDimensions.Controls.Add(this.LabelTextureInitializeColorHeight, 2, 0);
+            this.PanelColorInitializeDimensions.Controls.Add(this.LabelTextureInitializeColorWidth, 0, 0);
+            this.PanelColorInitializeDimensions.Controls.Add(this.UdColorInitializeWidth, 1, 0);
+            this.PanelColorInitializeDimensions.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PanelColorInitializeDimensions.Location = new System.Drawing.Point(3, 3);
+            this.PanelColorInitializeDimensions.Name = "PanelColorInitializeDimensions";
+            this.PanelColorInitializeDimensions.RowCount = 1;
+            this.PanelColorInitializeDimensions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.PanelColorInitializeDimensions.Size = new System.Drawing.Size(341, 25);
+            this.PanelColorInitializeDimensions.TabIndex = 5;
+            // 
+            // UdColorInitializeHeight
+            // 
+            this.UdColorInitializeHeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UdColorInitializeHeight.Location = new System.Drawing.Point(168, 3);
+            this.UdColorInitializeHeight.Maximum = new decimal(new int[] {
+            65536,
+            0,
+            0,
+            0});
+            this.UdColorInitializeHeight.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.UdColorInitializeHeight.Name = "UdColorInitializeHeight";
+            this.UdColorInitializeHeight.Size = new System.Drawing.Size(64, 19);
+            this.UdColorInitializeHeight.TabIndex = 4;
+            this.UdColorInitializeHeight.Tail = "";
+            this.UdColorInitializeHeight.Value = new decimal(new int[] {
+            2048,
+            0,
+            0,
+            0});
+            this.UdColorInitializeHeight.ValueChanged += new System.EventHandler(this.UdColorInitializeDimensions_ValueChanged);
+            // 
+            // LabelTextureInitializeColorHeight
+            // 
+            this.LabelTextureInitializeColorHeight.AutoSize = true;
+            this.LabelTextureInitializeColorHeight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.LabelTextureInitializeColorHeight.Location = new System.Drawing.Point(118, 0);
+            this.LabelTextureInitializeColorHeight.Name = "LabelTextureInitializeColorHeight";
+            this.LabelTextureInitializeColorHeight.Size = new System.Drawing.Size(44, 25);
+            this.LabelTextureInitializeColorHeight.TabIndex = 3;
+            this.LabelTextureInitializeColorHeight.Text = "Height :";
+            this.LabelTextureInitializeColorHeight.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // LabelTextureInitializeColorWidth
+            // 
+            this.LabelTextureInitializeColorWidth.AutoSize = true;
+            this.LabelTextureInitializeColorWidth.Dock = System.Windows.Forms.DockStyle.Right;
+            this.LabelTextureInitializeColorWidth.Location = new System.Drawing.Point(3, 0);
+            this.LabelTextureInitializeColorWidth.Name = "LabelTextureInitializeColorWidth";
+            this.LabelTextureInitializeColorWidth.Size = new System.Drawing.Size(39, 25);
+            this.LabelTextureInitializeColorWidth.TabIndex = 1;
+            this.LabelTextureInitializeColorWidth.Text = "Width :";
+            this.LabelTextureInitializeColorWidth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // UdColorInitializeWidth
+            // 
+            this.UdColorInitializeWidth.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UdColorInitializeWidth.Location = new System.Drawing.Point(48, 3);
+            this.UdColorInitializeWidth.Maximum = new decimal(new int[] {
+            65536,
+            0,
+            0,
+            0});
+            this.UdColorInitializeWidth.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.UdColorInitializeWidth.Name = "UdColorInitializeWidth";
+            this.UdColorInitializeWidth.Size = new System.Drawing.Size(64, 19);
+            this.UdColorInitializeWidth.TabIndex = 2;
+            this.UdColorInitializeWidth.Tail = "";
+            this.UdColorInitializeWidth.Value = new decimal(new int[] {
+            2048,
+            0,
+            0,
+            0});
+            this.UdColorInitializeWidth.ValueChanged += new System.EventHandler(this.UdColorInitializeDimensions_ValueChanged);
             // 
             // PanelSourceFileOptions
             // 
@@ -218,7 +340,7 @@
             this.PanelSourceFileOptions.Controls.Add(this.ButtonFileInitializeChoosePath);
             this.PanelSourceFileOptions.Controls.Add(this.LabelFileInitializeFile);
             this.PanelSourceFileOptions.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelSourceFileOptions.Location = new System.Drawing.Point(3, 131);
+            this.PanelSourceFileOptions.Location = new System.Drawing.Point(3, 163);
             this.PanelSourceFileOptions.Name = "PanelSourceFileOptions";
             this.PanelSourceFileOptions.Padding = new System.Windows.Forms.Padding(3);
             this.PanelSourceFileOptions.Size = new System.Drawing.Size(347, 27);
@@ -272,7 +394,13 @@
             this.PanelSource.ResumeLayout(false);
             this.PanelSource.PerformLayout();
             this.PanelSourceColorOptions.ResumeLayout(false);
+            this.PanelColorInitializeColors.ResumeLayout(false);
+            this.PanelColorInitializeColors.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UdColorInitializeAlpha)).EndInit();
+            this.PanelColorInitializeDimensions.ResumeLayout(false);
+            this.PanelColorInitializeDimensions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.UdColorInitializeHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UdColorInitializeWidth)).EndInit();
             this.PanelSourceFileOptions.ResumeLayout(false);
             this.PanelSourceFileOptions.PerformLayout();
             this.ResumeLayout(false);
@@ -299,5 +427,11 @@
         private System.Windows.Forms.TextBox TextBoxFileInitializePath;
         private System.Windows.Forms.Button ButtonFileInitializeChoosePath;
         private System.Windows.Forms.Label LabelFileInitializeFile;
+        private System.Windows.Forms.TableLayoutPanel PanelColorInitializeColors;
+        private System.Windows.Forms.TableLayoutPanel PanelColorInitializeDimensions;
+        private rtUtility.rtControl.CustomNumericUpDown UdColorInitializeHeight;
+        private System.Windows.Forms.Label LabelTextureInitializeColorHeight;
+        private System.Windows.Forms.Label LabelTextureInitializeColorWidth;
+        private rtUtility.rtControl.CustomNumericUpDown UdColorInitializeWidth;
     }
 }
