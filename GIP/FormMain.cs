@@ -60,16 +60,20 @@ namespace GIP
             return;
         }
 
+        private void SaveProject()
+        {
+            //Project.
+        }
+
         private void SaveShaderFile()
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Title = "Save shader file";
-            dialog.Filter = "All file(*.*)|*.*";
-            dialog.FilterIndex = 0;
-
-            if (dialog.ShowDialog() == DialogResult.OK) {
-                SaveShaderFile(dialog.FileName);
+            var codeEditor = m_DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor);
+            var currentShader = codeEditor.Shader;
+            if (currentShader == null) {
+                return;
             }
+
+            currentShader.Source.SaveSource();
             return;
         }
 

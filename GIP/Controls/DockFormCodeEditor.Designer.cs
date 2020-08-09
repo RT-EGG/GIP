@@ -43,6 +43,7 @@
             this.TextBoxCodeEditor.Name = "TextBoxCodeEditor";
             this.TextBoxCodeEditor.Size = new System.Drawing.Size(328, 266);
             this.TextBoxCodeEditor.TabIndex = 0;
+            this.TextBoxCodeEditor.TextChanged += new System.EventHandler(this.TextBoxCodeEditor_TextChanged);
             this.TextBoxCodeEditor.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TextBoxCodeEditor_KeyUp);
             // 
             // PanelCompile
