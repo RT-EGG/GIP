@@ -210,7 +210,6 @@ namespace GIP.Controls.VariableValues
         }
 
         private readonly TexturePixelFormat[] con_SupportsTextureFormat = {
-            new TexturePixelFormat{ Format = PixelInternalFormat.Rgb, Text = "RGB", SupportsAlpha = false },
             new TexturePixelFormat{ Format = PixelInternalFormat.Rgba, Text = "RGBA", SupportsAlpha = true }
         };
 

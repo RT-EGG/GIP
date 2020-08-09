@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL;
@@ -20,6 +21,8 @@ namespace GIP.Controls
             GLView.MakeCurrent();
             return;
         }
+
+        public TextureVariable CurrentTexture => (ComboCurrentTexture.SelectedItem == null) ? null : (ComboCurrentTexture.SelectedItem as ComboTextureItem).Variable;
 
         private void GLView_OnGLPaint(Ctrl_GLControl inControl)
         {
@@ -145,6 +148,34 @@ namespace GIP.Controls
         private void ComboCurrentTexture_SelectedValueChanged(object sender, EventArgs e)
         {
             GLView.Invalidate();
+            return;
+        }
+
+        private void ButtonExportToFile_Click(object sender, EventArgs e)
+        {
+            TextureVariable texture = CurrentTexture;
+            if (texture == null) {
+                return;
+            }
+
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "supported image file (*.bmp, *.jpg, *.png)|*.bmp;*.jpg;*.jpeg;*.png";
+            if (dialog.ShowDialog() != DialogResult.OK) {
+                return;
+            }
+
+            try {
+                Bitmap expImage = texture.ExportToBitmap();
+                if (expImage == null) {
+                    return;
+                }
+
+                expImage.Save(dialog.FileName);
+                expImage.Dispose();
+
+            } catch (Exception exception) {
+                Logger.DefaultLogger.PushLog(this, new LogExceptionData(exception));
+            }
             return;
         }
 

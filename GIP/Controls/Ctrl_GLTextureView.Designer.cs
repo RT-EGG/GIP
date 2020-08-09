@@ -33,15 +33,18 @@
             this.PanelDisplayOptions = new System.Windows.Forms.Panel();
             this.ButtonBgColor = new System.Windows.Forms.Button();
             this.GLView = new GIP.Controls.Ctrl_GLControl();
+            this.ButtonExportToFile = new System.Windows.Forms.Button();
             this.PanelCurrentTexture.SuspendLayout();
             this.PanelDisplayOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // PanelCurrentTexture
             // 
-            this.PanelCurrentTexture.ColumnCount = 2;
+            this.PanelCurrentTexture.ColumnCount = 3;
             this.PanelCurrentTexture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.PanelCurrentTexture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.PanelCurrentTexture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.PanelCurrentTexture.Controls.Add(this.ButtonExportToFile, 2, 0);
             this.PanelCurrentTexture.Controls.Add(this.LabelCurrentTexture, 0, 0);
             this.PanelCurrentTexture.Controls.Add(this.ComboCurrentTexture, 1, 0);
             this.PanelCurrentTexture.Dock = System.Windows.Forms.DockStyle.Top;
@@ -70,7 +73,7 @@
             this.ComboCurrentTexture.FormattingEnabled = true;
             this.ComboCurrentTexture.Location = new System.Drawing.Point(55, 3);
             this.ComboCurrentTexture.Name = "ComboCurrentTexture";
-            this.ComboCurrentTexture.Size = new System.Drawing.Size(443, 20);
+            this.ComboCurrentTexture.Size = new System.Drawing.Size(362, 20);
             this.ComboCurrentTexture.TabIndex = 2;
             this.ComboCurrentTexture.SelectedValueChanged += new System.EventHandler(this.ComboCurrentTexture_SelectedValueChanged);
             // 
@@ -105,6 +108,17 @@
             this.GLView.VSync = false;
             this.GLView.OnGLPaint += new GIP.Controls.GLControlEvent(this.GLView_OnGLPaint);
             // 
+            // ButtonExportToFile
+            // 
+            this.ButtonExportToFile.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ButtonExportToFile.Location = new System.Drawing.Point(423, 3);
+            this.ButtonExportToFile.Name = "ButtonExportToFile";
+            this.ButtonExportToFile.Size = new System.Drawing.Size(75, 21);
+            this.ButtonExportToFile.TabIndex = 3;
+            this.ButtonExportToFile.Text = "Export";
+            this.ButtonExportToFile.UseVisualStyleBackColor = true;
+            this.ButtonExportToFile.Click += new System.EventHandler(this.ButtonExportToFile_Click);
+            // 
             // Ctrl_GLTextureView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -129,5 +143,6 @@
         private Ctrl_GLControl GLView;
         private System.Windows.Forms.Panel PanelDisplayOptions;
         private System.Windows.Forms.Button ButtonBgColor;
+        private System.Windows.Forms.Button ButtonExportToFile;
     }
 }

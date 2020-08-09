@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using Reactive.Bindings;
 using OpenTK.Graphics.OpenGL4;
 using GIP.Common;
+using GIP.Controls;
 
 namespace GIP.Core.Variables
 {
@@ -21,6 +24,27 @@ namespace GIP.Core.Variables
             Format = inSrc.Format;
             DataType = inSrc.DataType;
             return;
+        }
+
+        public Bitmap ExportToBitmap()
+        {
+            if (TextureID == 0) {
+                throw new InvalidOperationException($"Texture \"{Name.Value}\" has not been created.");
+            }
+
+            Bitmap result = new Bitmap(PixelInitializer.TextureWidth, PixelInitializer.TextureHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            var bmpData = result.LockBits(new Rectangle(0, 0, result.Width, result.Height), ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            try {
+                GL.BindTexture(TextureTarget.Texture2D, TextureID);
+                GL.GetnTexImage(TextureTarget.Texture2D, 0, OpenTK.Graphics.OpenGL4.PixelFormat.Bgra, PixelType.UnsignedByte, result.Width * result.Height * 4, bmpData.Scan0);
+
+            } finally {
+                GL.BindTexture(TextureTarget.Texture2D, 0);
+                result.UnlockBits(bmpData);
+            }
+
+            result.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            return result;
         }
 
         public override void InitializeVariable()
@@ -107,7 +131,7 @@ namespace GIP.Core.Variables
         private ReactiveProperty<string> m_ValueString = new ReactiveProperty<string>("");
 
         public ReactiveProperty<PixelInternalFormat> Format
-        { get; } = new ReactiveProperty<PixelInternalFormat>(PixelInternalFormat.Rgb);
+        { get; } = new ReactiveProperty<PixelInternalFormat>(PixelInternalFormat.Rgba);
         public ReactiveProperty<PixelType> DataType
         { get; } = new ReactiveProperty<PixelType>(PixelType.UnsignedByte);
         public ITexturePixelInitializer PixelInitializer
