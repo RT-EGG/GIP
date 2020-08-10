@@ -353,6 +353,7 @@
             this.TextBoxFileInitializePath.Name = "TextBoxFileInitializePath";
             this.TextBoxFileInitializePath.Size = new System.Drawing.Size(274, 19);
             this.TextBoxFileInitializePath.TabIndex = 2;
+            this.TextBoxFileInitializePath.TextChanged += new System.EventHandler(this.TextBoxFileInitializePath_TextChanged);
             // 
             // ButtonFileInitializeChoosePath
             // 

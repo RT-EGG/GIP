@@ -54,9 +54,14 @@ namespace GIP.Controls
                     m_IsDataSetting = true;
                     try {
                         TextBoxName.Text = m_Data.UniformName.Value;
+                        var preType = ComboType.SelectedItem;
                         ComboType.Select((object inItem) => {
                             return ((inItem as VariableType).Type == m_Data.Variable.Value.GetType());
                         });
+                        if (ComboType.SelectedItem == preType) {
+                            // invoke on selected to adapt value updating
+                            ComboType_SelectedValueChanged(ComboType, null);
+                        }
 
                     } finally {
                         m_IsDataSetting = false;
@@ -88,7 +93,9 @@ namespace GIP.Controls
         private void ComboType_SelectedValueChanged(object sender, EventArgs e)
         {
             if ((!m_IsDataSetting) && (m_Data != null)) {
-                m_Data.Variable.Value = (ComboType.SelectedItem as VariableType).GenerateFunc();
+                if ((ComboType.SelectedItem as VariableType).Type != m_Data.Variable.Value.GetType()) {
+                    m_Data.Variable.Value = (ComboType.SelectedItem as VariableType).GenerateFunc();
+                }
             }
 
             if (m_ValueView != null) {

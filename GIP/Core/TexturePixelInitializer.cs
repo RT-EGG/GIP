@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics.OpenGL4;
 using rtUtility.rtMath;
+using GIP.Common;
 
 namespace GIP.Core
 {
@@ -49,18 +52,46 @@ namespace GIP.Core
 
         public class File : ITexturePixelInitializer
         {
-            public string Path
+            public string FilePath
             { get; set; } = "";
 
             public int TextureWidth
-            { get; } = 0;
+            { get; private set; } = 0;
             public int TextureHeight
-            { get; } = 0;
+            { get; private set; } = 0;
             public PixelFormat PixelFormat
-            { get; } = PixelFormat.Rgba;
+            { get; private set; } = PixelFormat.Bgra;
             public IntPtr GenerateBufferTaskMem(PixelType inType)
             {
-                throw new NotImplementedException();
+                if (!System.IO.File.Exists(FilePath)) {
+                    throw new FileNotFoundException($"Image file \"{FilePath}\" is not found.", FilePath);
+                }
+
+                IntPtr result = (IntPtr)null;
+                Bitmap bitmap = new Bitmap(FilePath);
+                bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                TextureWidth = bitmap.Width;
+                TextureHeight = bitmap.Height;
+
+                System.Drawing.Imaging.BitmapData bmpData = null;
+                try {
+                    switch (inType) {
+                        case PixelType.UnsignedByte:
+                            bmpData = bitmap.LockBits(bitmap.FullRectangle(), System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                            result = Marshal.AllocCoTaskMem(TextureWidth * TextureHeight * 4);
+
+                            CMethods.CopyMemory(result, bmpData.Scan0, (uint)(TextureWidth * TextureHeight * 4));
+                            break;
+                    }
+
+                } finally {
+                    if (bmpData != null) {
+                        bitmap.UnlockBits(bmpData);
+                    }
+                    bitmap.Dispose();
+                }
+
+                return result;
             }
         }
     }

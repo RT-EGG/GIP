@@ -81,7 +81,7 @@ namespace GIP.Controls.VariableValues
         private void SetFileInitializer(TexturePixelInitializer.File inValue)
         {
             ComboSource.SelectedIndex = 1;
-            TextBoxFileInitializePath.Text = inValue.Path;
+            TextBoxFileInitializePath.Text = inValue.FilePath;
             return;
         }
 
@@ -164,6 +164,14 @@ namespace GIP.Controls.VariableValues
             if ((!m_IsDataSetting) && (Data != null)) {
                 (Data.PixelInitializer as TexturePixelInitializer.Color).TextureWidth = ((int)UdColorInitializeWidth.Value);
                 (Data.PixelInitializer as TexturePixelInitializer.Color).TextureHeight = ((int)UdColorInitializeHeight.Value);
+            }
+            return;
+        }
+
+        private void TextBoxFileInitializePath_TextChanged(object sender, EventArgs e)
+        {
+            if ((!m_IsDataSetting) && (Data != null)) {
+                (Data.PixelInitializer as TexturePixelInitializer.File).FilePath = TextBoxFileInitializePath.Text;
             }
             return;
         }
