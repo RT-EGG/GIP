@@ -11,7 +11,7 @@ using GIP.IO.Json.Converter;
 namespace GIP.IO.Project
 {
     [JsonConverter(typeof(JsonUniformVariableValueConverter))]
-    public abstract class JsonUniformVariableValue : JsonSerializable
+    public abstract class JsonUniformVariableValue : JsonSerializable, IJsonSubClassSerializable
     {
         public static JsonUniformVariableValue ReadJson(JObject inObject)
         {

@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using Reactive.Bindings;
 using OpenTK.Graphics.OpenGL4;
 using GIP.Common;
-using GIP.Controls;
 
 namespace GIP.Core.Variables
 {

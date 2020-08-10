@@ -6,7 +6,7 @@ using GIP.IO.Json.Converter;
 namespace GIP.IO.Project
 {
     [JsonConverter(typeof(JsonTexturePixelInitializerConverter))]
-    public abstract class JsonTexturePixelInitializer
+    public abstract class JsonTexturePixelInitializer : IJsonSubClassSerializable
     {
         public static JsonTexturePixelInitializer ReadJson(JObject inObject)
         {

@@ -232,8 +232,10 @@
     <Compile Include="Core\ShaderTextSource.cs" />
     <Compile Include="Core\Variables\VariableBase.cs" />
     <Compile Include="Core\Variables\VariableList.cs" />
+    <Compile Include="IO\Json\Converter\JsonConverter.cs" />
     <Compile Include="IO\Json\Converter\JsonTexturePixelInitializerConverter.cs" />
     <Compile Include="IO\Json\Converter\JsonUniformVariableValueConverter.cs" />
+    <Compile Include="IO\Json\Converter\JsonVariableConverter.cs" />
     <Compile Include="IO\Json\JsonSerializable.cs" />
     <Compile Include="IO\Json\JsonVector3i.cs" />
     <Compile Include="IO\Json\NewtonsoftJsonExtensions.cs" />
@@ -257,6 +259,7 @@
     </Compile>
     <Compile Include="IO\Project\JsonUniformVariable.cs" />
     <Compile Include="IO\Project\JsonUniformVariableValue.cs" />
+    <Compile Include="IO\Project\JsonVariable.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MainFormEventBridge.cs" />
     <Compile Include="Program.cs" />

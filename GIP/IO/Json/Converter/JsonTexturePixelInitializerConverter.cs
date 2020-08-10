@@ -1,31 +1,13 @@
-﻿using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using GIP.IO.Project;
 
 namespace GIP.IO.Json.Converter
 {
-    class JsonTexturePixelInitializerConverter : JsonConverter
+    class JsonTexturePixelInitializerConverter : JsonConverter<JsonTexturePixelInitializer>
     {
-        public override bool CanConvert(Type inType)
+        protected override JsonTexturePixelInitializer GenerateObject(JObject inObject)
         {
-            return typeof(JsonTexturePixelInitializer).IsAssignableFrom(inType);
-        }
-
-        public override object ReadJson(JsonReader inReader, Type inObjectType, object inExistingValue, JsonSerializer inSerializer)
-        {
-            JObject jObject = JObject.Load(inReader);
-            var result = JsonTexturePixelInitializer.ReadJson(jObject);
-            result.ReadProperties(jObject);
-            return result;
-        }
-
-        public override void WriteJson(JsonWriter inWriter, object inValue, JsonSerializer inSerializer)
-        {
-            inWriter.WriteStartObject();
-            (inValue as JsonTexturePixelInitializer).WriteProperties(inWriter);
-            inWriter.WriteEndObject();
-            return;
+            return JsonTexturePixelInitializer.ReadJson(inObject); 
         }
     }
 }
