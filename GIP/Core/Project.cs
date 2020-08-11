@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Reactive.Bindings;
 using GIP.Core.Variables;
+using GIP.IO.Project;
 
 namespace GIP.Core
 {
@@ -12,6 +13,13 @@ namespace GIP.Core
 
             TaskSequence.Name.Value = "start";
             return;
+        }
+
+        public JsonProjectFile ExportToJson()
+        {
+            JsonProjectFile result = new JsonProjectFile();
+            result.Variables = Variables.ExportToJson();
+            return result;
         }
 
         public ReactiveProperty<string> FilePath

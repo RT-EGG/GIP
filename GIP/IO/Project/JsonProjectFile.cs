@@ -6,12 +6,8 @@ namespace GIP.IO.Project
 {
     public class JsonProjectFile : JsonSerializable
     {
-        [JsonProperty(PropertyName = "TextureInitializer")]
-        public List<JsonTextureInitializer> TextureInitializer
-        { get; set; } = new List<JsonTextureInitializer>();
-
-        [JsonProperty(PropertyName = "Tasks")]
-        public List<JsonImageProcessTask> Tasks
-        { get; set; } = new List<JsonImageProcessTask>();
+        [JsonProperty(PropertyName = "variables")]
+        public List<JsonVariable> Variables
+        { get; set; } = new List<JsonVariable>();
     }
 }

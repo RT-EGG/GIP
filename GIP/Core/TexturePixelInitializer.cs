@@ -5,6 +5,8 @@ using System.Runtime.InteropServices;
 using OpenTK.Graphics.OpenGL4;
 using rtUtility.rtMath;
 using GIP.Common;
+using GIP.IO.Project;
+using GIP.IO.Json;
 
 namespace GIP.Core
 {
@@ -14,6 +16,7 @@ namespace GIP.Core
         int TextureHeight { get; }
         PixelFormat PixelFormat { get; }
         IntPtr GenerateBufferTaskMem(PixelType inType);
+        JsonTexturePixelInitializer ExportToJson();
     }
 
     public abstract class TexturePixelInitializer
@@ -31,6 +34,18 @@ namespace GIP.Core
             { get; set; } = 2048;
             public PixelFormat PixelFormat
             { get; set; } = PixelFormat.Rgba;
+
+            public JsonTexturePixelInitializer ExportToJson()
+            {
+                JsonTexturePixelColorInitializer result = new JsonTexturePixelColorInitializer();
+                result.ClearColor = new JsonColorRGBA(RGB, (byte)(Alpha * 255.0f));
+                result.Width = TextureWidth;
+                result.Height = TextureHeight;
+                result.PixelFormat = PixelFormat;
+
+                return result;
+            }
+
             public IntPtr GenerateBufferTaskMem(PixelType inType)
             {
                 switch (inType) {
@@ -61,6 +76,15 @@ namespace GIP.Core
             { get; private set; } = 0;
             public PixelFormat PixelFormat
             { get; private set; } = PixelFormat.Bgra;
+
+            public JsonTexturePixelInitializer ExportToJson()
+            {
+                JsonTexturePixelFileInitializer result = new JsonTexturePixelFileInitializer();
+                result.Path = FilePath;
+
+                return result;
+            }
+
             public IntPtr GenerateBufferTaskMem(PixelType inType)
             {
                 if (!System.IO.File.Exists(FilePath)) {

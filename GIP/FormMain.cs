@@ -62,7 +62,9 @@ namespace GIP
 
         private void SaveProject()
         {
-            //Project.
+            var json = Project.ExportToJson();
+            json.ExportToFile(Project.FilePath.Value);
+            return;
         }
 
         private void SaveShaderFile()
@@ -118,15 +120,15 @@ namespace GIP
             return;
         }
 
-        private void MenuItem_OpenShaderFile_Click(object sender, EventArgs e)
-        {
-            OpenShaderFile();
-            return;
-        }
-
         private void MenuItem_SaveShaderFile_Click(object sender, EventArgs e)
         {
             SaveShaderFile();
+            return;
+        }
+
+        private void MenuItem_Save_Project_Click(object sender, EventArgs e)
+        {
+            SaveProject();
             return;
         }
 

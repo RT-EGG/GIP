@@ -1,9 +1,12 @@
-﻿using Reactive.Bindings;
+﻿using GIP.IO.Project;
+using Reactive.Bindings;
 
 namespace GIP.Core.Variables
 {
     public abstract class VariableBase
     {
+        public abstract JsonVariable ExportToJson();
+
         public virtual void InitializeVariable()
         {
             return;

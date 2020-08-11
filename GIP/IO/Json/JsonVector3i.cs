@@ -14,15 +14,15 @@ namespace GIP.IO.Json
             return;
         }
 
-        [JsonProperty(PropertyName = "X")]
+        [JsonProperty(PropertyName = "x")]
         public int X
         { get; set; } = 0;
 
-        [JsonProperty(PropertyName = "Y")]
+        [JsonProperty(PropertyName = "y")]
         public int Y
         { get; set; } = 0;
 
-        [JsonProperty(PropertyName = "Z")]
+        [JsonProperty(PropertyName = "z")]
         public int Z
         { get; set; } = 0;
     }

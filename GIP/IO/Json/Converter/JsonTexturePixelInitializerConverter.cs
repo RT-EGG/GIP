@@ -1,13 +1,20 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
 using GIP.IO.Project;
 
 namespace GIP.IO.Json.Converter
 {
     class JsonTexturePixelInitializerConverter : JsonConverter<JsonTexturePixelInitializer>
     {
-        protected override JsonTexturePixelInitializer GenerateObject(JObject inObject)
+        protected override JsonTexturePixelInitializer GenerateObject(string inSubClassIdentifier)
         {
-            return JsonTexturePixelInitializer.ReadJson(inObject); 
+            switch (inSubClassIdentifier) {
+                case "Color":
+                    return new JsonTexturePixelColorInitializer();
+                case "File":
+                    return new JsonTexturePixelFileInitializer();
+                default:
+                    throw new JsonReaderException();
+            }
         }
     }
 }

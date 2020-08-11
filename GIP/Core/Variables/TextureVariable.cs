@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using Reactive.Bindings;
 using OpenTK.Graphics.OpenGL4;
 using GIP.Common;
+using GIP.IO.Project;
 
 namespace GIP.Core.Variables
 {
@@ -23,6 +24,17 @@ namespace GIP.Core.Variables
             Format = inSrc.Format;
             DataType = inSrc.DataType;
             return;
+        }
+
+        public override JsonVariable ExportToJson()
+        {
+            JsonTextureVariable result = new JsonTextureVariable();
+            result.Name = Name.Value;
+            result.Format = Format.Value;
+            result.DataType = DataType.Value;
+            result.PixelInitializer = PixelInitializer.ExportToJson();
+
+            return result;
         }
 
         public Bitmap ExportToBitmap()
