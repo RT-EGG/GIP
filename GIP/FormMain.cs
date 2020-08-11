@@ -39,27 +39,6 @@ namespace GIP
             return;
         }
 
-        private void OpenShaderFile()
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Title = "Open shader file";
-            dialog.Filter = "All file(*.*)|*.*";
-            dialog.FilterIndex = 0;
-
-            if (dialog.ShowDialog() == DialogResult.OK) {
-                OpenShaderFile(dialog.FileName);
-            }
-            return;
-        }
-
-        private void OpenShaderFile(string inPath)
-        {
-            using (StreamReader reader = new StreamReader(new FileStream(inPath, FileMode.Open, FileAccess.Read))) {
-                //ProcessTask.SetSourceCode(reader.ReadToEnd());
-            }
-            return;
-        }
-
         private void SaveProject()
         {
             var json = Project.ExportToJson();
@@ -76,14 +55,6 @@ namespace GIP
             }
 
             currentShader.Source.SaveSource();
-            return;
-        }
-
-        private void SaveShaderFile(string inPath)
-        {
-            using (StreamWriter writer = new StreamWriter(new FileStream(inPath, FileMode.OpenOrCreate, FileAccess.Write))) {
-                //writer.Write(ProcessTask.SourceCode);
-            }
             return;
         }
 
