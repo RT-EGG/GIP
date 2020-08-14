@@ -91,16 +91,8 @@ namespace GIP.IO.Json.Converter
             public JsonConverter Converter
             { get; set; } = null;
 
-            public void SetValue(object inObject, object inValue)
-            {
-                Property.SetValue(inObject, inValue);
-                return;
-            }
-
-            public object GetValue(object inObject)
-            {
-                return Property.GetValue(inObject);
-            }
+            public void SetValue(object inObject, object inValue) => Property.SetValue(inObject, inValue);
+            public object GetValue(object inObject) => Property.GetValue(inObject);
 
             private PropertyInfo Property
             { get; } = null;
