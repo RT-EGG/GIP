@@ -14,10 +14,7 @@ namespace GIP.IO.Json.Converter
 
     abstract class JsonConverter<T> : JsonConverter where T : IJsonSubClassSerializable
     {
-        public override bool CanConvert(Type inType)
-        {
-            return typeof(T).IsAssignableFrom(inType);
-        }
+        public override bool CanConvert(Type inType) => typeof(T).IsAssignableFrom(inType);
 
         public override object ReadJson(JsonReader inReader, Type inObjectType, object inExistingValue, JsonSerializer inSerializer)
         {
