@@ -7,7 +7,7 @@ using Newtonsoft.Json.Converters;
 namespace GIP.IO.Project
 {
     [JsonConverter(typeof(JsonVariableConverter))]
-    public abstract class JsonVariable : JsonSerializable, IJsonSubClassSerializable
+    public abstract class JsonVariable : JsonDataObject, IJsonSubClassSerializable
     {
 
         [JsonProperty(PropertyName = "name")]

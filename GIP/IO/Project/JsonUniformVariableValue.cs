@@ -5,7 +5,7 @@ using GIP.IO.Json.Converter;
 namespace GIP.IO.Project
 {
     [JsonConverter(typeof(JsonUniformVariableValueConverter))]
-    public abstract class JsonUniformVariableValue : JsonSerializable, IJsonSubClassSerializable
+    public abstract class JsonUniformVariableValue : JsonDataObject, IJsonSubClassSerializable
     {
         public abstract string GetSubClassIdentifier();
     }

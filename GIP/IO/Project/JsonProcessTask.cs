@@ -14,4 +14,9 @@ namespace GIP.IO.Project
     {
         public abstract string GetSubClassIdentifier();
     }
+
+    class JsonComputeTask : JsonProcessTask
+    {
+        public override string GetSubClassIdentifier() => "Compute";
+    }
 }
