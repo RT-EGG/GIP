@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace GIP.IO.Json
 {
-    class JsonDataObject : JsonSerializable
+    public class JsonDataObject : JsonSerializable
     {
         [JsonProperty(PropertyName = "guid")]
         public Guid GUID
