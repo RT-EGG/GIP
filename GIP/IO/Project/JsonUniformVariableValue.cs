@@ -5,12 +5,12 @@ using GIP.IO.Json.Converter;
 namespace GIP.IO.Project
 {
     [JsonConverter(typeof(JsonUniformVariableValueConverter))]
-    abstract class JsonUniformVariableValue : JsonDataObject, IJsonSubClassSerializable
+    public abstract class JsonUniformVariableValue : JsonDataObject, IJsonSubClassSerializable
     {
         public abstract string GetSubClassIdentifier();
     }
 
-    class JsonUniformVariableTextureValue : JsonUniformVariableValue
+    public class JsonUniformVariableTextureValue : JsonUniformVariableValue
     {
         [JsonProperty(PropertyName = "TextureIndex")]
         public int TextureIndex
