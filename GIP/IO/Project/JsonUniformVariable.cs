@@ -5,7 +5,7 @@ using GIP.IO.Json;
 
 namespace GIP.IO.Project
 {
-    class JsonUniformVariable : JsonDataObject
+    public class JsonUniformVariable : JsonDataObject
     {
         [JsonProperty(PropertyName = "UniformName")]
         public string UniformName
