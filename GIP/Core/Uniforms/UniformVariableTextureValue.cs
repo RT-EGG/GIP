@@ -4,12 +4,14 @@ using Reactive.Bindings;
 using OpenTK.Graphics.OpenGL4;
 using GIP.Controls.UniformVariableValues;
 using GIP.Core.Variables;
+using GIP.IO.Json;
+using GIP.IO.Project;
 
 namespace GIP.Core.Uniforms
 {
-    class UniformTextureVariable : UniformVariableValue
+    class UniformVariableTextureValue : UniformVariableValue
     {
-        public UniformTextureVariable()
+        public UniformVariableTextureValue()
         {
             Texture.Subscribe(texture => {
                 texture?.Name.Subscribe(name => {
@@ -35,9 +37,17 @@ namespace GIP.Core.Uniforms
             return;
         }
 
-        public override Ctrl_UniformVariableValueView CreateView()
+        public override Ctrl_UniformVariableValueView CreateView() => new Ctrl_UniformVariableTextureValueView();
+
+        protected override JsonDataObject CreateJson() => new JsonUniformVariableTextureValue();
+        protected override void ExportToJson(JsonDataObject inDst)
         {
-            return new Ctrl_UniformVariableTextureValueView();
+            base.ExportToJson(inDst);
+
+            (inDst as JsonUniformVariableTextureValue).TextureGuid = Texture.Value.GUID;
+            (inDst as JsonUniformVariableTextureValue).Access = Access.Value;
+            (inDst as JsonUniformVariableTextureValue).InternalFormat = InternalFormat.Value;
+            return;
         }
     }
 }

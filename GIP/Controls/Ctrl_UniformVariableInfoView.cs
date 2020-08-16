@@ -133,7 +133,7 @@ namespace GIP.Controls
         }
 
         private readonly VariableType[] con_SupportVariables = {
-            new VariableType{ Name = "Texture", Type = typeof(UniformTextureVariable), GenerateFunc = () => { return new UniformTextureVariable(); } }
+            new VariableType{ Name = "Texture", Type = typeof(UniformVariableTextureValue), GenerateFunc = () => { return new UniformVariableTextureValue(); } }
         };
     }
 }

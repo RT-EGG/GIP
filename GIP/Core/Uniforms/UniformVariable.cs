@@ -1,10 +1,12 @@
 ﻿using Reactive.Bindings;
 using OpenTK.Graphics.OpenGL;
 using GIP.Common;
+using GIP.IO.Json;
+using GIP.IO.Project;
 
 namespace GIP.Core.Uniforms
 {
-    public class UniformVariable
+    public class UniformVariable : DataObjectBase
     {
         public UniformVariable()
         { return; }
@@ -26,6 +28,17 @@ namespace GIP.Core.Uniforms
         { get; } = new ReactiveProperty<string>("Uniform");
 
         public ReactiveProperty<UniformVariableValue> Variable
-        { get; set; } = new ReactiveProperty<UniformVariableValue>(new UniformTextureVariable());
+        { get; set; } = new ReactiveProperty<UniformVariableValue>(new UniformVariableTextureValue());
+
+        protected override JsonDataObject CreateJson() => new JsonUniformVariable();
+        protected override void ExportToJson(JsonDataObject inDst)
+        {
+            base.ExportToJson(inDst);
+
+            var dst = inDst as JsonUniformVariable;
+            dst.UniformName = UniformName.Value;
+            dst.Value = Variable.Value.ExportToJson<JsonUniformVariableValue>();
+            return;
+        }
     }
 }

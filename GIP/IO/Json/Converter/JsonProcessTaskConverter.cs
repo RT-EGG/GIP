@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 using GIP.IO.Project;
 
 namespace GIP.IO.Json.Converter
@@ -11,7 +7,14 @@ namespace GIP.IO.Json.Converter
     {
         protected override JsonProcessTask GenerateObject(string inSubClassIdentifier)
         {
-            throw new NotImplementedException();
+            switch (inSubClassIdentifier) {
+                case "Compute":
+                    return new JsonComputeTask();
+                case "Sequence":
+                    return new JsonTaskSequence();
+                default:
+                    throw new JsonReaderException();
+            }
         }
     }
 }

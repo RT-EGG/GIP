@@ -1,12 +1,11 @@
-﻿using GIP.IO.Project;
+﻿using GIP.IO.Json;
+using GIP.IO.Project;
 using Reactive.Bindings;
 
 namespace GIP.Core.Variables
 {
-    public abstract class VariableBase
+    public abstract class VariableBase : DataObjectBase
     {
-        public abstract JsonVariable ExportToJson();
-
         public virtual void InitializeVariable()
         {
             return;
@@ -23,6 +22,12 @@ namespace GIP.Core.Variables
         public abstract IReadOnlyReactiveProperty<string> ValueString
         { get; }
 
-        // public object InitialValue
+        protected override void ExportToJson(JsonDataObject inDst)
+        {
+            base.ExportToJson(inDst);
+
+            (inDst as JsonVariable).Name = Name.Value;
+            return;
+        }
     }
 }

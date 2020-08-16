@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using OpenTK.Graphics.OpenGL4;
 using GIP.Common;
-using System;
+using GIP.IO.Project;
+using GIP.IO.Json;
 
 namespace GIP.Core
 {
@@ -66,5 +68,7 @@ namespace GIP.Core
 
             return true;
         }
+
+        protected override JsonDataObject CreateJson() => new JsonShaderTextSource();
     }
 }

@@ -55,11 +55,11 @@ namespace GIP.Controls.UniformVariableValues
                 m_Data = null;
                 return;
             }
-            if (!(inValue is UniformTextureVariable)) {
+            if (!(inValue is UniformVariableTextureValue)) {
                 throw new NotSupportedException($"{GetType().Name} not supports {inValue.GetType().Name}.");
             }
 
-            m_Data = inValue as UniformTextureVariable;
+            m_Data = inValue as UniformVariableTextureValue;
             ComboTexture.Select((object inItem) => {
                 return (inItem as TextureNameItem).Texture == m_Data.Texture.Value;
             });
@@ -124,7 +124,7 @@ namespace GIP.Controls.UniformVariableValues
             return;
         }
 
-        private UniformTextureVariable m_Data = null;
+        private UniformVariableTextureValue m_Data = null;
 
         private class TextureNameItem
         {

@@ -5,7 +5,7 @@ using GIP.IO.Json;
 namespace GIP.IO.Project
 {
     [JsonConverter(typeof(JsonShaderSourceConverter))]
-    abstract class JsonShaderSource : JsonDataObject, IJsonSubClassSerializable
+    public abstract class JsonShaderSource : JsonDataObject, IJsonSubClassSerializable
     {
         [JsonProperty(PropertyName = "file_path")]
         public string FilePath
@@ -15,7 +15,7 @@ namespace GIP.IO.Project
     }
 
 
-    class JsonShaderTextSource : JsonShaderSource
+    public class JsonShaderTextSource : JsonShaderSource
     {
         public override string GetSubClassIdentifier() => "Text";
     }

@@ -1,7 +1,10 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using System;
 using Reactive.Bindings;
+using OpenTK.Graphics.OpenGL4;
+using GIP.Common;
 using GIP.Core.Uniforms;
-using System;
+using GIP.IO.Json;
+using GIP.IO.Project;
 
 namespace GIP.Core
 {
@@ -29,6 +32,22 @@ namespace GIP.Core
             }
 
             return true;
+        }
+
+        protected override JsonDataObject CreateJson() => new JsonComputeTask();
+        protected override void ExportToJson(JsonDataObject inDst)
+        {
+            base.ExportToJson(inDst);
+
+            var dst = inDst as JsonComputeTask;
+            dst.ShaderGuid = Shader.Source.GUID;
+            dst.UniformVariables.AddRange(UniformVariables.Convert(u => u.ExportToJson<JsonUniformVariable>()));
+            dst.DispatchGroupSize = new JsonVector3i(
+                DispatchGroupSizeX.Value,
+                DispatchGroupSizeY.Value,
+                DispatchGroupSizeZ.Value
+                );
+            return;
         }
 
         public ComputeShader Shader

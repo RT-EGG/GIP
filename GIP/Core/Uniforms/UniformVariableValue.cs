@@ -3,7 +3,7 @@ using GIP.Controls.UniformVariableValues;
 
 namespace GIP.Core.Uniforms
 {
-    public abstract class UniformVariableValue
+    public abstract class UniformVariableValue : DataObjectBase
     {
         public UniformVariableValue()
         {
@@ -16,10 +16,7 @@ namespace GIP.Core.Uniforms
         { get; }
         public IReadOnlyReactiveProperty<string> ValueString => m_ValueString;
 
-        public virtual Ctrl_UniformVariableValueView CreateView()
-        {
-            return new Ctrl_UniformVariableValueView();
-        }
+        public virtual Ctrl_UniformVariableValueView CreateView() => new Ctrl_UniformVariableValueView();
 
         protected void SetValueString(string inValue)
         {

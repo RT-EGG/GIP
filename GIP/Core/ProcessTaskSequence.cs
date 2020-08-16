@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using Reactive.Bindings;
+using GIP.Common;
+using GIP.IO.Json;
+using GIP.IO.Project;
 
 namespace GIP.Core
 {
@@ -97,6 +100,16 @@ namespace GIP.Core
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ((IEnumerable<ProcessTask>)m_Sequence).GetEnumerator();
+        }
+
+        protected override JsonDataObject CreateJson() => new JsonTaskSequence();
+        protected override void ExportToJson(JsonDataObject inDst)
+        {
+            base.ExportToJson(inDst);
+
+            var dst = inDst as JsonTaskSequence;
+            this.ForEach(t => dst.Tasks.Add(t.ExportToJson<JsonProcessTask>()));
+            return;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using OpenTK.Graphics.OpenGL4;
 using GIP.IO.Json;
 using GIP.IO.Json.Converter;
@@ -22,7 +23,7 @@ namespace GIP.IO.Project
         [JsonProperty(PropertyName = "height")]
         public int Height
         { get; set; } = 0;
-        [JsonProperty(PropertyName = "pixel_format")]
+        [JsonProperty(PropertyName = "pixel_format"), JsonConverter(typeof(StringEnumConverter))]
         public PixelFormat PixelFormat
         { get; set; } = PixelFormat.Rgba;
 

@@ -6,6 +6,7 @@ using Reactive.Bindings;
 using OpenTK.Graphics.OpenGL4;
 using GIP.Common;
 using GIP.IO.Project;
+using GIP.IO.Json;
 
 namespace GIP.Core.Variables
 {
@@ -24,17 +25,6 @@ namespace GIP.Core.Variables
             Format = inSrc.Format;
             DataType = inSrc.DataType;
             return;
-        }
-
-        public override JsonVariable ExportToJson()
-        {
-            JsonTextureVariable result = new JsonTextureVariable();
-            result.Name = Name.Value;
-            result.Format = Format.Value;
-            result.DataType = DataType.Value;
-            result.PixelInitializer = PixelInitializer.ExportToJson();
-
-            return result;
         }
 
         public Bitmap ExportToBitmap()
@@ -108,6 +98,17 @@ namespace GIP.Core.Variables
                 Marshal.FreeCoTaskMem(buffer);
                 GL.BindTexture(TextureTarget.Texture2D, 0);
             }
+            return;
+        }
+
+        protected override JsonDataObject CreateJson() => new JsonTextureVariable();
+        protected override void ExportToJson(JsonDataObject inDst)
+        {
+            base.ExportToJson(inDst);
+
+            (inDst as JsonTextureVariable).Format = Format.Value;
+            (inDst as JsonTextureVariable).DataType = DataType.Value;
+            (inDst as JsonTextureVariable).PixelInitializer = PixelInitializer.ExportToJson<JsonTexturePixelInitializer>();
             return;
         }
 

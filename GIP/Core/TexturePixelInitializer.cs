@@ -10,18 +10,17 @@ using GIP.IO.Json;
 
 namespace GIP.Core
 {
-    public interface ITexturePixelInitializer
+    public interface ITexturePixelInitializer : IDataObjectBase
     {
         int TextureWidth { get; }
         int TextureHeight { get; }
         PixelFormat PixelFormat { get; }
         IntPtr GenerateBufferTaskMem(PixelType inType);
-        JsonTexturePixelInitializer ExportToJson();
     }
 
     public abstract class TexturePixelInitializer
     {
-        public class Color : ITexturePixelInitializer
+        public class Color : DataObjectBase, ITexturePixelInitializer
         {
             public TColorRGB RGB
             { get; set; } = new TColorRGB();
@@ -34,17 +33,6 @@ namespace GIP.Core
             { get; set; } = 2048;
             public PixelFormat PixelFormat
             { get; set; } = PixelFormat.Rgba;
-
-            public JsonTexturePixelInitializer ExportToJson()
-            {
-                JsonTexturePixelColorInitializer result = new JsonTexturePixelColorInitializer();
-                result.ClearColor = new JsonColorRGBA(RGB, (byte)(Alpha * 255.0f));
-                result.Width = TextureWidth;
-                result.Height = TextureHeight;
-                result.PixelFormat = PixelFormat;
-
-                return result;
-            }
 
             public IntPtr GenerateBufferTaskMem(PixelType inType)
             {
@@ -63,9 +51,21 @@ namespace GIP.Core
                 }
                 return (IntPtr)null;
             }
+
+            protected override JsonDataObject CreateJson() => new JsonTexturePixelColorInitializer();
+            protected override void ExportToJson(JsonDataObject inDst)
+            {
+                base.ExportToJson(inDst);
+
+                (inDst as JsonTexturePixelColorInitializer).ClearColor = new JsonColorRGBA(RGB, (byte)(Alpha * 255.0f));
+                (inDst as JsonTexturePixelColorInitializer).Width = TextureWidth;
+                (inDst as JsonTexturePixelColorInitializer).Height = TextureHeight;
+                (inDst as JsonTexturePixelColorInitializer).PixelFormat = PixelFormat;
+                return;
+            }
         }
 
-        public class File : ITexturePixelInitializer
+        public class File : DataObjectBase, ITexturePixelInitializer
         {
             public string FilePath
             { get; set; } = "";
@@ -76,14 +76,6 @@ namespace GIP.Core
             { get; private set; } = 0;
             public PixelFormat PixelFormat
             { get; private set; } = PixelFormat.Bgra;
-
-            public JsonTexturePixelInitializer ExportToJson()
-            {
-                JsonTexturePixelFileInitializer result = new JsonTexturePixelFileInitializer();
-                result.Path = FilePath;
-
-                return result;
-            }
 
             public IntPtr GenerateBufferTaskMem(PixelType inType)
             {
@@ -116,6 +108,15 @@ namespace GIP.Core
                 }
 
                 return result;
+            }
+
+            protected override JsonDataObject CreateJson() => new JsonTexturePixelFileInitializer();
+            protected override void ExportToJson(JsonDataObject inDst)
+            {
+                base.ExportToJson(inDst);
+
+                (inDst as JsonTexturePixelFileInitializer).Path = FilePath;
+                return;
             }
         }
     }

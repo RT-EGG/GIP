@@ -224,6 +224,7 @@
     </Compile>
     <Compile Include="Core\ComputeShader.cs" />
     <Compile Include="Core\ComputeTask.cs" />
+    <Compile Include="Core\DataObjectBase.cs" />
     <Compile Include="Core\ProcessTask.cs" />
     <Compile Include="Core\ProcessTaskSequence.cs" />
     <Compile Include="Core\ProcessTaskSequenceRunner.cs" />
@@ -248,11 +249,10 @@
     <Compile Include="IO\Project\JsonShaderSource.cs" />
     <Compile Include="IO\Project\JsonTextureInitializer.cs" />
     <Compile Include="IO\Project\JsonTexturePixelInitializer.cs" />
-    <Compile Include="Core\ShaderResources.cs" />
     <Compile Include="Core\TexturePixelInitializer.cs" />
     <Compile Include="Core\Variables\TextureVariable.cs" />
     <Compile Include="Core\Uniforms\UniformIntVariable.cs" />
-    <Compile Include="Core\Uniforms\UniformTextureVariable.cs" />
+    <Compile Include="Core\Uniforms\UniformVariableTextureValue.cs" />
     <Compile Include="Core\Uniforms\UniformVariable.cs" />
     <Compile Include="Core\Uniforms\UniformVariableList.cs" />
     <Compile Include="Core\Uniforms\UniformVariableValue.cs" />

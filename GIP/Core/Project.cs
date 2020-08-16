@@ -1,11 +1,14 @@
 ﻿using System.IO;
+using System.Collections.Generic;
 using Reactive.Bindings;
+using GIP.Common;
 using GIP.Core.Variables;
 using GIP.IO.Project;
+using GIP.IO.Json;
 
 namespace GIP.Core
 {
-    public class Project
+    public class Project : DataObjectBase
     {
         public Project(string inPath)
         {
@@ -13,13 +16,6 @@ namespace GIP.Core
 
             TaskSequence.Name.Value = "start";
             return;
-        }
-
-        public JsonProjectFile ExportToJson()
-        {
-            JsonProjectFile result = new JsonProjectFile();
-            result.Variables = Variables.ExportToJson();
-            return result;
         }
 
         public ReactiveProperty<string> FilePath
@@ -37,5 +33,18 @@ namespace GIP.Core
         { get; } = new VariableList();
         public ProcessTaskSequence TaskSequence
         { get; } = new ProcessTaskSequence();
+
+        protected override JsonDataObject CreateJson() => new JsonProjectFile();
+        protected override void ExportToJson(JsonDataObject inDst)
+        {
+            base.ExportToJson(inDst);
+
+            var dst = inDst as JsonProjectFile;
+            dst.ShaderSources.AddRange(ComputeShaders.Convert(s => s.Source.ExportToJson<JsonShaderSource>()));
+            dst.Variables.AddRange(Variables.Convert(v => v.ExportToJson<JsonVariable>()));
+            dst.TaskSequence = TaskSequence.ExportToJson<JsonTaskSequence>();
+
+            return;
+        }
     }
 }

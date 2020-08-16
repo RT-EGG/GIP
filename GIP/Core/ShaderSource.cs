@@ -3,12 +3,14 @@ using System.IO;
 using Reactive.Bindings;
 using OpenTK.Graphics.OpenGL4;
 using GIP.Common;
+using GIP.IO.Project;
+using GIP.IO.Json;
 
 namespace GIP.Core
 {
     public delegate void ShaderSourceNotifyEvent(ShaderSource inValue);
 
-    public abstract class ShaderSource
+    public abstract class ShaderSource : DataObjectBase
     {
         public static bool IsBinaryFile(string inPath)
         {
@@ -47,6 +49,14 @@ namespace GIP.Core
         }
         public abstract void SaveSource(string inPath);
         protected abstract void LoadSource(string inPath);
+
+        protected override void ExportToJson(JsonDataObject inDst)
+        {
+            base.ExportToJson(inDst);
+
+            (inDst as JsonShaderSource).FilePath = FilePath.Value;
+            return;
+        }
 
         private ReactiveProperty<string> m_FilePath = new ReactiveProperty<string>();
 
