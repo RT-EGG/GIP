@@ -5,7 +5,7 @@ using GIP.IO.Json;
 
 namespace GIP.IO.Project
 {
-    class JsonTextureInitializer : JsonDataObject
+    public class JsonTextureInitializer : JsonDataObject
     {
         [JsonProperty(PropertyName = "Name")]
         public string Name
