@@ -17,7 +17,7 @@ namespace GIP.Core
 
             foreach (var shader in Project.ComputeShaders) {
                 shader.GLDispose();
-                inLogger?.PushLog(this, new LogData(LogLevel.Information, $"Compile shader \"{shader.Source.FilePath.Value}\"." + Environment.NewLine));
+                inLogger?.PushLog(this, new LogData(LogLevel.Information, $"Compile shader \"{shader.FilePath.Value}\"." + Environment.NewLine));
                 if (!shader.CompileAndLink(inLogger)) {
                     result = false;
                     break;

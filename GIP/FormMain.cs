@@ -48,13 +48,7 @@ namespace GIP
 
         private void SaveShaderFile()
         {
-            var codeEditor = m_DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor);
-            var currentShader = codeEditor.Shader;
-            if (currentShader == null) {
-                return;
-            }
-
-            currentShader.Source.SaveSource();
+            m_DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor)?.SaveCurrentSource();
             return;
         }
 

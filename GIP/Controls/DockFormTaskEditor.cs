@@ -158,18 +158,18 @@ namespace GIP.Controls
                 Owner = inOwner;
                 Shader = inSource;
 
-                Shader.Source.FilePath.Subscribe(path => {
-                    if (Owner.SelectedItem == this) {
-                        Owner.Invalidate();
+                Shader.FilePath.Subscribe(path => {
+                    var index = inOwner.Items.IndexOf(this);
+                    if (index >= 0) {
+                        inOwner.Items[index] = this;
                     }
-                    return;
                 });
                 return;
             }
 
             public override string ToString()
             {
-                return Path.GetFileNameWithoutExtension(Shader.Source.FilePath.Value);
+                return Path.GetFileNameWithoutExtension(Shader.FilePath.Value);
             }
 
             private ComboBox Owner

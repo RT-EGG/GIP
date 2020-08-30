@@ -6,9 +6,9 @@ namespace GIP.IO.Project
 {
     public class JsonProjectFile : JsonDataObject
     {
-        [JsonProperty(PropertyName = "shader_sources")]
-        public List<JsonShaderSource> ShaderSources
-        { get; set; } = new List<JsonShaderSource>();
+        [JsonProperty(PropertyName = "compute_shader")]
+        public List<JsonComputeShader> ComputeShader
+        { get; set; } = new List<JsonComputeShader>();
 
         [JsonProperty(PropertyName = "variables")]
         public List<JsonVariable> Variables

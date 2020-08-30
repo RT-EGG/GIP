@@ -40,7 +40,7 @@ namespace GIP.Core
             base.ExportToJson(inDst);
 
             var dst = inDst as JsonProjectFile;
-            dst.ShaderSources.AddRange(ComputeShaders.Convert(s => s.Source.ExportToJson<JsonShaderSource>()));
+            dst.ComputeShader.AddRange(ComputeShaders.Convert(s => s.ExportToJson<JsonComputeShader>()));
             dst.Variables.AddRange(Variables.Convert(v => v.ExportToJson<JsonVariable>()));
             dst.TaskSequence = TaskSequence.ExportToJson<JsonTaskSequence>();
 

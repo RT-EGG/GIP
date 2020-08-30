@@ -40,7 +40,7 @@ namespace GIP.Core
             base.ExportToJson(inDst);
 
             var dst = inDst as JsonComputeTask;
-            dst.ShaderGuid = Shader.Source.GUID;
+            dst.ShaderGuid = Shader.GUID;
             dst.UniformVariables.AddRange(UniformVariables.Convert(u => u.ExportToJson<JsonUniformVariable>()));
             dst.DispatchGroupSize = new JsonVector3i(
                 DispatchGroupSizeX.Value,

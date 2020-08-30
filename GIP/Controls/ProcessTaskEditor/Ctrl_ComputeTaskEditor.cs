@@ -102,7 +102,7 @@ namespace GIP.Controls.ProcessTaskEditor
                 Owner = inOwner;
                 Data = inData;
 
-                Data.Source.FilePath.Subscribe(p => {
+                Data.FilePath.Subscribe(p => {
                     // repaint item text
                     if (Owner.SelectedItem == this) {
                         Owner.Invalidate();
@@ -118,7 +118,7 @@ namespace GIP.Controls.ProcessTaskEditor
 
             public override string ToString()
             {
-                return Path.GetFileName(Data.Source.FilePath.Value);
+                return Path.GetFileName(Data.FilePath.Value);
             }
         }
     }

@@ -75,7 +75,7 @@ namespace GIP.Controls
                 path = $"{directory}\\new_file{++index}.txt";
             }
             File.Create(path);
-            m_Project.ComputeShaders.Add(new ComputeShader(new ShaderTextSource(path)));
+            m_Project.ComputeShaders.Add(new ComputeShader(ComputeShaderFileType.Text, path));
 
             TreeViewFiles.SelectedNode.Expand();
             var newNode = (TreeViewFiles.Nodes[0] as TreeNodeProjectFile).FindNodeFor(path);
@@ -92,18 +92,12 @@ namespace GIP.Controls
                                         : Path.GetDirectoryName(Data.FilePath.Value);
             
             if (dialog.ShowDialog() == DialogResult.OK) {
-                if (Data.ComputeShaders.FirstOrDefault(s => s.Source.FilePath.Value == dialog.FileName) == null) {
+                if (Data.ComputeShaders.FirstOrDefault(s => s.FilePath.Value == dialog.FileName) == null) {
                     // if ShaderSources has file of the path, do nothing.
 
-                    ShaderSource source;
-                    if (ShaderSource.IsBinaryFile(dialog.FileName)) {
-                        source = null;
+                    if (ComputeShader.IsBinaryFile(dialog.FileName)) {
                     } else {
-                        source = new ShaderTextSource(dialog.FileName);
-                    }
-
-                    if (source != null) {
-                        Data.ComputeShaders.Add(new ComputeShader(source));
+                        Data.ComputeShaders.Add(new ComputeShader(ComputeShaderFileType.Text, dialog.FileName));
                     }
                 }
             }
@@ -136,7 +130,7 @@ namespace GIP.Controls
             string path;
             switch (e.Node) {
                 case TreeNodeComputeShader source:
-                    path = source.Data.Source.FilePath.Value;
+                    path = source.Data.FilePath.Value;
                     break;
                 case TreeNodeProjectFile project:
                     path = project.Data.FilePath.Value;

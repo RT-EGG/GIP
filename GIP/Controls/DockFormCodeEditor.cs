@@ -1,4 +1,5 @@
 ﻿using GIP.Core;
+using System.IO;
 
 namespace GIP.Controls
 {
@@ -20,8 +21,8 @@ namespace GIP.Controls
                     }
 
                     if (m_Shader != null) {
-                        if (m_Shader.Source is ShaderTextSource) {
-                            (m_Shader.Source as ShaderTextSource).SourceCode = Code;
+                        if (m_Shader.FileType == ComputeShaderFileType.Text) {
+                            SaveSource(m_Shader.FilePath.Value);
                         }
                     }
 
@@ -30,24 +31,45 @@ namespace GIP.Controls
                         TextBoxCodeEditor.Text = "";
 
                     } else {
-                        switch (m_Shader.Source) {
-                            case ShaderTextSource text:
-                                TextBoxCodeEditor.Text = text.SourceCode;
-                                break;
-                            default:
-                                TextBoxCodeEditor.Text = "";
-                                break;
+                        if (m_Shader.FileType == ComputeShaderFileType.Text) {
+                            LoadSource(m_Shader.FilePath.Value);
                         }
                     }
 
                 } finally {
-                    this.Enabled = (m_Shader != null) && (m_Shader.Source is ShaderTextSource);
+                    this.Enabled = (m_Shader != null) && (m_Shader.FileType == ComputeShaderFileType.Text);
                 }
             }
         }
 
         public string Code
         { get => TextBoxCodeEditor.Text; }
+
+        public void SaveCurrentSource()
+        {
+            if ((m_Shader == null) || (m_Shader.FileType != ComputeShaderFileType.Text)) {
+                return; 
+            }
+
+            SaveSource(m_Shader.FilePath.Value);
+            return;
+        }
+
+        private void LoadSource(string inPath)
+        {
+            using (StreamReader reader = new StreamReader(new FileStream(inPath, FileMode.Open, FileAccess.Read))) {
+                TextBoxCodeEditor.Text= reader.ReadToEnd();
+            }
+            return;
+        }
+
+        private void SaveSource(string inPath)
+        {
+            using (StreamWriter writer = new StreamWriter(new FileStream(inPath, FileMode.OpenOrCreate, FileAccess.Write))) {
+                writer.Write(TextBoxCodeEditor.Text);
+            }
+            return;
+        }
 
         protected override string GetPersistString()
         {
@@ -63,10 +85,7 @@ namespace GIP.Controls
             switch (e.KeyCode) {
                 case System.Windows.Forms.Keys.S:
                     if (e.Control) {
-                        if (m_Shader.Source is ShaderTextSource) {
-                            (m_Shader.Source as ShaderTextSource).SourceCode = Code;
-                        }
-                        m_Shader.Source.SaveSource();
+                        SaveSource(m_Shader.FilePath.Value);
                     }
                     break;
             }
@@ -74,12 +93,6 @@ namespace GIP.Controls
 
         private void TextBoxCodeEditor_TextChanged(object sender, System.EventArgs e)
         {
-            if (m_Shader != null) {
-                if (m_Shader.Source is ShaderTextSource) {
-                    var textSource = m_Shader.Source as ShaderTextSource;
-                    textSource.SourceCode = TextBoxCodeEditor.Text;
-                }
-            }
             return;
         }
 

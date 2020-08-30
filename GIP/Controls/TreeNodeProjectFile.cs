@@ -65,7 +65,7 @@ namespace GIP.Controls
 
         private void AddFile(ComputeShader inShader)
         {
-            string path = inShader.Source.FilePath.Value.UnifyPathDelimitter().RemoveExtraDelimitter();
+            string path = inShader.FilePath.Value.UnifyPathDelimitter().RemoveExtraDelimitter();
             TreeNode parent = FindOrCreateNodeForDirectory(Path.GetDirectoryName(path));
             TreeNode node = new TreeNodeComputeShader(inShader);
             if (parent == null) {
@@ -82,7 +82,7 @@ namespace GIP.Controls
 
         private void RemoveFile(ComputeShader inShader)
         {
-            if (FindNodeFor(inShader.Source.FilePath.Value, out var nodePath)) {
+            if (FindNodeFor(inShader.FilePath.Value, out var nodePath)) {
                 var node = nodePath.Last().Item2;
                 node.Parent.Nodes.Remove(node);
             }
