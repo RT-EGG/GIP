@@ -5,6 +5,7 @@ using GIP.Common;
 using GIP.Core.Variables;
 using GIP.IO.Project;
 using GIP.IO.Json;
+using System;
 
 namespace GIP.Core
 {
@@ -33,6 +34,38 @@ namespace GIP.Core
         { get; } = new VariableList();
         public ProcessTaskSequence TaskSequence
         { get; } = new ProcessTaskSequence();
+
+        protected override IEnumerable<Type> ReadableJsonClass => new Type[] { typeof(JsonProjectFile) };
+        public override bool ReadJson(JsonDataObject inSource, JsonDataReadBuffer inBuffer, ILogger inLogger)
+        {
+            ComputeShaders.Clear();
+            Variables.Clear();
+            TaskSequence.Clear();
+
+            if (!base.ReadJson(inSource, inBuffer, inLogger)) {
+                return false;
+            }
+
+            var src = inSource as JsonProjectFile;
+
+            src.ComputeShader.ForEach(s => {
+                var shader = new ComputeShader(s.FileType, s.FilePath);
+                shader.ReadJson(s, inBuffer, inLogger);
+                ComputeShaders.Add(shader);
+            });
+
+            src.Variables.ForEach(v => {
+                var variable = VariableBase.CreateFrom(v);
+                if (variable != null) {
+                    variable.ReadJson(v, inBuffer, inLogger);
+                    Variables.Add(variable);
+                }
+            });
+
+            TaskSequence.ReadJson(src.TaskSequence, inBuffer, inLogger);
+
+            return true;
+        }
 
         protected override JsonDataObject CreateJson() => new JsonProjectFile();
         protected override void ExportToJson(JsonDataObject inDst)

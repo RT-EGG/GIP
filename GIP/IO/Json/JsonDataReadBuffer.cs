@@ -4,7 +4,11 @@ using GIP.Core;
 
 namespace GIP.IO.Json
 {
-    public delegate void JsonReferenceComplementProc(IReadOnlyDictionary<Guid, DataObjectBase> inDictionary, ILogger inLogger);
+    public interface IJsonDataReferenceDictionary : IReadOnlyDictionary<Guid, DataObjectBase>
+    {
+        bool TryGetValueAs<T>(Guid inKey, out T outValue, ILogger inLogger) where T : DataObjectBase;
+    }
+    public delegate void JsonReferenceComplementProc(IJsonDataReferenceDictionary inDictionary, ILogger inLogger);
 
     public class JsonDataReadBuffer
     {
@@ -29,6 +33,25 @@ namespace GIP.IO.Json
         }
 
         private Queue<JsonReferenceComplementProc> m_TaskAfterImport = new Queue<JsonReferenceComplementProc>();
-        private Dictionary<Guid, DataObjectBase> m_DataList = new Dictionary<Guid, DataObjectBase>();        
+        private JsonDataReferenceDictionary m_DataList = new JsonDataReferenceDictionary();
+    }
+
+    public class JsonDataReferenceDictionary : Dictionary<Guid, DataObjectBase>, IJsonDataReferenceDictionary
+    {
+        public bool TryGetValueAs<T>(Guid inKey, out T outValue, ILogger inLogger) where T : DataObjectBase
+        {
+            outValue = null;
+
+            if (TryGetValue(inKey, out var value)) {
+                if (value is T) {
+                    outValue = value as T;
+                } else {
+                    inLogger.PushLog(this, new LogData(LogLevel.Error, $"\"{inKey}\" is not guid of \"{typeof(T).Name}\"."));
+                }
+            } else {
+                inLogger.PushLog(this, new LogData(LogLevel.Error, $"Shader \"{inKey}\" not found."));
+            }
+            return outValue != null;
+        }
     }
 }

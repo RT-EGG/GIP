@@ -1,5 +1,6 @@
 ﻿using Reactive.Bindings;
 using GIP.Controls.UniformVariableValues;
+using GIP.IO.Project;
 
 namespace GIP.Core.Uniforms
 {
@@ -8,6 +9,15 @@ namespace GIP.Core.Uniforms
         public UniformVariableValue()
         {
             return;
+        }
+
+        public static UniformVariableValue CreateFrom(JsonUniformVariableValue inSource)
+        {
+            switch (inSource) {
+                case JsonUniformVariableTextureValue texture:
+                    return new UniformVariableTextureValue();
+            }
+            return null;
         }
 
         public abstract void Bind(int inLocation, ComputeShader inTarget);

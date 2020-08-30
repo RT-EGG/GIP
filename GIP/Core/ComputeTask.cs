@@ -5,6 +5,7 @@ using GIP.Common;
 using GIP.Core.Uniforms;
 using GIP.IO.Json;
 using GIP.IO.Project;
+using System.Collections.Generic;
 
 namespace GIP.Core
 {
@@ -31,6 +32,34 @@ namespace GIP.Core
                 return false;
             }
 
+            return true;
+        }
+
+        protected override IEnumerable<Type> ReadableJsonClass => new Type[] { typeof(JsonComputeTask) };
+        public override bool ReadJson(JsonDataObject inSource, JsonDataReadBuffer inBuffer, ILogger inLogger)
+        {
+            if (!base.ReadJson(inSource, inBuffer, inLogger)) {
+                return false;
+            }
+
+            UniformVariables.Clear();
+
+            var src = inSource as JsonComputeTask;
+            DispatchGroupSizeX.Value = src.DispatchGroupSize.X;
+            DispatchGroupSizeY.Value = src.DispatchGroupSize.Y;
+            DispatchGroupSizeZ.Value = src.DispatchGroupSize.Z;
+
+            foreach (var u in src.UniformVariables) {
+                var uniform = new UniformVariable();
+                if (uniform.ReadJson(u, inBuffer, inLogger)) {
+                    UniformVariables.Add(uniform);
+                }
+            }
+
+            inBuffer.RegisterComplementTask((buffer, logger) => {
+                buffer.TryGetValueAs<ComputeShader>(src.ShaderGuid, out var Shader, logger);
+                return;
+            });
             return true;
         }
 

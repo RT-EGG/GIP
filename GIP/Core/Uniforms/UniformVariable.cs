@@ -3,6 +3,8 @@ using OpenTK.Graphics.OpenGL;
 using GIP.Common;
 using GIP.IO.Json;
 using GIP.IO.Project;
+using System;
+using System.Collections.Generic;
 
 namespace GIP.Core.Uniforms
 {
@@ -29,6 +31,22 @@ namespace GIP.Core.Uniforms
 
         public ReactiveProperty<UniformVariableValue> Variable
         { get; set; } = new ReactiveProperty<UniformVariableValue>(new UniformVariableTextureValue());
+
+        protected override IEnumerable<Type> ReadableJsonClass => new Type[] { typeof(JsonUniformVariable) };
+        public override bool ReadJson(JsonDataObject inSource, JsonDataReadBuffer inBuffer, ILogger inLogger)
+        {
+            if (!base.ReadJson(inSource, inBuffer, inLogger)) {
+                return false;
+            }
+
+            var src = inSource as JsonUniformVariable;
+            UniformName.Value = src.UniformName;
+            Variable.Value = UniformVariableValue.CreateFrom(src.Value);
+            if (Variable.Value != null) {
+                Variable.Value.ReadJson(src.Value, inBuffer, inLogger);
+            }
+            return true;
+        }
 
         protected override JsonDataObject CreateJson() => new JsonUniformVariable();
         protected override void ExportToJson(JsonDataObject inDst)

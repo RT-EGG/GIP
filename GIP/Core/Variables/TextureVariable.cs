@@ -7,6 +7,7 @@ using OpenTK.Graphics.OpenGL4;
 using GIP.Common;
 using GIP.IO.Project;
 using GIP.IO.Json;
+using System.Collections.Generic;
 
 namespace GIP.Core.Variables
 {
@@ -16,14 +17,6 @@ namespace GIP.Core.Variables
         {
             Format.Subscribe(f => m_ValueString.Value = ToValueString());
             DataType.Subscribe(d => m_ValueString.Value = ToValueString());
-            return;
-        }
-
-        public TextureVariable(TextureVariable inSrc)
-            : this()
-        {
-            Format = inSrc.Format;
-            DataType = inSrc.DataType;
             return;
         }
 
@@ -99,6 +92,22 @@ namespace GIP.Core.Variables
                 GL.BindTexture(TextureTarget.Texture2D, 0);
             }
             return;
+        }
+
+        protected override IEnumerable<Type> ReadableJsonClass => new Type[] { typeof(JsonTextureVariable) };
+        public override bool ReadJson(JsonDataObject inSource, JsonDataReadBuffer inBuffer, ILogger inLogger)
+        {
+            if (!base.ReadJson(inSource, inBuffer, inLogger)) {
+                return false;
+            }
+
+            var src = inSource as JsonTextureVariable;
+            Format.Value = src.Format;
+            DataType.Value = src.DataType;
+
+            PixelInitializer = TexturePixelInitializer.CreateFrom(src.PixelInitializer);
+            (PixelInitializer as DataObjectBase)?.ReadJson(src.PixelInitializer, inBuffer, inLogger);
+            return true;
         }
 
         protected override JsonDataObject CreateJson() => new JsonTextureVariable();

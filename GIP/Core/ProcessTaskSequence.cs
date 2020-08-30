@@ -6,6 +6,7 @@ using Reactive.Bindings;
 using GIP.Common;
 using GIP.IO.Json;
 using GIP.IO.Project;
+using System;
 
 namespace GIP.Core
 {
@@ -100,6 +101,26 @@ namespace GIP.Core
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ((IEnumerable<ProcessTask>)m_Sequence).GetEnumerator();
+        }
+
+        protected override IEnumerable<Type> ReadableJsonClass => new Type[] { typeof(JsonTaskSequence) };
+        public override bool ReadJson(JsonDataObject inSource, JsonDataReadBuffer inBuffer, ILogger inLogger)
+        {
+            this.Clear();
+
+            if (!base.ReadJson(inSource, inBuffer, inLogger)) {
+                return false;
+            }
+
+            var src = inSource as JsonTaskSequence;
+            src.Tasks.ForEach(t => {
+                var task = ProcessTask.CreateFrom(t);
+                if (task != null) {
+                    task.ReadJson(t, inBuffer, inLogger);
+                    this.Add(task);
+                }
+            });
+            return true;
         }
 
         protected override JsonDataObject CreateJson() => new JsonTaskSequence();

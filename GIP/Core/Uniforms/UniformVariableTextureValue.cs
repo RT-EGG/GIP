@@ -6,6 +6,7 @@ using GIP.Controls.UniformVariableValues;
 using GIP.Core.Variables;
 using GIP.IO.Json;
 using GIP.IO.Project;
+using System.Collections.Generic;
 
 namespace GIP.Core.Uniforms
 {
@@ -38,6 +39,24 @@ namespace GIP.Core.Uniforms
         }
 
         public override Ctrl_UniformVariableValueView CreateView() => new Ctrl_UniformVariableTextureValueView();
+
+        protected override IEnumerable<Type> ReadableJsonClass => new Type[] { typeof(JsonUniformVariableTextureValue) };
+        public override bool ReadJson(JsonDataObject inSource, JsonDataReadBuffer inBuffer, ILogger inLogger)
+        {
+            if (!base.ReadJson(inSource, inBuffer, inLogger)) {
+                return false;
+            }
+
+            var src = inSource as JsonUniformVariableTextureValue;
+            Access.Value = src.Access;
+            InternalFormat.Value = src.InternalFormat;
+
+            inBuffer.RegisterComplementTask((data, logger) => {
+                data.TryGetValueAs<TextureVariable>(src.TextureGuid, out var texture, logger);
+                Texture.Value = texture;
+            });
+            return true;
+        }
 
         protected override JsonDataObject CreateJson() => new JsonUniformVariableTextureValue();
         protected override void ExportToJson(JsonDataObject inDst)

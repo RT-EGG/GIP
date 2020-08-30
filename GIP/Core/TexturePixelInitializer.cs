@@ -7,6 +7,7 @@ using rtUtility.rtMath;
 using GIP.Common;
 using GIP.IO.Project;
 using GIP.IO.Json;
+using System.Collections.Generic;
 
 namespace GIP.Core
 {
@@ -20,6 +21,17 @@ namespace GIP.Core
 
     public abstract class TexturePixelInitializer
     {
+        public static ITexturePixelInitializer CreateFrom(JsonTexturePixelInitializer inSource)
+        {
+            switch (inSource) {
+                case JsonTexturePixelColorInitializer color:
+                    return new TexturePixelInitializer.Color();
+                case JsonTexturePixelFileInitializer file:
+                    return new TexturePixelInitializer.File();
+            }
+            return null;
+        }
+
         public class Color : DataObjectBase, ITexturePixelInitializer
         {
             public TColorRGB RGB
@@ -52,6 +64,21 @@ namespace GIP.Core
                 return (IntPtr)null;
             }
 
+            public override bool ReadJson(JsonDataObject inSource, JsonDataReadBuffer inBuffer, ILogger inLogger)
+            {
+                if (!base.ReadJson(inSource, inBuffer, inLogger)) {
+                    return false;
+                }
+
+                var src = inSource as JsonTexturePixelColorInitializer;
+                RGB = src.ClearColor;
+                Alpha = src.ClearColor.A / 255.0f;
+                TextureWidth = src.Width;
+                TextureHeight = src.Height;
+                PixelFormat = src.PixelFormat;
+                return true;
+            }
+
             protected override JsonDataObject CreateJson() => new JsonTexturePixelColorInitializer();
             protected override void ExportToJson(JsonDataObject inDst)
             {
@@ -63,6 +90,8 @@ namespace GIP.Core
                 (inDst as JsonTexturePixelColorInitializer).PixelFormat = PixelFormat;
                 return;
             }
+
+            protected override IEnumerable<Type> ReadableJsonClass => new Type[] { typeof(JsonTexturePixelColorInitializer) };
         }
 
         public class File : DataObjectBase, ITexturePixelInitializer
@@ -110,6 +139,17 @@ namespace GIP.Core
                 return result;
             }
 
+            public override bool ReadJson(JsonDataObject inSource, JsonDataReadBuffer inBuffer, ILogger inLogger)
+            {
+                if (!base.ReadJson(inSource, inBuffer, inLogger)) {
+                    return false;
+                }
+
+                var src = inSource as JsonTexturePixelFileInitializer;
+                FilePath = src.Path;
+                return true;
+            }
+
             protected override JsonDataObject CreateJson() => new JsonTexturePixelFileInitializer();
             protected override void ExportToJson(JsonDataObject inDst)
             {
@@ -118,6 +158,8 @@ namespace GIP.Core
                 (inDst as JsonTexturePixelFileInitializer).Path = FilePath;
                 return;
             }
+
+            protected override IEnumerable<Type> ReadableJsonClass => new Type[] { typeof(JsonTexturePixelFileInitializer) };
         }
     }
 }
