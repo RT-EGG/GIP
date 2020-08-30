@@ -38,5 +38,10 @@ namespace GIP.IO.Json
         [JsonProperty(PropertyName = "a")]
         public byte A
         { get; set; } = 0;
+
+        public static implicit operator TColorRGBA(JsonColorRGBA inValue)
+        {
+            return new TColorRGBA(inValue.R, inValue.G, inValue.B, inValue.A);
+        }
     }
 }

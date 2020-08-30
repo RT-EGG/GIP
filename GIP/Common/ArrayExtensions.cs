@@ -59,6 +59,26 @@ namespace GIP.Common
             return result;
         }
 
+        public static bool Any<T>(this IEnumerable<T> inList, Predicate<T> inCondition)
+        {
+            foreach (var item in inList) {
+                if (inCondition(item)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool All<T>(this IEnumerable<T> inList, Predicate<T> inCondition)
+        {
+            foreach (var item in inList) {
+                if (!inCondition(item)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public static void DisposeAndClear<T>(this IList<T> inList) where T : IDisposable
         {
             foreach (var item in inList) {
