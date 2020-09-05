@@ -21,11 +21,12 @@ namespace GIP.Controls.VariableValues
                         return;
                     }
 
-                    m_Data = value;
+                    m_Data = null;
                     Clear();
                     foreach (var data in value) {
                         AddNew(new ListItem(Table, data));
                     }
+                    m_Data = value;
                 } catch (Exception e) {
                     m_Data = null;
                     throw e;
@@ -53,7 +54,7 @@ namespace GIP.Controls.VariableValues
 
         protected override void NewItemAdded(VirtualListItem inNewItem)
         {
-            m_Data.Add((inNewItem as ListItem).Data);
+            m_Data?.Add((inNewItem as ListItem).Data);
             return;
         }
 

@@ -31,6 +31,7 @@
             this.MenuItem_File = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_NewProject = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_SaveFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_Save_Project = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_Save_CurrentShaderFile = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_View = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_ProjectFiles = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,7 +43,8 @@
             this.MenuItem_UniformVariables = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_TextureView = new System.Windows.Forms.ToolStripMenuItem();
             this.PanelDockMain = new WeifenLuo.WinFormsUI.Docking.DockPanel();
-            this.MenuItem_Save_Project = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_OpenFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_Open_Project = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,6 +63,7 @@
             // 
             this.MenuItem_File.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuItem_NewProject,
+            this.MenuItem_OpenFile,
             this.MenuItem_SaveFile});
             this.MenuItem_File.Name = "MenuItem_File";
             this.MenuItem_File.Size = new System.Drawing.Size(37, 20);
@@ -81,6 +84,15 @@
             this.MenuItem_SaveFile.Name = "MenuItem_SaveFile";
             this.MenuItem_SaveFile.Size = new System.Drawing.Size(180, 22);
             this.MenuItem_SaveFile.Text = "Save";
+            // 
+            // MenuItem_Save_Project
+            // 
+            this.MenuItem_Save_Project.Name = "MenuItem_Save_Project";
+            this.MenuItem_Save_Project.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.MenuItem_Save_Project.Size = new System.Drawing.Size(218, 22);
+            this.MenuItem_Save_Project.Text = "Project";
+            this.MenuItem_Save_Project.Click += new System.EventHandler(this.MenuItem_Save_Project_Click);
             // 
             // MenuItem_Save_CurrentShaderFile
             // 
@@ -170,14 +182,20 @@
             this.PanelDockMain.Size = new System.Drawing.Size(1306, 524);
             this.PanelDockMain.TabIndex = 4;
             // 
-            // MenuItem_Save_Project
+            // MenuItem_OpenFile
             // 
-            this.MenuItem_Save_Project.Name = "MenuItem_Save_Project";
-            this.MenuItem_Save_Project.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.MenuItem_Save_Project.Size = new System.Drawing.Size(218, 22);
-            this.MenuItem_Save_Project.Text = "Project";
-            this.MenuItem_Save_Project.Click += new System.EventHandler(this.MenuItem_Save_Project_Click);
+            this.MenuItem_OpenFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItem_Open_Project});
+            this.MenuItem_OpenFile.Name = "MenuItem_OpenFile";
+            this.MenuItem_OpenFile.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_OpenFile.Text = "Open";
+            // 
+            // MenuItem_Open_Project
+            // 
+            this.MenuItem_Open_Project.Name = "MenuItem_Open_Project";
+            this.MenuItem_Open_Project.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_Open_Project.Text = "Project";
+            this.MenuItem_Open_Project.Click += new System.EventHandler(this.MenuItem_Open_Project_Click);
             // 
             // FormMain
             // 
@@ -216,6 +234,8 @@
         private System.Windows.Forms.ToolStripMenuItem MenuItem_TaskEditor;
         private System.Windows.Forms.ToolStripMenuItem MenuItem_TaskSequence;
         private System.Windows.Forms.ToolStripMenuItem MenuItem_Save_Project;
+        private System.Windows.Forms.ToolStripMenuItem MenuItem_OpenFile;
+        private System.Windows.Forms.ToolStripMenuItem MenuItem_Open_Project;
     }
 }
 

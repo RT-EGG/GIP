@@ -5,6 +5,9 @@ using WeifenLuo.WinFormsUI.Docking;
 using GIP.Core;
 using GIP.Common;
 using GIP.Controls;
+using GIP.IO.Json;
+using GIP.IO.Project;
+using System.Collections.Generic;
 
 namespace GIP
 {
@@ -31,11 +34,16 @@ namespace GIP
 
         private void NewProject(string inPath)
         {
-            if (false) {
-                // query save if have not saved yet.
+            if (/*File.Exists(inPath)*/ false) {
+                // query overwrite or open
+                if (false) {
+                    OpenProject(inPath);
+                } else {
+                    Project = new Project(inPath);
+                }
+            } else {
+                Project = new Project(inPath);
             }
-
-            Project = new Project(inPath);
             return;
         }
 
@@ -49,6 +57,35 @@ namespace GIP
         private void SaveShaderFile()
         {
             m_DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor)?.SaveCurrentSource();
+            return;
+        }
+
+        private void OpenProject()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Title = "Open project";
+            dialog.Filter = "GIP project file(*.gip, *.json)|*.gip;*.json";
+            dialog.FilterIndex = 0;
+
+            if (dialog.ShowDialog() == DialogResult.OK) {
+                OpenProject(dialog.FileName);
+            }
+            return;
+        }
+
+        private void OpenProject(string inPath)
+        {
+            if (false) {
+                // query save or not if project changed.
+            } else {
+                var json = JsonSerializable.ImportFromFile<JsonProjectFile>(inPath);
+
+                Project newProject = new Project(inPath);
+                JsonDataReadBuffer buffer = new JsonDataReadBuffer();
+                newProject.ReadJson(json, buffer, Logger.DefaultLogger);
+                buffer.ProcessComplementation(Logger.DefaultLogger);
+                Project = newProject;
+            }
             return;
         }
 
@@ -94,6 +131,12 @@ namespace GIP
         private void MenuItem_Save_Project_Click(object sender, EventArgs e)
         {
             SaveProject();
+            return;
+        }
+
+        private void MenuItem_Open_Project_Click(object sender, EventArgs e)
+        {
+            OpenProject();
             return;
         }
 

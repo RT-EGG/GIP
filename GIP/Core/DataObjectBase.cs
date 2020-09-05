@@ -31,7 +31,7 @@ namespace GIP.Core
             if (inSource == null) {
                 throw new ArgumentNullException(nameof(inSource));
             }
-            if (IsReadableJsonClass(inSource.GetType())) {
+            if (!IsReadableJsonClass(inSource.GetType())) {
                 inLogger.PushLog(this, new LogData(LogLevel.Error, $"{inSource.GetType()} is not readable for {GetType()}."));
                 return false;
             }

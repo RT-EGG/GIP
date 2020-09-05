@@ -6,6 +6,7 @@ using GIP.IO.Json.Converter;
 
 namespace GIP.IO.Project
 {
+    [JsonConverter(typeof(JsonProcessTaskConverter))]
     public abstract class JsonProcessTask : JsonDataObject, IJsonSubClassSerializable
     {
         [JsonProperty(PropertyName = "name")]

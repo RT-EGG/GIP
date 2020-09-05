@@ -57,7 +57,8 @@ namespace GIP.Core
             }
 
             inBuffer.RegisterComplementTask((buffer, logger) => {
-                buffer.TryGetValueAs<ComputeShader>(src.ShaderGuid, out var Shader, logger);
+                buffer.TryGetValueAs<ComputeShader>(src.ShaderGuid, out var shader, logger);
+                Shader = shader;
                 return;
             });
             return true;
