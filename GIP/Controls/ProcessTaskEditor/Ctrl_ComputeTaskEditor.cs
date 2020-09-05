@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using GIP.Common;
 using GIP.Core;
+using GIP.Core.Task;
 
 namespace GIP.Controls.ProcessTaskEditor
 {

@@ -7,7 +7,7 @@ using GIP.IO.Json;
 using GIP.IO.Project;
 using System.Collections.Generic;
 
-namespace GIP.Core
+namespace GIP.Core.Task
 {
     public class ComputeTask : ProcessTask
     {

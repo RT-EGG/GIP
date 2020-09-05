@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using GIP.Core;
+using GIP.Core.Task;
 
 namespace GIP.Controls
 {

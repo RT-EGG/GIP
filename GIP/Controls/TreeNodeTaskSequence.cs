@@ -1,5 +1,5 @@
 ﻿using System.Collections.Specialized;
-using GIP.Core;
+using GIP.Core.Task;
 
 namespace GIP.Controls
 {

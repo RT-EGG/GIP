@@ -28,12 +28,12 @@
         private void InitializeComponent()
         {
             this.PanelCurrentTexture = new System.Windows.Forms.TableLayoutPanel();
+            this.ButtonExportToFile = new System.Windows.Forms.Button();
             this.LabelCurrentTexture = new System.Windows.Forms.Label();
             this.ComboCurrentTexture = new System.Windows.Forms.ComboBox();
             this.PanelDisplayOptions = new System.Windows.Forms.Panel();
             this.ButtonBgColor = new System.Windows.Forms.Button();
             this.GLView = new GIP.Controls.Ctrl_GLControl();
-            this.ButtonExportToFile = new System.Windows.Forms.Button();
             this.PanelCurrentTexture.SuspendLayout();
             this.PanelDisplayOptions.SuspendLayout();
             this.SuspendLayout();
@@ -54,6 +54,17 @@
             this.PanelCurrentTexture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.PanelCurrentTexture.Size = new System.Drawing.Size(501, 27);
             this.PanelCurrentTexture.TabIndex = 1;
+            // 
+            // ButtonExportToFile
+            // 
+            this.ButtonExportToFile.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ButtonExportToFile.Location = new System.Drawing.Point(423, 3);
+            this.ButtonExportToFile.Name = "ButtonExportToFile";
+            this.ButtonExportToFile.Size = new System.Drawing.Size(75, 21);
+            this.ButtonExportToFile.TabIndex = 3;
+            this.ButtonExportToFile.Text = "Export";
+            this.ButtonExportToFile.UseVisualStyleBackColor = true;
+            this.ButtonExportToFile.Click += new System.EventHandler(this.ButtonExportToFile_Click);
             // 
             // LabelCurrentTexture
             // 
@@ -107,17 +118,6 @@
             this.GLView.TabIndex = 2;
             this.GLView.VSync = false;
             this.GLView.OnGLPaint += new GIP.Controls.GLControlEvent(this.GLView_OnGLPaint);
-            // 
-            // ButtonExportToFile
-            // 
-            this.ButtonExportToFile.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ButtonExportToFile.Location = new System.Drawing.Point(423, 3);
-            this.ButtonExportToFile.Name = "ButtonExportToFile";
-            this.ButtonExportToFile.Size = new System.Drawing.Size(75, 21);
-            this.ButtonExportToFile.TabIndex = 3;
-            this.ButtonExportToFile.Text = "Export";
-            this.ButtonExportToFile.UseVisualStyleBackColor = true;
-            this.ButtonExportToFile.Click += new System.EventHandler(this.ButtonExportToFile_Click);
             // 
             // Ctrl_GLTextureView
             // 

@@ -20,6 +20,18 @@ namespace GIP.Core.Variables
             return;
         }
 
+        public void ExportToFile(string inFilePath)
+        {
+            Bitmap expImage = ExportToBitmap();
+            if (expImage == null) {
+                return;
+            }
+
+            expImage.Save(inFilePath);
+            expImage.Dispose();
+            return;
+        }
+
         public Bitmap ExportToBitmap()
         {
             if (TextureID == 0) {

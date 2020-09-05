@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Reactive.Bindings;
 using GIP.Common;
 using GIP.Core.Variables;
+using GIP.Core.Task;
 using GIP.IO.Project;
 using GIP.IO.Json;
 using System;

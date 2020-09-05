@@ -165,13 +165,7 @@ namespace GIP.Controls
             }
 
             try {
-                Bitmap expImage = texture.ExportToBitmap();
-                if (expImage == null) {
-                    return;
-                }
-
-                expImage.Save(dialog.FileName);
-                expImage.Dispose();
+                texture.ExportToFile(dialog.FileName);
 
             } catch (Exception exception) {
                 Logger.DefaultLogger.PushLog(this, new LogExceptionData(exception));

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using GIP.Core;
+using GIP.Core.Task;
 using GIP.Common;
 
 namespace GIP.Controls.ProcessTaskEditor

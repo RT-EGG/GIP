@@ -223,10 +223,10 @@
       <DependentUpon>Ctrl_VariableValueView.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\ComputeShader.cs" />
-    <Compile Include="Core\ComputeTask.cs" />
+    <Compile Include="Core\Tasks\ComputeTask.cs" />
     <Compile Include="Core\DataObjectBase.cs" />
-    <Compile Include="Core\ProcessTask.cs" />
-    <Compile Include="Core\ProcessTaskSequence.cs" />
+    <Compile Include="Core\Tasks\ProcessTask.cs" />
+    <Compile Include="Core\Tasks\ProcessTaskSequence.cs" />
     <Compile Include="Core\ProcessTaskSequenceRunner.cs" />
     <Compile Include="Core\Project.cs" />
     <Compile Include="Core\Variables\VariableBase.cs" />

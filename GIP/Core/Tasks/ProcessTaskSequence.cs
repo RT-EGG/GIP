@@ -8,7 +8,7 @@ using GIP.IO.Json;
 using GIP.IO.Project;
 using System;
 
-namespace GIP.Core
+namespace GIP.Core.Task
 {
     public class ProcessTaskSequence : ProcessTask, IList<ProcessTask>, IReadOnlyList<ProcessTask>, IEnumerable<ProcessTask>, INotifyCollectionChanged, INotifyPropertyChanged
     {

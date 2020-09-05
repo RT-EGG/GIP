@@ -4,7 +4,7 @@ using GIP.IO.Json;
 using System;
 using System.Collections.Generic;
 
-namespace GIP.Core
+namespace GIP.Core.Task
 {
     public delegate void ProcessTaskNotifyEvent(ProcessTask inValue);
 
