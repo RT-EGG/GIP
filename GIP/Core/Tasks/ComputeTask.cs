@@ -1,30 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
 using Reactive.Bindings;
 using OpenTK.Graphics.OpenGL4;
 using GIP.Common;
 using GIP.Core.Uniforms;
 using GIP.IO.Json;
 using GIP.IO.Project;
-using System.Collections.Generic;
 
-namespace GIP.Core.Task
+namespace GIP.Core.Tasks
 {
     public class ComputeTask : ProcessTask
     {
         public override bool Execute(ILogger inLogger)
         {
-            if (Shader == null) {
+            if (Shader.Value == null) {
                 inLogger.PushLog(this, new LogData(LogLevel.Error, "Compute shader is not attached."));
                 return false;
             }
 
             try {
-                Shader.NextBindableTextureUnit = 0;
+                Shader.Value.NextBindableTextureUnit = 0;
                 foreach (var uniform in UniformVariables) {
-                    uniform.Bind(Shader);
+                    uniform.Bind(Shader.Value);
                 }
 
-                GL.UseProgram(Shader.ProgramID);
+                GL.UseProgram(Shader.Value.ProgramID);
                 GL.DispatchCompute(DispatchGroupSizeX.Value, DispatchGroupSizeY.Value, DispatchGroupSizeZ.Value);
 
             } catch (Exception e) {
@@ -58,7 +58,7 @@ namespace GIP.Core.Task
 
             inBuffer.RegisterComplementTask((buffer, logger) => {
                 buffer.TryGetValueAs<ComputeShader>(src.ShaderGuid, out var shader, logger);
-                Shader = shader;
+                Shader.Value = shader;
                 return;
             });
             return true;
@@ -70,7 +70,7 @@ namespace GIP.Core.Task
             base.ExportToJson(inDst);
 
             var dst = inDst as JsonComputeTask;
-            dst.ShaderGuid = Shader.GUID;
+            dst.ShaderGuid = Shader.Value == null ? Guid.Empty : Shader.Value.GUID;
             dst.UniformVariables.AddRange(UniformVariables.Convert(u => u.ExportToJson<JsonUniformVariable>()));
             dst.DispatchGroupSize = new JsonVector3i(
                 DispatchGroupSizeX.Value,
@@ -80,8 +80,8 @@ namespace GIP.Core.Task
             return;
         }
 
-        public ComputeShader Shader
-        { get; set; } = null;
+        public ReactiveProperty<ComputeShader> Shader
+        { get; } = new ReactiveProperty<ComputeShader>(initialValue: null);
         public UniformVariableList UniformVariables
         { get; } = new UniformVariableList();
 

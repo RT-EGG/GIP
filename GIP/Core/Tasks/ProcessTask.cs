@@ -4,17 +4,26 @@ using GIP.IO.Json;
 using System;
 using System.Collections.Generic;
 
-namespace GIP.Core.Task
+namespace GIP.Core.Tasks
 {
     public delegate void ProcessTaskNotifyEvent(ProcessTask inValue);
+
+    public class ProcessTaskLogData : LogData
+    {
+        public ProcessTaskLogData(ProcessTask inTask, LogLevel inLevel, string inMessage)
+            : base(inLevel, $"[task: {inTask.Name.Value}] {inMessage}")
+        { }
+    }
 
     public abstract class ProcessTask : DataObjectBase
     {
         public static ProcessTask CreateFrom(JsonProcessTask inSource)
         {
             switch (inSource) {
-                case JsonComputeTask compute:
+                case JsonComputeTask _:
                     return new ComputeTask();
+                case JsonTextureExportTask _:
+                    return new TextureExportTask();
             }
             return null;
         }

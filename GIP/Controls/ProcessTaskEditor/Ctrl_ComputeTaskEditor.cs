@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using GIP.Common;
 using GIP.Core;
-using GIP.Core.Task;
+using GIP.Core.Tasks;
 
 namespace GIP.Controls.ProcessTaskEditor
 {
@@ -28,7 +28,9 @@ namespace GIP.Controls.ProcessTaskEditor
 
         protected override IEnumerable<IDisposable> SetProject(Project inValue)
         {
-            base.SetProject(inValue);
+            foreach (var item in base.SetProject(inValue)) {
+                yield return item;
+            }
 
             Ctrl_UniformVariables.Variables = inValue.Variables;
 
@@ -39,16 +41,24 @@ namespace GIP.Controls.ProcessTaskEditor
 
         protected override IEnumerable<IDisposable> SetData(ProcessTask inValue)
         {
-            base.SetData(inValue);
+            foreach (var item in base.SetData(inValue)) {
+                yield return item;
+            }
 
             if (Task != null) {
+                yield return Task.Shader.Subscribe(s => ComboShaderSource.Select(i => (i as ComboShaderItem).Data == s));
                 yield return Task.DispatchGroupSizeX.Subscribe(v => this.InvokeOnUIThread(() => UdDispatchGroupSizeX.Value = v));
                 yield return Task.DispatchGroupSizeY.Subscribe(v => this.InvokeOnUIThread(() => UdDispatchGroupSizeY.Value = v));
                 yield return Task.DispatchGroupSizeZ.Subscribe(v => this.InvokeOnUIThread(() => UdDispatchGroupSizeZ.Value = v));
+                
+                Ctrl_UniformVariables.Data = Task.UniformVariables;
             } else {
-                UdDispatchGroupSizeX.Value = 0;
-                UdDispatchGroupSizeY.Value = 0;
-                UdDispatchGroupSizeZ.Value = 0;
+                ComboShaderSource.SelectedIndex = -1;
+                UdDispatchGroupSizeX.Value = 1;
+                UdDispatchGroupSizeY.Value = 1;
+                UdDispatchGroupSizeZ.Value = 1;
+
+                Ctrl_UniformVariables.Data = null;
             }
 
             yield break;
@@ -62,19 +72,25 @@ namespace GIP.Controls.ProcessTaskEditor
 
         private void UdDispatchGroupSizeX_ValueChanged(object sender, EventArgs e)
         {
-            Task.DispatchGroupSizeX.Value = (int)UdDispatchGroupSizeX.Value;
+            if (Task != null) {
+                Task.DispatchGroupSizeX.Value = (int)UdDispatchGroupSizeX.Value;
+            }
             return;
         }
 
         private void UdDispatchGroupSizeY_ValueChanged(object sender, EventArgs e)
         {
-            Task.DispatchGroupSizeY.Value = (int)UdDispatchGroupSizeY.Value;
+            if (Task != null) {
+                Task.DispatchGroupSizeY.Value = (int)UdDispatchGroupSizeY.Value;
+            }
             return;
         }
 
         private void UdDispatchGroupSizeZ_ValueChanged(object sender, EventArgs e)
         {
-            Task.DispatchGroupSizeZ.Value = (int)UdDispatchGroupSizeZ.Value;
+            if (Task != null) {
+                Task.DispatchGroupSizeZ.Value = (int)UdDispatchGroupSizeZ.Value;
+            }
             return;
         }
 

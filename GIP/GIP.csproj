@@ -113,6 +113,12 @@
     <Compile Include="Controls\ProcessTaskEditor\Ctrl_ProcessTaskEditor.Designer.cs">
       <DependentUpon>Ctrl_ProcessTaskEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ProcessTaskEditor\Ctrl_TextureExportTaskEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ProcessTaskEditor\Ctrl_TextureExportTaskEditor.Designer.cs">
+      <DependentUpon>Ctrl_TextureExportTaskEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\VariableValues\Ctrl_VariableListView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -198,7 +204,6 @@
       <DependentUpon>DockFormTextureView.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\MainDockForms.cs" />
-    <Compile Include="Controls\TreeNodeComputeTask.cs" />
     <Compile Include="Controls\TreeNodeDirectory.cs" />
     <Compile Include="Controls\TreeNodeProcessTask.cs" />
     <Compile Include="Controls\TreeNodeProjectFile.cs" />
@@ -229,6 +234,7 @@
     <Compile Include="Core\Tasks\ProcessTaskSequence.cs" />
     <Compile Include="Core\ProcessTaskSequenceRunner.cs" />
     <Compile Include="Core\Project.cs" />
+    <Compile Include="Core\Tasks\TextureExportTask.cs" />
     <Compile Include="Core\Variables\VariableBase.cs" />
     <Compile Include="Core\Variables\VariableList.cs" />
     <Compile Include="IO\Json\Converter\JsonConverter.cs" />
@@ -272,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProcessTaskEditor\Ctrl_ProcessTaskEditor.resx">
       <DependentUpon>Ctrl_ProcessTaskEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ProcessTaskEditor\Ctrl_TextureExportTaskEditor.resx">
+      <DependentUpon>Ctrl_TextureExportTaskEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\VariableValues\Ctrl_VariableListView.resx">
       <DependentUpon>Ctrl_VariableListView.cs</DependentUpon>

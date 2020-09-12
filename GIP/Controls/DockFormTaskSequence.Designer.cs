@@ -30,11 +30,15 @@
             this.components = new System.ComponentModel.Container();
             this.tvTaskSequence = new System.Windows.Forms.TreeView();
             this.MenuTreeNodePopup = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.MenuItem_NewComputeTask = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuItem_InsertNewComputeTask = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_Delete = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ButtonRunSequence = new System.Windows.Forms.Button();
+            this.MenuItem_NewTask = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_InsertTask = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_NewTask_Compute = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_NewTask_ExportTexture = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_InsertTask_Compute = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_InsertTask_ExportTexture = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuTreeNodePopup.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -52,30 +56,16 @@
             // MenuTreeNodePopup
             // 
             this.MenuTreeNodePopup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuItem_NewComputeTask,
-            this.MenuItem_InsertNewComputeTask,
+            this.MenuItem_NewTask,
+            this.MenuItem_InsertTask,
             this.MenuItem_Delete});
             this.MenuTreeNodePopup.Name = "MenuTreeNodePopup";
-            this.MenuTreeNodePopup.Size = new System.Drawing.Size(203, 70);
-            // 
-            // MenuItem_NewComputeTask
-            // 
-            this.MenuItem_NewComputeTask.Name = "MenuItem_NewComputeTask";
-            this.MenuItem_NewComputeTask.Size = new System.Drawing.Size(202, 22);
-            this.MenuItem_NewComputeTask.Text = "New compute task";
-            this.MenuItem_NewComputeTask.Click += new System.EventHandler(this.MenuItem_NewComputeTask_Click);
-            // 
-            // MenuItem_InsertNewComputeTask
-            // 
-            this.MenuItem_InsertNewComputeTask.Name = "MenuItem_InsertNewComputeTask";
-            this.MenuItem_InsertNewComputeTask.Size = new System.Drawing.Size(202, 22);
-            this.MenuItem_InsertNewComputeTask.Text = "Insert new compute task";
-            this.MenuItem_InsertNewComputeTask.Click += new System.EventHandler(this.MenuItem_InsertNewComputeTask_Click);
+            this.MenuTreeNodePopup.Size = new System.Drawing.Size(181, 92);
             // 
             // MenuItem_Delete
             // 
             this.MenuItem_Delete.Name = "MenuItem_Delete";
-            this.MenuItem_Delete.Size = new System.Drawing.Size(202, 22);
+            this.MenuItem_Delete.Size = new System.Drawing.Size(180, 22);
             this.MenuItem_Delete.Text = "Delete";
             this.MenuItem_Delete.Click += new System.EventHandler(this.MenuItem_Delete_Click);
             // 
@@ -104,6 +94,52 @@
             this.ButtonRunSequence.UseVisualStyleBackColor = true;
             this.ButtonRunSequence.Click += new System.EventHandler(this.ButtonRunSequence_Click);
             // 
+            // MenuItem_NewTask
+            // 
+            this.MenuItem_NewTask.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItem_NewTask_Compute,
+            this.MenuItem_NewTask_ExportTexture});
+            this.MenuItem_NewTask.Name = "MenuItem_NewTask";
+            this.MenuItem_NewTask.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_NewTask.Text = "New task";
+            // 
+            // MenuItem_InsertTask
+            // 
+            this.MenuItem_InsertTask.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItem_InsertTask_Compute,
+            this.MenuItem_InsertTask_ExportTexture});
+            this.MenuItem_InsertTask.Name = "MenuItem_InsertTask";
+            this.MenuItem_InsertTask.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_InsertTask.Text = "Insert task";
+            // 
+            // MenuItem_NewTask_Compute
+            // 
+            this.MenuItem_NewTask_Compute.Name = "MenuItem_NewTask_Compute";
+            this.MenuItem_NewTask_Compute.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_NewTask_Compute.Text = "Compute";
+            this.MenuItem_NewTask_Compute.Click += new System.EventHandler(this.MenuItem_NewTask_Click);
+            // 
+            // MenuItem_NewTask_ExportTexture
+            // 
+            this.MenuItem_NewTask_ExportTexture.Name = "MenuItem_NewTask_ExportTexture";
+            this.MenuItem_NewTask_ExportTexture.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_NewTask_ExportTexture.Text = "Export texture";
+            this.MenuItem_NewTask_ExportTexture.Click += new System.EventHandler(this.MenuItem_NewTask_Click);
+            // 
+            // MenuItem_InsertTask_Compute
+            // 
+            this.MenuItem_InsertTask_Compute.Name = "MenuItem_InsertTask_Compute";
+            this.MenuItem_InsertTask_Compute.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_InsertTask_Compute.Text = "Compute";
+            this.MenuItem_InsertTask_Compute.Click += new System.EventHandler(this.MenuItem_InsertTask_Click);
+            // 
+            // MenuItem_InsertTask_ExportTexture
+            // 
+            this.MenuItem_InsertTask_ExportTexture.Name = "MenuItem_InsertTask_ExportTexture";
+            this.MenuItem_InsertTask_ExportTexture.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_InsertTask_ExportTexture.Text = "Export texture";
+            this.MenuItem_InsertTask_ExportTexture.Click += new System.EventHandler(this.MenuItem_InsertTask_Click);
+            // 
             // DockFormTaskSequence
             // 
             this.ClientSize = new System.Drawing.Size(387, 448);
@@ -121,10 +157,14 @@
 
         private System.Windows.Forms.TreeView tvTaskSequence;
         private System.Windows.Forms.ContextMenuStrip MenuTreeNodePopup;
-        private System.Windows.Forms.ToolStripMenuItem MenuItem_NewComputeTask;
-        private System.Windows.Forms.ToolStripMenuItem MenuItem_InsertNewComputeTask;
         private System.Windows.Forms.ToolStripMenuItem MenuItem_Delete;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button ButtonRunSequence;
+        private System.Windows.Forms.ToolStripMenuItem MenuItem_NewTask;
+        private System.Windows.Forms.ToolStripMenuItem MenuItem_NewTask_Compute;
+        private System.Windows.Forms.ToolStripMenuItem MenuItem_NewTask_ExportTexture;
+        private System.Windows.Forms.ToolStripMenuItem MenuItem_InsertTask;
+        private System.Windows.Forms.ToolStripMenuItem MenuItem_InsertTask_Compute;
+        private System.Windows.Forms.ToolStripMenuItem MenuItem_InsertTask_ExportTexture;
     }
 }

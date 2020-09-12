@@ -1,5 +1,5 @@
 ﻿using System;
-using GIP.Core.Task;
+using GIP.Core.Tasks;
 
 namespace GIP.Core
 {

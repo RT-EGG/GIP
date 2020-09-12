@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GIP.Core;
-using GIP.Core.Task;
+using GIP.Core.Tasks;
 
 namespace GIP.Controls
 {
@@ -107,18 +107,27 @@ namespace GIP.Controls
             return;
         }
 
-        private void MenuItem_NewComputeTask_Click(object sender, EventArgs e)
+        private void MenuItem_NewTask_Click(object sender, EventArgs e)
         {
             if (!(tvTaskSequence.SelectedNode is TreeNodeTaskSequence)) {
                 throw new InvalidProgramException("TreeNodeTaskSequence must be selected.");
             }
 
-            TreeNodeTaskSequence sequenceNode = (tvTaskSequence.SelectedNode as TreeNodeTaskSequence);
-            AddTask(new ComputeTask(), (tvTaskSequence.SelectedNode as TreeNodeTaskSequence).Data);
+            ProcessTask task = null;
+            if (sender == MenuItem_NewTask_Compute) {
+                task = new ComputeTask();
+            } else if (sender == MenuItem_NewTask_ExportTexture) {
+                task = new TextureExportTask();
+            } else {
+                throw new InvalidProgramException($"Unknown sender [{sender.GetType()}].");
+            }
+
+            TreeNodeTaskSequence parent = (tvTaskSequence.SelectedNode as TreeNodeTaskSequence);
+            AddTask(task, parent.Data);
             return;
         }
 
-        private void MenuItem_InsertNewComputeTask_Click(object sender, EventArgs e)
+        private void MenuItem_InsertTask_Click(object sender, EventArgs es)
         {
             if (tvTaskSequence.SelectedNode == tvTaskSequence.Nodes[0]) {
                 throw new InvalidProgramException("First node of tree must not be selected.");
@@ -127,7 +136,17 @@ namespace GIP.Controls
                 throw new InvalidProgramException("Parent of selected node must be TreeNodeTaskSequence.");
             }
 
-            AddTask(new ComputeTask(), (tvTaskSequence.SelectedNode.Parent as TreeNodeTaskSequence).Data, tvTaskSequence.SelectedNode.Index);
+            ProcessTask task = null;
+            if (sender == MenuItem_InsertTask_Compute) {
+                task = new ComputeTask();
+            } else if (sender == MenuItem_InsertTask_ExportTexture) {
+                task = new TextureExportTask();
+            } else {
+                throw new InvalidProgramException($"Unknown sender [{sender.GetType()}].");
+            }
+
+            TreeNodeTaskSequence parent = (tvTaskSequence.SelectedNode as TreeNodeTaskSequence);
+            AddTask(task, (parent.Parent as TreeNodeTaskSequence).Data, tvTaskSequence.SelectedNode.Index);
             return;
         }
 
@@ -158,8 +177,8 @@ namespace GIP.Controls
 
         private void RequestTreeViewPopup(Point inLocation, TreeNode inNode)
         {
-            MenuItem_NewComputeTask.Visible = inNode is TreeNodeTaskSequence;
-            MenuItem_InsertNewComputeTask.Visible = inNode != tvTaskSequence.Nodes[0];
+            MenuItem_NewTask.Visible = inNode is TreeNodeTaskSequence;
+            MenuItem_InsertTask.Visible = inNode.Index != 0;
             MenuItem_Delete.Visible = inNode != tvTaskSequence.Nodes[0];
             MenuTreeNodePopup.Show(inLocation);
             return;

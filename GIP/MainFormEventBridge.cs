@@ -1,5 +1,5 @@
 ﻿using GIP.Core;
-using GIP.Core.Task;
+using GIP.Core.Tasks;
 using GIP.Controls;
 
 namespace GIP
@@ -24,13 +24,7 @@ namespace GIP
 
         private void DockFormTaskSequence_OnTaskSelected(ProcessTask inValue)
         {
-            m_DockForms.Get<DockFormTaskEditor>(MainDockFormType.TaskEditor).Task = null;
-
-            switch (inValue) {
-                case ComputeTask e:
-                    m_DockForms.Get<DockFormTaskEditor>(MainDockFormType.TaskEditor).Task = e;
-                    break;
-            }
+            m_DockForms.Get<DockFormTaskEditor>(MainDockFormType.TaskEditor).Task = inValue;
             return;
         }
 

@@ -8,7 +8,7 @@ namespace GIP.IO.Json
         public void ExportToFile(string inPath)
         {
             string output = JsonConvert.SerializeObject(this);
-            using (StreamWriter writer = new StreamWriter(new FileStream(inPath, FileMode.OpenOrCreate, FileAccess.Write))) {
+            using (StreamWriter writer = new StreamWriter(new FileStream(inPath, FileMode.Create, FileAccess.Write))) {
                 writer.Write(output);
             }
             return;

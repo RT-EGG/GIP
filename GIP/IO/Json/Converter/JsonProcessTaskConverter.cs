@@ -10,6 +10,8 @@ namespace GIP.IO.Json.Converter
             switch (inSubClassIdentifier) {
                 case "Compute":
                     return new JsonComputeTask();
+                case "TextureExport":
+                    return new JsonTextureExportTask();
                 case "Sequence":
                     return new JsonTaskSequence();
                 default:

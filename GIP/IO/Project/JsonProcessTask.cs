@@ -33,6 +33,23 @@ namespace GIP.IO.Project
         public override string GetSubClassIdentifier() => "Compute";
     }
 
+    public class JsonTextureExportTask : JsonProcessTask
+    {
+        [JsonProperty(PropertyName = "file_path")]
+        public string FilePath
+        { get; set; } = "";
+
+        [JsonProperty(PropertyName = "texture")]
+        public Guid Texture
+        { get; set; } = Guid.Empty;
+
+        [JsonProperty(PropertyName = "override")]
+        public bool OverwriteIfExistAlready
+        { get; set; } = true;
+
+        public override string GetSubClassIdentifier() => "TextureExport";
+    }
+
     public class JsonTaskSequence : JsonProcessTask
     {
         [JsonProperty(PropertyName = "tasks")]
