@@ -15,7 +15,7 @@ namespace GIP.Core.Tasks
         public override bool Execute(ILogger inLogger)
         {
             foreach (var task in this) {
-                inLogger.PushLog(this, new LogData(LogLevel.Error, $"Run task \"{task.Name.Value}\"."));
+                inLogger.PushLog(this, new LogData(LogLevel.Error, $"Run task \"{task.Name.Value}\".{Environment.NewLine}"));
                 if (!task.Execute(inLogger)) {
                     return false;
                 }

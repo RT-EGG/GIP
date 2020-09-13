@@ -7,15 +7,20 @@ using GIP.Common;
 using GIP.Controls;
 using GIP.IO.Json;
 using GIP.IO.Project;
-using System.Collections.Generic;
 
 namespace GIP
 {
     public partial class FormMain : Form
     {
-        public FormMain()
+        public FormMain(Arguments inArgs)
         {
             InitializeComponent();
+
+            Arguments = inArgs;
+            if (Arguments.MinWindow) {
+                WindowState = FormWindowState.Minimized;
+            }
+
             return;
         }
 
@@ -107,6 +112,16 @@ namespace GIP
         private void FormMain_Shown(object sender, EventArgs e)
         {
             Ctrl_GLControl.MakeCurrentSomeone();
+
+            if (Arguments.Tasks != null) {
+                ProjectsRunner runner = new ProjectsRunner();
+                runner.RunFiles(Arguments.Tasks.Split(new char[]{ ';' }, StringSplitOptions.RemoveEmptyEntries), Logger.DefaultLogger);
+
+                if (Arguments.AutoClose) {
+                    this.Close();
+                }
+            }
+
             return;
         }
 
@@ -192,6 +207,8 @@ namespace GIP
             } 
         }
 
+        private Arguments Arguments
+        { get; } = null;
         private MainDockForms m_DockForms
         { get; set; } = null;
         private MainFormEventBridge UIEventBridge
