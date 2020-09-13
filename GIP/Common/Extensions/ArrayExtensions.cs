@@ -7,6 +7,14 @@ namespace GIP.Common
 {
     public static class ArrayExtensions
     {
+        public static bool Empty<T>(this IEnumerable<T> inList)
+        {
+            foreach (var _ in inList) {
+                return true;
+            }
+            return false;
+        }
+
         public static IEnumerable<(int, T)> Enumerate<T>(this IList<T> inList)
         {
             for (int i = 0; i < inList.Count; ++i) {

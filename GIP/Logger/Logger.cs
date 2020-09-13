@@ -20,6 +20,9 @@ namespace GIP
             Message = inMessage;
         }
 
+        public DateTime Time
+        { get; } = DateTime.Now;
+
         public LogLevel Level
         { get; } = LogLevel.Information;
 
@@ -68,6 +71,8 @@ namespace GIP
             this.ForEach((i) => i.PushLog(inSource, inData));
             return;
         }
+
+        private int m_IndentLevel = 0;
     }
 
     public static class Logger
