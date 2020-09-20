@@ -10,9 +10,9 @@ namespace GIP.Common
         public static bool Empty<T>(this IEnumerable<T> inList)
         {
             foreach (var _ in inList) {
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
 
         public static IEnumerable<(int, T)> Enumerate<T>(this IList<T> inList)
