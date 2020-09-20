@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.IO;
 using CommandLine;
+using System.Linq;
 
 namespace GIP
 {
@@ -33,6 +34,11 @@ namespace GIP
             if (arguments == null) {
                 return;
             }
+
+            if (arguments.LogFile != null) {
+                Logger.DefaultLogger.Add(new FileLogger(arguments.LogFile));
+            }
+            arguments.PushLog(Logger.DefaultLogger);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
