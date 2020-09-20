@@ -98,8 +98,8 @@ namespace GIP
         {
             m_DockForms = new MainDockForms();
 
-            if (File.Exists("layout.xml")) {
-                PanelDockMain.LoadFromXml("layout.xml", new DeserializeDockContent(m_DockForms.Find));
+            if (File.Exists(LayoutFilePath)) {
+                PanelDockMain.LoadFromXml(LayoutFilePath, new DeserializeDockContent(m_DockForms.Find));
             } else {
                 m_DockForms.ShowAll(PanelDockMain);
             }
@@ -118,6 +118,7 @@ namespace GIP
                 runner.RunFiles(Arguments.Tasks.Split(new char[]{ ';' }, StringSplitOptions.RemoveEmptyEntries), Logger.DefaultLogger);
 
                 if (Arguments.AutoClose) {
+                    Logger.DefaultLogger.PushLog(this, new LogData(LogLevel.Information, "Auto close by argument."));
                     this.Close();
                 }
             }
@@ -127,7 +128,7 @@ namespace GIP
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            PanelDockMain.SaveAsXml("layout.xml");
+            PanelDockMain.SaveAsXml(LayoutFilePath);
             return;
         }
 
@@ -214,5 +215,7 @@ namespace GIP
         private MainFormEventBridge UIEventBridge
         { get; set; } = new MainFormEventBridge();
         private Project m_Project = null;
+
+        private string LayoutFilePath => $"{AppDomain.CurrentDomain.BaseDirectory}/layout.xml";
     }
 }
