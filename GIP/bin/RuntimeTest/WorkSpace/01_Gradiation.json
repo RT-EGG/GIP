@@ -1,0 +1,71 @@
+{
+    "compute_shader": [
+        {
+            "file_type": "Text",
+            "file_path": ".\\WorkSpace\\Shaders\\Gradation.glsl",
+            "guid": "7d743479-4a2f-4315-866a-7a10aa5f31f0"
+        }
+    ],
+    "variables": [
+        {
+            "@class": "Texture",
+            "format": "Rgba",
+            "data_type": "UnsignedByte",
+            "pixel_initializer": {
+                "@class": "Color",
+                "clear_color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 255
+                },
+                "width": 2048,
+                "height": 2048,
+                "pixel_format": "Rgba",
+                "guid": "0e0ec2f7-9304-4857-8dc5-90cd3d7c30d7"
+            },
+            "name": "Variable",
+            "guid": "0206ce9a-30f0-4196-beae-ceb436602d98"
+        }
+    ],
+    "task_sequence": {
+        "@class": "Sequence",
+        "tasks": [
+            {
+                "@class": "Compute",
+                "shader": "7d743479-4a2f-4315-866a-7a10aa5f31f0",
+                "uniform_variables": [
+                    {
+                        "UniformName": "outTexture",
+                        "Value": {
+                            "@class": "Texture",
+                            "texture": "0206ce9a-30f0-4196-beae-ceb436602d98",
+                            "Access": "ReadWrite",
+                            "InternalFormat": "Rgba8",
+                            "guid": "c80d85a3-4839-48bc-9c58-564363e00422"
+                        },
+                        "guid": "41c5fd19-44f9-414b-9948-373d447905ef"
+                    }
+                ],
+                "dispatch_group_size": {
+                    "x": 64,
+                    "y": 64,
+                    "z": 1
+                },
+                "name": "task",
+                "guid": "85133565-6bba-4083-8fcd-9187754de098"
+            },
+            {
+                "@class": "TextureExport",
+                "file_path": ".\\WorkSpace\\Results\\01_Gradation\\Result.png",
+                "texture": "0206ce9a-30f0-4196-beae-ceb436602d98",
+                "override": true,
+                "name": "export",
+                "guid": "d4c2e15c-30d7-487c-a4b0-b96ef8a61335"
+            }
+        ],
+        "name": "start",
+        "guid": "7ec10dce-7d58-4074-97f5-9ab5c85261f4"
+    },
+    "guid": "5cdc65d5-a9ca-4fbf-966f-27c35a091318"
+}
