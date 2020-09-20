@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 
 !/GIP/[Bb]in/RuntimeTest/
+/GIP/[Bb]in/RuntimeTest/WorkSpace/Results/
