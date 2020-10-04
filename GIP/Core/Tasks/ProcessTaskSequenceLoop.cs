@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Reactive.Bindings;
 using GIP.IO.Json;
 using GIP.IO.Project;
 
@@ -9,7 +10,16 @@ namespace GIP.Core.Tasks
     {
         public override bool Execute(ILogger inLogger)
         {
-            return base.Execute(inLogger);
+            LoopIndex = 0;
+            while (DoContinue) {
+                inLogger.PushLog(this, new LogData(LogLevel.Information, $"loop[{LoopIndex++}]"));
+                if (!base.Execute(inLogger)) {
+                    inLogger.PushLog(this, new LogData(LogLevel.Information, $"braek loop by failer task."));
+                    return false;
+                }
+            }
+            inLogger.PushLog(this, new LogData(LogLevel.Information, $"Finish loop."));
+            return true;
         }
 
         protected abstract bool DoContinue { get; }
@@ -20,10 +30,10 @@ namespace GIP.Core.Tasks
 
     public class ProcessTaskSequenceCountingForLoop : ProcessTaskSequenceLoop
     {
-        public int MaxLoopCount
-        { get; set; } = 10;
+        public ReactiveProperty<int> MaxLoopCount
+        { get; } = new ReactiveProperty<int>(10);
 
-        protected override bool DoContinue => LoopIndex < MaxLoopCount;
+        protected override bool DoContinue => LoopIndex < MaxLoopCount.Value;
 
         protected override IEnumerable<Type> ReadableJsonClass => new Type[] { typeof(JsonTaskSequenceCountingForLoop) };
         public override bool ReadJson(JsonDataObject inSource, JsonDataReadBuffer inBuffer, ILogger inLogger)
@@ -33,7 +43,7 @@ namespace GIP.Core.Tasks
             }
 
             var src = inSource as JsonTaskSequenceCountingForLoop;
-            MaxLoopCount = src.MaxLoopCount;
+            MaxLoopCount.Value = src.MaxLoopCount;
             return true;
         }
 
@@ -43,7 +53,7 @@ namespace GIP.Core.Tasks
             base.ExportToJson(inDst);
 
             var dst = inDst as JsonTaskSequenceCountingForLoop;
-            dst.MaxLoopCount = MaxLoopCount;
+            dst.MaxLoopCount = MaxLoopCount.Value;
             return;
         }
     }

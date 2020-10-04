@@ -94,6 +94,18 @@ namespace GIP.Controls.ProcessTaskEditor
             return;
         }
 
+        private void ComboShaderSource_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Task != null) {
+                if (ComboShaderSource.SelectedItem == null) {
+                    Task.Shader.Value = null;
+                } else {
+                    Task.Shader.Value = (ComboShaderSource.SelectedItem as ComboShaderItem).Data;
+                }                
+            }
+            return;
+        }
+
         private void CollectShaderSourceComboBox(IEnumerable<ComputeShader> inShaders)
         {
             ComputeShader currentSource = null;

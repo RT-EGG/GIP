@@ -245,6 +245,7 @@
             this.ComboShaderSource.Name = "ComboShaderSource";
             this.ComboShaderSource.Size = new System.Drawing.Size(315, 20);
             this.ComboShaderSource.TabIndex = 1;
+            this.ComboShaderSource.SelectedIndexChanged += new System.EventHandler(this.ComboShaderSource_SelectedIndexChanged);
             // 
             // Ctrl_ComputeTaskEditor
             // 

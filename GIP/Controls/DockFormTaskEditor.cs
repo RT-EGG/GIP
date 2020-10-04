@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.IO;
 using System.Windows.Forms;
-using GIP.Common;
 using GIP.Core;
 using GIP.Core.Tasks;
 using GIP.Controls.ProcessTaskEditor;
@@ -72,10 +68,12 @@ namespace GIP.Controls
         private bool IsCurrentTaskFor(ProcessTask inTask)
         {
             switch (inTask) {
-                case ComputeTask compute:
+                case ComputeTask _:
                     return m_Editor is Ctrl_ComputeTaskEditor;
-                case TextureExportTask export:
+                case TextureExportTask _:
                     return m_Editor is Ctrl_TextureExportTaskEditor;
+                case ProcessTaskSequenceCountingForLoop _:
+                    return m_Editor is Ctrl_CountingForLoopTaskEditor;
             }
             return false;
         }
@@ -83,10 +81,12 @@ namespace GIP.Controls
         private Ctrl_ProcessTaskEditor CreateEditorFor(ProcessTask inTask)
         {
             switch (inTask) {
-                case ComputeTask compute:
+                case ComputeTask _:
                     return new Ctrl_ComputeTaskEditor();
-                case TextureExportTask export:
+                case TextureExportTask _:
                     return new Ctrl_TextureExportTaskEditor();
+                case ProcessTaskSequenceCountingForLoop _:
+                    return new Ctrl_CountingForLoopTaskEditor();
             }
             return null;
         }

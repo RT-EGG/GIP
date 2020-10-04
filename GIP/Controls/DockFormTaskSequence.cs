@@ -118,6 +118,8 @@ namespace GIP.Controls
                 task = new ComputeTask();
             } else if (sender == MenuItem_NewTask_ExportTexture) {
                 task = new TextureExportTask();
+            } else if (sender == MenuItem_NewTask_CountingLoop) {
+                task = new ProcessTaskSequenceCountingForLoop();
             } else {
                 throw new InvalidProgramException($"Unknown sender [{sender.GetType()}].");
             }
@@ -141,12 +143,14 @@ namespace GIP.Controls
                 task = new ComputeTask();
             } else if (sender == MenuItem_InsertTask_ExportTexture) {
                 task = new TextureExportTask();
+            } else if (sender == MenuItem_InsertTask_CountingLoop) {
+                task = new ProcessTaskSequenceCountingForLoop();
             } else {
                 throw new InvalidProgramException($"Unknown sender [{sender.GetType()}].");
             }
 
-            TreeNodeTaskSequence parent = (tvTaskSequence.SelectedNode as TreeNodeTaskSequence);
-            AddTask(task, (parent.Parent as TreeNodeTaskSequence).Data, tvTaskSequence.SelectedNode.Index);
+            TreeNodeTaskSequence parent = tvTaskSequence.SelectedNode.Parent as TreeNodeTaskSequence;
+            AddTask(task, parent.Data, tvTaskSequence.SelectedNode.Index);
             return;
         }
 
@@ -178,7 +182,7 @@ namespace GIP.Controls
         private void RequestTreeViewPopup(Point inLocation, TreeNode inNode)
         {
             MenuItem_NewTask.Visible = inNode is TreeNodeTaskSequence;
-            MenuItem_InsertTask.Visible = inNode.Index != 0;
+            MenuItem_InsertTask.Visible = inNode != tvTaskSequence.Nodes[0];
             MenuItem_Delete.Visible = inNode != tvTaskSequence.Nodes[0];
             MenuTreeNodePopup.Show(inLocation);
             return;
