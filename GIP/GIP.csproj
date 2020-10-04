@@ -276,6 +276,7 @@
       <DependentUpon>Ctrl_VariableValueView.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\ComputeShader.cs" />
+    <Compile Include="Core\NumericSource.cs" />
     <Compile Include="Core\ProjectsRunner.cs" />
     <Compile Include="Core\Tasks\ComputeTask.cs" />
     <Compile Include="Core\DataObjectBase.cs" />
