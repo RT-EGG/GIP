@@ -6,7 +6,7 @@ namespace GIP.IO.Json
 {
     public interface IJsonDataReferenceDictionary : IReadOnlyDictionary<Guid, DataObjectBase>
     {
-        bool TryGetValueAs<T>(Guid inKey, out T outValue, ILogger inLogger) where T : DataObjectBase;
+        bool TryGetValueAs<T>(Guid inKey, out T outValue, ILogger inLogger) where T : class, IDataObjectBase;
     }
     public delegate void JsonReferenceComplementProc(IJsonDataReferenceDictionary inDictionary, ILogger inLogger);
 
@@ -38,7 +38,7 @@ namespace GIP.IO.Json
 
     public class JsonDataReferenceDictionary : Dictionary<Guid, DataObjectBase>, IJsonDataReferenceDictionary
     {
-        public bool TryGetValueAs<T>(Guid inKey, out T outValue, ILogger inLogger) where T : DataObjectBase
+        public bool TryGetValueAs<T>(Guid inKey, out T outValue, ILogger inLogger) where T : class, IDataObjectBase
         {
             outValue = null;
 

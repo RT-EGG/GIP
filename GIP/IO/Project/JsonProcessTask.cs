@@ -58,4 +58,13 @@ namespace GIP.IO.Project
 
         public override string GetSubClassIdentifier() => "Sequence";
     }
+
+    public class JsonTaskSequenceCountingForLoop : JsonTaskSequence
+    {
+        [JsonProperty(PropertyName = "max_loop_count")]
+        public int MaxLoopCount
+        { get; set; } = 10;
+
+        public override string GetSubClassIdentifier() => "CountingFor";
+    }
 }

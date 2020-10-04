@@ -5,27 +5,7 @@ using GIP.IO.Project;
 
 namespace GIP.Core.Condition
 {
-    public interface INumericSource
-    {
-
-    }
-
-    public interface IIntSource : INumericSource
-    {
-        int Value { get; }
-    }
-
-    public class IntSource : IIntSource
-    {
-        public int Value
-        { get; set; } = 0;
-    }
-
-    public interface IFloatSource : INumericSource
-    {
-        float Value { get; }
-    }
-
+   
     public abstract class NumericComparisonCondition : ConditionBase
     {
         public static NumericComparisonCondition CreateByType(string inType)

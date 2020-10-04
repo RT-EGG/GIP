@@ -24,6 +24,8 @@ namespace GIP.Core.Tasks
                     return new ComputeTask();
                 case JsonTextureExportTask _:
                     return new TextureExportTask();
+                case JsonTaskSequenceCountingForLoop _:
+                    return new ProcessTaskSequenceCountingForLoop();
             }
             return null;
         }

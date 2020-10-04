@@ -14,6 +14,8 @@ namespace GIP.IO.Json.Converter
                     return new JsonTextureExportTask();
                 case "Sequence":
                     return new JsonTaskSequence();
+                case "CountingFor":
+                    return new JsonTaskSequenceCountingForLoop();
                 default:
                     throw new JsonReaderException();
             }
