@@ -5,7 +5,7 @@ using GIP.IO.Project;
 
 namespace GIP.Core.Condition
 {
-    public interface INumericSource : IDataObjectBase
+    public interface INumericSource
     {
 
     }
@@ -13,6 +13,12 @@ namespace GIP.Core.Condition
     public interface IIntSource : INumericSource
     {
         int Value { get; }
+    }
+
+    public class IntSource : IIntSource
+    {
+        public int Value
+        { get; set; } = 0;
     }
 
     public interface IFloatSource : INumericSource
@@ -69,16 +75,6 @@ namespace GIP.Core.Condition
             var src = inSource as JsonNumericComparisonCondition;
             Operator = src.Operator;
 
-            inBuffer.RegisterComplementTask((data, logger) => {
-                if (data.TryGetValueAs<INumericSource>(src.LeftSource, out var left, logger)) {
-                    Left = left;
-                }
-                if (data.TryGetValueAs<INumericSource>(src.RightSource, out var right, logger)) {
-                    Right = right;
-                }
-                return;
-            });
-
             return true;
         }
 
@@ -90,8 +86,6 @@ namespace GIP.Core.Condition
             var dst = inDst as JsonNumericComparisonCondition;
             dst.Type = NumericType;
             dst.Operator = Operator;
-            dst.LeftSource  = (Left  == null) ? Guid.Empty : Left.GUID;
-            dst.RightSource = (Right == null) ? Guid.Empty : Right.GUID;
             return;
         }
     }

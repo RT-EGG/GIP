@@ -2,6 +2,13 @@
 
 namespace GIP.Common
 {
+    public class UnknownEnumValueException<T> : Exception where T : Enum
+    {
+        public UnknownEnumValueException(T inValue)
+            : base ($"\"{(int)(object)inValue}\" is not value of {typeof(T).Name}.")
+        { }
+    }
+
     public class UniformVariableNotBindableException : Exception
     {
         public UniformVariableNotBindableException(string inMessage)

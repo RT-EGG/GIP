@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -6,7 +7,6 @@ using Reactive.Bindings;
 using GIP.Common;
 using GIP.IO.Json;
 using GIP.IO.Project;
-using System;
 
 namespace GIP.Core.Tasks
 {
