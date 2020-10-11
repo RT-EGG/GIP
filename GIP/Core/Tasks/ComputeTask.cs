@@ -11,6 +11,15 @@ namespace GIP.Core.Tasks
 {
     public class ComputeTask : ProcessTask
     {
+        public ComputeTask()
+        {
+            Shader.Subscribe(c => {
+                if (c != null) {
+                    c.OnFileDeleted += OnShaderFileDeleted;
+                }
+            });
+        }
+
         public override bool Execute(ILogger inLogger)
         {
             if (Shader.Value == null) {
@@ -77,6 +86,13 @@ namespace GIP.Core.Tasks
                 DispatchGroupSizeY.Value,
                 DispatchGroupSizeZ.Value
                 );
+            return;
+        }
+
+        private void OnShaderFileDeleted(ComputeShader inValue)
+        {
+            inValue.OnFileDeleted -= OnShaderFileDeleted;
+            Shader.Value = null;
             return;
         }
 

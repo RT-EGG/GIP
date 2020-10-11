@@ -84,7 +84,7 @@ namespace GIP.Controls
         {
             if (FindNodeFor(inShader.FilePath.Value, out var nodePath)) {
                 var node = nodePath.Last().Item2;
-                node.Parent.Nodes.Remove(node);
+                TreeView.InvokeOnUIThread(() => node.Parent.Nodes.Remove(node));
             }
             return;
         }

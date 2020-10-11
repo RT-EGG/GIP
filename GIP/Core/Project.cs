@@ -7,6 +7,7 @@ using GIP.Core.Tasks;
 using GIP.IO.Project;
 using GIP.IO.Json;
 using System;
+using System.Collections.Specialized;
 
 namespace GIP.Core
 {
@@ -29,8 +30,8 @@ namespace GIP.Core
             }
         }
 
-        public ReactiveCollection<ComputeShader> ComputeShaders
-        { get; } = new ReactiveCollection<ComputeShader>();
+        public ComputeShaderList ComputeShaders
+        { get; } = new ComputeShaderList();
         public VariableList Variables
         { get; } = new VariableList();
         public ProcessTaskSequence TaskSequence

@@ -282,6 +282,7 @@
       <DependentUpon>Ctrl_VariableValueView.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\ComputeShader.cs" />
+    <Compile Include="Core\ComputeShaderList.cs" />
     <Compile Include="Core\Condition\ComparisonOperator.cs" />
     <Compile Include="Core\Condition\ConditionBase.cs" />
     <Compile Include="Core\Condition\NumericComparisonCondition.cs" />

@@ -18,19 +18,26 @@ namespace GIP.Core
         SpirV
     }
 
-    public partial class ComputeShader : DataObjectBase
+    public partial class ComputeShader : DataObjectBase, IFileModificationReactioner
     {
         public ComputeShader(ComputeShaderFileType inFileType, string inFilePath)
             : this()
         {
             FileType = inFileType;
             m_FilePath.Value = inFilePath;
+            FileModificationMonitor.AddModificationReactioner(m_FilePath.Value, this);
             return;
         }
 
         private ComputeShader()
         {
             FilePath = m_FilePath.ToReadOnlyReactiveProperty();
+            return;
+        }
+
+        ~ComputeShader()
+        {
+            FileModificationMonitor.RemoveModificationReactioner(m_FilePath.Value, this);
             return;
         }
 
@@ -63,6 +70,27 @@ namespace GIP.Core
             GL.DeleteProgram(ProgramID);
             return;
         }
+
+        void IFileModificationReactioner.OnFileChanged(FileSystemEventArgs inArgs)
+        {
+            OnFileChanged(this);
+            return;
+        }
+
+        void IFileModificationReactioner.OnFileDeleted(FileSystemEventArgs inArgs)
+        {
+            OnFileDeleted(this);
+            return;
+        }
+
+        void IFileModificationReactioner.OnFileRenamed(RenamedEventArgs inArgs)
+        {
+            m_FilePath.Value = inArgs.FullPath;
+            return;
+        }
+
+        public event ComputeShaderNotifyEvent OnFileChanged;
+        public event ComputeShaderNotifyEvent OnFileDeleted;
 
         public IReadOnlyList<string> Error => m_Errors;
 
