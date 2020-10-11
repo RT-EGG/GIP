@@ -18,7 +18,7 @@ namespace GIP.Core
         SpirV
     }
 
-    public partial class ComputeShader : DataObjectBase, IFileModificationReactioner
+    public partial class ComputeShader : DataObjectBase, IFileModificationReactioner, IDisposable
     {
         public ComputeShader(ComputeShaderFileType inFileType, string inFilePath)
             : this()
@@ -32,12 +32,6 @@ namespace GIP.Core
         private ComputeShader()
         {
             FilePath = m_FilePath.ToReadOnlyReactiveProperty();
-            return;
-        }
-
-        ~ComputeShader()
-        {
-            FileModificationMonitor.RemoveModificationReactioner(m_FilePath.Value, this);
             return;
         }
 
@@ -71,15 +65,33 @@ namespace GIP.Core
             return;
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            return;
+        }
+
+        private bool m_Disposed = false;
+        protected virtual void Dispose(bool inDisposing)
+        {
+            if (!m_Disposed) {
+                if (inDisposing) {
+                    FileModificationMonitor.RemoveModificationReactioner(m_FilePath.Value, this);
+                }
+                m_Disposed = true;
+            }
+            return;
+        }
+
         void IFileModificationReactioner.OnFileChanged(FileSystemEventArgs inArgs)
         {
-            OnFileChanged(this);
+            OnFileChanged?.Invoke(this);
             return;
         }
 
         void IFileModificationReactioner.OnFileDeleted(FileSystemEventArgs inArgs)
         {
-            OnFileDeleted(this);
+            OnFileDeleted?.Invoke(this);
             return;
         }
 

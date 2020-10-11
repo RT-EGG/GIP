@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.IO;
 using System.Windows.Forms;
+using Microsoft.VisualBasic.FileIO;
 using GIP.Core;
 
 namespace GIP.Controls
@@ -113,6 +114,19 @@ namespace GIP.Controls
 
             (node as TreeNodeComputeShader).Data.GLDispose();
             Data.ComputeShaders.Remove((node as TreeNodeComputeShader).Data);
+            return;
+        }
+
+        private void MenuItem_Delete_Click(object sender, EventArgs e)
+        {
+            switch (TreeViewFiles.SelectedNode) {
+                case TreeNodeComputeShader s:
+                    FileSystem.DeleteFile(s.Data.FilePath.Value, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                    break;
+                case TreeNodeDirectory d:
+                    FileSystem.DeleteDirectory(d.DirectoryPath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                    break;
+            }
             return;
         }
 

@@ -19,6 +19,7 @@ namespace GIP.Core
         protected override void RemoveItem(int index)
         {
             this[index].OnFileDeleted -= Shader_OnFileDeleted;
+            this[index].Dispose();
             base.RemoveItem(index);
         }
 
@@ -31,6 +32,7 @@ namespace GIP.Core
         {
             this.ForEach(s => {
                 s.OnFileDeleted -= Shader_OnFileDeleted;
+                s.Dispose();
             });
 
             base.ClearItems();

@@ -89,6 +89,7 @@
             this.MenuItem_Delete.Name = "MenuItem_Delete";
             this.MenuItem_Delete.Size = new System.Drawing.Size(180, 22);
             this.MenuItem_Delete.Text = "Delete";
+            this.MenuItem_Delete.Click += new System.EventHandler(this.MenuItem_Delete_Click);
             // 
             // MenuItem_OpenInExplorer
             // 
