@@ -30,6 +30,8 @@
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.MenuItem_File = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_NewProject = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_OpenFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItem_Open_Project = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_SaveFile = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_Save_Project = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_Save_CurrentShaderFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,8 +45,6 @@
             this.MenuItem_UniformVariables = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_TextureView = new System.Windows.Forms.ToolStripMenuItem();
             this.PanelDockMain = new WeifenLuo.WinFormsUI.Docking.DockPanel();
-            this.MenuItem_OpenFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuItem_Open_Project = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,9 +72,24 @@
             // MenuItem_NewProject
             // 
             this.MenuItem_NewProject.Name = "MenuItem_NewProject";
-            this.MenuItem_NewProject.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_NewProject.Size = new System.Drawing.Size(138, 22);
             this.MenuItem_NewProject.Text = "New project";
             this.MenuItem_NewProject.Click += new System.EventHandler(this.MenuItem_NewProject_Click);
+            // 
+            // MenuItem_OpenFile
+            // 
+            this.MenuItem_OpenFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItem_Open_Project});
+            this.MenuItem_OpenFile.Name = "MenuItem_OpenFile";
+            this.MenuItem_OpenFile.Size = new System.Drawing.Size(138, 22);
+            this.MenuItem_OpenFile.Text = "Open";
+            // 
+            // MenuItem_Open_Project
+            // 
+            this.MenuItem_Open_Project.Name = "MenuItem_Open_Project";
+            this.MenuItem_Open_Project.Size = new System.Drawing.Size(111, 22);
+            this.MenuItem_Open_Project.Text = "Project";
+            this.MenuItem_Open_Project.Click += new System.EventHandler(this.MenuItem_Open_Project_Click);
             // 
             // MenuItem_SaveFile
             // 
@@ -82,7 +97,7 @@
             this.MenuItem_Save_Project,
             this.MenuItem_Save_CurrentShaderFile});
             this.MenuItem_SaveFile.Name = "MenuItem_SaveFile";
-            this.MenuItem_SaveFile.Size = new System.Drawing.Size(180, 22);
+            this.MenuItem_SaveFile.Size = new System.Drawing.Size(138, 22);
             this.MenuItem_SaveFile.Text = "Save";
             // 
             // MenuItem_Save_Project
@@ -181,21 +196,6 @@
             this.PanelDockMain.Name = "PanelDockMain";
             this.PanelDockMain.Size = new System.Drawing.Size(1306, 524);
             this.PanelDockMain.TabIndex = 4;
-            // 
-            // MenuItem_OpenFile
-            // 
-            this.MenuItem_OpenFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuItem_Open_Project});
-            this.MenuItem_OpenFile.Name = "MenuItem_OpenFile";
-            this.MenuItem_OpenFile.Size = new System.Drawing.Size(180, 22);
-            this.MenuItem_OpenFile.Text = "Open";
-            // 
-            // MenuItem_Open_Project
-            // 
-            this.MenuItem_Open_Project.Name = "MenuItem_Open_Project";
-            this.MenuItem_Open_Project.Size = new System.Drawing.Size(180, 22);
-            this.MenuItem_Open_Project.Text = "Project";
-            this.MenuItem_Open_Project.Click += new System.EventHandler(this.MenuItem_Open_Project_Click);
             // 
             // FormMain
             // 

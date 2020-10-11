@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
+using System.Text;
 using WeifenLuo.WinFormsUI.Docking;
 using GIP.Core;
 using GIP.Common;
 using GIP.Controls;
 using GIP.IO.Json;
 using GIP.IO.Project;
+using GIP.IO;
 
 namespace GIP
 {
@@ -98,10 +100,23 @@ namespace GIP
         {
             m_DockForms = new MainDockForms();
 
+            JsonWindowLayout layout;
             if (File.Exists(LayoutFilePath)) {
-                PanelDockMain.LoadFromXml(LayoutFilePath, new DeserializeDockContent(m_DockForms.Find));
+                layout = JsonSerializable.ImportFromFile<JsonWindowLayout>(LayoutFilePath);
             } else {
-                m_DockForms.ShowAll(PanelDockMain);
+                layout = JsonSerializable.ImportFromText<JsonWindowLayout>(Properties.Resources.DefaultLayout_json);
+            }
+
+            if (layout.Location != null) {
+                Location = (System.Drawing.Point)layout.Location;
+            }
+            if (layout.Size != null) {
+                Size = (System.Drawing.Size)layout.Size;
+            }
+            if (layout.DockFormLayout != null) {
+                using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(layout.DockFormLayout))) {
+                    PanelDockMain.LoadFromXml(stream, new DeserializeDockContent(m_DockForms.Find));
+                }
             }
 
             UIEventBridge.Register(m_DockForms);
@@ -128,7 +143,18 @@ namespace GIP
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            PanelDockMain.SaveAsXml(LayoutFilePath);
+            JsonWindowLayout layout = new JsonWindowLayout();
+            layout.Location = (JsonVector2i)this.Location;
+            layout.Size = (JsonVector2i)this.Size;
+            using (MemoryStream stream = new MemoryStream()) {
+                PanelDockMain.SaveAsXml(stream, Encoding.UTF8);
+
+                stream.Position = 0;
+                using (StreamReader reader = new StreamReader(stream)) {
+                    layout.DockFormLayout = reader.ReadToEnd();
+                }
+            }
+            layout.ExportToFile(LayoutFilePath);
             return;
         }
 
@@ -216,6 +242,6 @@ namespace GIP
         { get; set; } = new MainFormEventBridge();
         private Project m_Project = null;
 
-        private string LayoutFilePath => $"{AppDomain.CurrentDomain.BaseDirectory}/layout.xml";
+        private string LayoutFilePath => $"{AppDomain.CurrentDomain.BaseDirectory}/layout.json";
     }
 }

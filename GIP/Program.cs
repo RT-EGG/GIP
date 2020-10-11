@@ -42,7 +42,14 @@ namespace GIP
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMain(arguments));
+
+            var form = new FormMain(arguments);
+            try {
+                Application.Run(form);
+
+            } catch (Exception e) {
+                Logger.DefaultLogger.PushLog(null, new LogExceptionData(e));
+            }
         }
     }
 }

@@ -308,7 +308,9 @@
     <Compile Include="IO\Json\JsonDataObject.cs" />
     <Compile Include="IO\Json\JsonDataReadBuffer.cs" />
     <Compile Include="IO\Json\JsonSerializable.cs" />
+    <Compile Include="IO\Json\JsonVector2i.cs" />
     <Compile Include="IO\Json\JsonVector3i.cs" />
+    <Compile Include="IO\JsonWindowLayout.cs" />
     <Compile Include="IO\Json\NewtonsoftJsonExtensions.cs" />
     <Compile Include="IO\Project\JsonComputeShader.cs" />
     <Compile Include="IO\Project\JsonNumericComparisonCondition.cs" />
@@ -405,6 +407,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
@@ -427,6 +430,8 @@
       <Name>rtUtility</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\DefaultLayout.json.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
