@@ -116,6 +116,17 @@ namespace GIP.Controls
             return;
         }
 
+        private void MenuItem_OpenInExplorer_Click(object sender, EventArgs e)
+        {
+            if (!(TreeViewFiles.SelectedNode is TreeNodeDirectory)) {
+                return;
+            }
+
+            var path = (TreeViewFiles.SelectedNode as TreeNodeDirectory).DirectoryPath;
+            System.Diagnostics.Process.Start(path);
+            return;
+        }
+
         private void TreeViewFiles_BeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
             //
@@ -195,8 +206,10 @@ namespace GIP.Controls
             MenuItem_CreateNewTextFile.Visible = inNode is TreeNodeDirectory;
             MenuItem_RemoveFile.Visible = inNode is TreeNodeComputeShader;
             MenuItem_Delete.Visible = !(inNode is TreeNodeProjectFile);
+            MenuItem_OpenInExplorer.Visible = inNode is TreeNodeDirectory;
 
             MenuTreeNodePopup.Show(inLocation);
+            return;
         }
 
         private Project m_Project = null;
