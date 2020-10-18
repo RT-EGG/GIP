@@ -18,14 +18,13 @@ namespace GIP.Core
         SpirV
     }
 
-    public partial class ComputeShader : DataObjectBase, IFileModificationReactioner, IDisposable
+    public partial class ComputeShader : DataObjectBase
     {
         public ComputeShader(ComputeShaderFileType inFileType, string inFilePath)
             : this()
         {
             FileType = inFileType;
             m_FilePath.Value = inFilePath;
-            FileModificationMonitor.AddModificationReactioner(m_FilePath.Value, this);
             return;
         }
 
@@ -65,45 +64,6 @@ namespace GIP.Core
             return;
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            return;
-        }
-
-        private bool m_Disposed = false;
-        protected virtual void Dispose(bool inDisposing)
-        {
-            if (!m_Disposed) {
-                if (inDisposing) {
-                    FileModificationMonitor.RemoveModificationReactioner(m_FilePath.Value, this);
-                }
-                m_Disposed = true;
-            }
-            return;
-        }
-
-        void IFileModificationReactioner.OnFileChanged(FileSystemEventArgs inArgs)
-        {
-            OnFileChanged?.Invoke(this);
-            return;
-        }
-
-        void IFileModificationReactioner.OnFileDeleted(FileSystemEventArgs inArgs)
-        {
-            OnFileDeleted?.Invoke(this);
-            return;
-        }
-
-        void IFileModificationReactioner.OnFileRenamed(RenamedEventArgs inArgs)
-        {
-            m_FilePath.Value = inArgs.FullPath;
-            return;
-        }
-
-        public event ComputeShaderNotifyEvent OnFileChanged;
-        public event ComputeShaderNotifyEvent OnFileDeleted;
-
         public IReadOnlyList<string> Error => m_Errors;
 
         public ComputeShaderFileType FileType
@@ -129,6 +89,16 @@ namespace GIP.Core
             dst.FileType = FileType;
             dst.FilePath = FilePath.Value;
             return;
+        }
+
+        public void OnDelete(string inPath)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnRestore(string inPath)
+        {
+            throw new NotImplementedException();
         }
     }
 

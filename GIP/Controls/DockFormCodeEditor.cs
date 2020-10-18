@@ -1,5 +1,5 @@
-﻿using GIP.Core;
-using System.IO;
+﻿using System.IO;
+using GIP.Core;
 
 namespace GIP.Controls
 {
@@ -16,12 +16,13 @@ namespace GIP.Controls
             get => m_Shader;
             set {
                 try {
-                    if (m_Shader == value) {
-                        return;
-                    }
+                    //if (m_Shader == value) {
+                    //    return;
+                    //}
 
                     if (m_Shader != null) {
-                        if (m_Shader.FileType == ComputeShaderFileType.Text) {
+                        if ((m_Shader != value) && TextBoxCodeEditor.Enabled &&
+                            (m_Shader.FileType == ComputeShaderFileType.Text)) {
                             SaveSource(m_Shader.FilePath.Value);
                         }
                     }
@@ -57,8 +58,14 @@ namespace GIP.Controls
 
         private void LoadSource(string inPath)
         {
-            using (StreamReader reader = new StreamReader(new FileStream(inPath, FileMode.Open, FileAccess.Read))) {
-                TextBoxCodeEditor.Text= reader.ReadToEnd();
+            if (File.Exists(inPath)) {
+                using (StreamReader reader = new StreamReader(new FileStream(inPath, FileMode.Open, FileAccess.Read))) {
+                    TextBoxCodeEditor.Text = reader.ReadToEnd();
+                }
+                TextBoxCodeEditor.Enabled = true;
+            } else {
+                TextBoxCodeEditor.Text = "File is missed.";
+                TextBoxCodeEditor.Enabled = false;
             }
             return;
         }
@@ -74,26 +81,6 @@ namespace GIP.Controls
         protected override string GetPersistString()
         {
             return MainDockFormType.CodeEditor.ToPersistString();
-        }
-
-        private void TextBoxCodeEditor_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
-        {
-            if (m_Shader == null) {
-                return;
-            }
-
-            switch (e.KeyCode) {
-                case System.Windows.Forms.Keys.S:
-                    if (e.Control) {
-                        SaveSource(m_Shader.FilePath.Value);
-                    }
-                    break;
-            }
-        }
-
-        private void TextBoxCodeEditor_TextChanged(object sender, System.EventArgs e)
-        {
-            return;
         }
 
         private void ButtonCompile_Click(object sender, System.EventArgs e)

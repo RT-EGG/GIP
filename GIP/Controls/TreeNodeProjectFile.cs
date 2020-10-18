@@ -8,11 +8,14 @@ using GIP.Common;
 
 namespace GIP.Controls
 {
-    class TreeNodeProjectFile : TreeNode
+    class TreeNodeProjectFile : DockFormProjectFileView.FileTreeNode, IPathExistenceWatchReactioner
     {
-        public TreeNodeProjectFile(Project inData)
+        public TreeNodeProjectFile(TreeNodeCollection inParent, Project inData)
         {
+            inParent.Add(this);
+
             Data = inData;
+            PathExistenceWatcher.Singleton.RegisterWatcher(Data.FilePath.Value, this);
             return;
         }
 
@@ -67,14 +70,11 @@ namespace GIP.Controls
         {
             string path = inShader.FilePath.Value.UnifyPathDelimitter().RemoveExtraDelimitter();
             TreeNode parent = FindOrCreateNodeForDirectory(Path.GetDirectoryName(path));
-            TreeNode node = new TreeNodeComputeShader(inShader);
             if (parent == null) {
-                // as absolute path
-                node.Text = path;
-                Nodes.Add(node);
+                new TreeNodeComputeShader(Nodes, inShader);
+                Expand();
             } else {
-                node.Text = Path.GetFileName(path);
-                parent.Nodes.Add(node);
+                new TreeNodeComputeShader(parent, inShader);
                 parent.Expand();
             }
             return;
@@ -139,8 +139,7 @@ namespace GIP.Controls
                         path += $"\\{name}";
 
                         if (node == null) {
-                            node = new TreeNodeDirectory(path);
-                            parent.Nodes.Add(node);
+                            node = new TreeNodeDirectory(parent, path);
                             continue;
                         }
                     }
@@ -167,8 +166,20 @@ namespace GIP.Controls
         {
             Nodes.Clear();
             foreach (var file in Directory.GetDirectories(Path.GetDirectoryName(Data.FilePath.Value), "*", SearchOption.TopDirectoryOnly)) {
-                Nodes.Add(new TreeNodeDirectory(file));
+                new TreeNodeDirectory(this, file);
             }
+            return;
+        }
+
+        void IPathExistenceWatchReactioner.OnDelete(string inPath)
+        {
+            SetIcon(DockFormProjectFileView.NodeIcon.MissingProjectFile);
+            return;
+        }
+
+        void IPathExistenceWatchReactioner.OnRestore(string inPath)
+        {
+            SetIcon(DockFormProjectFileView.NodeIcon.ProjectFile);
             return;
         }
 

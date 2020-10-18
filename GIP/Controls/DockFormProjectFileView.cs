@@ -4,12 +4,24 @@ using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using Microsoft.VisualBasic.FileIO;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using GIP.Common;
 using GIP.Core;
 
 namespace GIP.Controls
 {
     public partial class DockFormProjectFileView : WeifenLuo.WinFormsUI.Docking.DockContent
     {
+        public enum NodeIcon
+        {
+            ProjectFile = 0,
+            MissingProjectFile,
+            ExistDirectory,
+            MissingDirectory,
+            ExistTextFile,
+            MissingTextFile
+        }
+
         public event ComputeShaderNotifyEvent OnComputeShaderSelect;
 
         public DockFormProjectFileView()
@@ -33,7 +45,7 @@ namespace GIP.Controls
                         return;
                     }
 
-                    TreeViewFiles.Nodes.Add(new TreeNodeProjectFile(m_Project));
+                    new TreeNodeProjectFile(TreeViewFiles.Nodes, m_Project);
                     TreeViewFiles.Nodes[0].Expand();
 
                 } catch (Exception e) {
@@ -105,6 +117,19 @@ namespace GIP.Controls
             return;
         }
 
+        private void MenuItem_AddExistingDirectory_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.InitialDirectory = TreeViewFiles.SelectedNode is TreeNodeDirectory
+                                        ? (TreeViewFiles.SelectedNode as TreeNodeDirectory).DirectoryPath
+                                        : Path.GetDirectoryName(Data.FilePath.Value);
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok) {
+                (TreeViewFiles.Nodes[0] as TreeNodeProjectFile).FindNodeFor(dialog.FileName);
+            }
+            return;
+        }
+
         private void MenuItem_RemoveFile_Click(object sender, EventArgs e)
         {
             var node = TreeViewFiles.SelectedNode;
@@ -143,7 +168,8 @@ namespace GIP.Controls
 
         private void TreeViewFiles_BeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
-            //
+            e.CancelEdit = true;
+            return;
         }
 
         private void TreeViewFiles_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
@@ -217,6 +243,7 @@ namespace GIP.Controls
         private void RequestTreeViewPopup(Point inLocation, TreeNode inNode)
         {
             MenuItem_AddExistingFile.Visible = inNode is TreeNodeDirectory;
+            MenuItem_AddExistingDirectory.Visible = inNode is TreeNodeDirectory;
             MenuItem_CreateNewTextFile.Visible = inNode is TreeNodeDirectory;
             MenuItem_RemoveFile.Visible = inNode is TreeNodeComputeShader;
             MenuItem_Delete.Visible = !(inNode is TreeNodeProjectFile);
@@ -227,5 +254,18 @@ namespace GIP.Controls
         }
 
         private Project m_Project = null;
+
+        public class FileTreeNode : TreeNode
+        {
+            public void SetIcon(NodeIcon inValue)
+            {
+                TreeView.InvokeOnUIThread(() => {
+                    ImageIndex = (int)inValue;
+                    SelectedImageIndex = ImageIndex;
+                    TreeView.Invalidate();
+                });
+                return;
+            }
+        }
     }
 }

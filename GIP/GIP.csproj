@@ -81,6 +81,12 @@
       <HintPath>..\packages\CommandLineParser.2.9.0-preview1\lib\net461\CommandLine.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -140,7 +146,7 @@
     <Compile Include="Common\DisposableObject.cs" />
     <Compile Include="Common\Extensions\DockPanelSuiteExtensions.cs" />
     <Compile Include="Common\Exception.cs" />
-    <Compile Include="Common\FileModificationMonitor.cs" />
+    <Compile Include="Common\PathExistenceWatcher.cs" />
     <Compile Include="Common\GLDisposable.cs" />
     <Compile Include="Common\Extensions\ListViewExtensions.cs" />
     <Compile Include="Common\Extensions\StringExtensions.cs" />

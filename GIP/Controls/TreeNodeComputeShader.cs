@@ -7,11 +7,29 @@ using GIP.Core;
 
 namespace GIP.Controls
 {
-    class TreeNodeComputeShader : TreeNode
+    class TreeNodeComputeShader : DockFormProjectFileView.FileTreeNode, IPathExistenceWatchReactioner
     {
-        public TreeNodeComputeShader(ComputeShader inData)
+        public TreeNodeComputeShader(TreeNode inParent, ComputeShader inData)
+            : this()
         {
+            inParent.Nodes.Add(this);
             Data = inData;
+            PathExistenceWatcher.Singleton.RegisterWatcher(Data.FilePath.Value, this);
+            return;
+        }
+
+        public TreeNodeComputeShader(TreeNodeCollection inParent, ComputeShader inData)
+            : this()
+        {
+            inParent.Add(this);
+            Data = inData;
+            PathExistenceWatcher.Singleton.RegisterWatcher(Data.FilePath.Value, this);
+            return;
+        }
+
+        private TreeNodeComputeShader()
+        {
+            ImageIndex = (int)DockFormProjectFileView.NodeIcon.ExistTextFile;
             return;
         }
 
@@ -27,14 +45,26 @@ namespace GIP.Controls
 
                 m_Data = value;
                 if (m_Data == null) {
-                    Text = "<N/A>";
+                    TreeView.InvokeOnUIThread(() => Text = "<N/A>");
                 } else {
                     m_Subscription.Add(m_Data.FilePath.Subscribe(path => {
-                        Text = Path.GetFileName(m_Data.FilePath.Value);
+                        TreeView.InvokeOnUIThread(() => Text = Path.GetFileName(m_Data.FilePath.Value));
                     }));
                 }
                 return;
             }
+        }
+
+        void IPathExistenceWatchReactioner.OnDelete(string inPath)
+        {
+            SetIcon(DockFormProjectFileView.NodeIcon.MissingTextFile);
+            return;
+        }
+
+        void IPathExistenceWatchReactioner.OnRestore(string inPath)
+        {
+            SetIcon(DockFormProjectFileView.NodeIcon.ExistTextFile);
+            return;
         }
 
         private ComputeShader m_Data = null;

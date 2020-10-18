@@ -28,23 +28,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.TextBoxCodeEditor = new GIP.Controls.ComputeShaderCodeBox(this.components);
             this.PanelCompile = new System.Windows.Forms.Panel();
             this.ButtonCompile = new System.Windows.Forms.Button();
+            this.TextBoxCodeEditor = new GIP.Controls.ComputeShaderCodeBox(this.components);
             this.PanelCompile.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // TextBoxCodeEditor
-            // 
-            this.TextBoxCodeEditor.AcceptsTab = true;
-            this.TextBoxCodeEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TextBoxCodeEditor.Location = new System.Drawing.Point(0, 0);
-            this.TextBoxCodeEditor.Multiline = true;
-            this.TextBoxCodeEditor.Name = "TextBoxCodeEditor";
-            this.TextBoxCodeEditor.Size = new System.Drawing.Size(328, 266);
-            this.TextBoxCodeEditor.TabIndex = 0;
-            this.TextBoxCodeEditor.TextChanged += new System.EventHandler(this.TextBoxCodeEditor_TextChanged);
-            this.TextBoxCodeEditor.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TextBoxCodeEditor_KeyUp);
             // 
             // PanelCompile
             // 
@@ -66,6 +54,16 @@
             this.ButtonCompile.Text = "Compile";
             this.ButtonCompile.UseVisualStyleBackColor = true;
             this.ButtonCompile.Click += new System.EventHandler(this.ButtonCompile_Click);
+            // 
+            // TextBoxCodeEditor
+            // 
+            this.TextBoxCodeEditor.AcceptsTab = true;
+            this.TextBoxCodeEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TextBoxCodeEditor.Location = new System.Drawing.Point(0, 0);
+            this.TextBoxCodeEditor.Multiline = true;
+            this.TextBoxCodeEditor.Name = "TextBoxCodeEditor";
+            this.TextBoxCodeEditor.Size = new System.Drawing.Size(328, 266);
+            this.TextBoxCodeEditor.TabIndex = 0;
             // 
             // DockFormCodeEditor
             // 
