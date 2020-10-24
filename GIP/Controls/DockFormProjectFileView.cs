@@ -77,11 +77,18 @@ namespace GIP.Controls
 
         private void MenuItem_CreateNewTextFile_Click(object sender, EventArgs e)
         {
-            if (!(TreeViewFiles.SelectedNode is TreeNodeDirectory)) {
-                return;
+            string directory;
+            switch (TreeViewFiles.SelectedNode) {
+                case TreeNodeDirectory d:
+                    directory = d.DirectoryPath;
+                    break;
+                case TreeNodeProjectFile p:
+                    directory = Path.GetDirectoryName(p.Data?.FilePath?.Value);
+                    break;
+                default:
+                    return;
             }
 
-            string directory = (TreeViewFiles.SelectedNode as TreeNodeDirectory).DirectoryPath;
             string path = $"{directory}\\new_file.txt";
             int index = 0;
             while (File.Exists(path)) {
