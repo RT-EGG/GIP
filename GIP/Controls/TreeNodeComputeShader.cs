@@ -7,7 +7,7 @@ using GIP.Core;
 
 namespace GIP.Controls
 {
-    class TreeNodeComputeShader : DockFormProjectFileView.FileTreeNode, IPathExistenceWatchReactioner
+    class TreeNodeComputeShader : DockFormProjectFileView.FileTreeNode, IPathExistenceWatchReactioner, ITreeNodePath
     {
         public TreeNodeComputeShader(TreeNode inParent, ComputeShader inData)
             : this()
@@ -54,6 +54,8 @@ namespace GIP.Controls
                 return;
             }
         }
+
+        string ITreeNodePath.Path => Data?.FilePath?.Value;
 
         void IPathExistenceWatchReactioner.OnDelete(string inPath)
         {

@@ -4,7 +4,7 @@ using GIP.Common;
 
 namespace GIP.Controls
 {
-    class TreeNodeDirectory : DockFormProjectFileView.FileTreeNode, IPathExistenceWatchReactioner
+    class TreeNodeDirectory : DockFormProjectFileView.FileTreeNode, IPathExistenceWatchReactioner, ITreeNodePath
     {
         public TreeNodeDirectory(TreeNodeCollection inParent, string inPath)
             : this(inPath)
@@ -48,5 +48,7 @@ namespace GIP.Controls
 
         public string DirectoryPath
         { get; private set; } = "";
+
+        string ITreeNodePath.Path => DirectoryPath;
     }
 }

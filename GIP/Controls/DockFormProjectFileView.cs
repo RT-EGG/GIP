@@ -157,12 +157,14 @@ namespace GIP.Controls
 
         private void MenuItem_OpenInExplorer_Click(object sender, EventArgs e)
         {
-            if (!(TreeViewFiles.SelectedNode is TreeNodeDirectory)) {
+            if (!(TreeViewFiles.SelectedNode is ITreeNodePath)) {
                 return;
             }
 
-            var path = (TreeViewFiles.SelectedNode as TreeNodeDirectory).DirectoryPath;
-            System.Diagnostics.Process.Start(path);
+            var path = (TreeViewFiles.SelectedNode as ITreeNodePath).Path;
+            if (path != null) {
+                System.Diagnostics.Process.Start("explorer.exe", $"/select,\"{path}\"");
+            }
             return;
         }
 
@@ -242,12 +244,12 @@ namespace GIP.Controls
 
         private void RequestTreeViewPopup(Point inLocation, TreeNode inNode)
         {
-            MenuItem_AddExistingFile.Visible = inNode is TreeNodeDirectory;
-            MenuItem_AddExistingDirectory.Visible = inNode is TreeNodeDirectory;
-            MenuItem_CreateNewTextFile.Visible = inNode is TreeNodeDirectory;
+            MenuItem_AddExistingFile.Visible = (inNode is TreeNodeDirectory) | (inNode is TreeNodeProjectFile);
+            MenuItem_AddExistingDirectory.Visible = (inNode is TreeNodeDirectory) | (inNode is TreeNodeProjectFile);
+            MenuItem_CreateNewTextFile.Visible = (inNode is TreeNodeDirectory) | (inNode is TreeNodeProjectFile);
             MenuItem_RemoveFile.Visible = inNode is TreeNodeComputeShader;
             MenuItem_Delete.Visible = !(inNode is TreeNodeProjectFile);
-            MenuItem_OpenInExplorer.Visible = inNode is TreeNodeDirectory;
+            MenuItem_OpenInExplorer.Visible = inNode is ITreeNodePath;
 
             MenuTreeNodePopup.Show(inLocation);
             return;

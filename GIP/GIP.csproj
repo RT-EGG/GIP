@@ -180,6 +180,7 @@
     <Compile Include="Controls\ProcessTaskEditor\Ctrl_TextureExportTaskEditor.Designer.cs">
       <DependentUpon>Ctrl_TextureExportTaskEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TreeNodePath.cs" />
     <Compile Include="Controls\VariableValues\Ctrl_VariableListView.cs">
       <SubType>UserControl</SubType>
     </Compile>

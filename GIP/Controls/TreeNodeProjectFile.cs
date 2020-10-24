@@ -8,7 +8,7 @@ using GIP.Common;
 
 namespace GIP.Controls
 {
-    class TreeNodeProjectFile : DockFormProjectFileView.FileTreeNode, IPathExistenceWatchReactioner
+    class TreeNodeProjectFile : DockFormProjectFileView.FileTreeNode, IPathExistenceWatchReactioner, ITreeNodePath
     {
         public TreeNodeProjectFile(TreeNodeCollection inParent, Project inData)
         {
@@ -41,6 +41,8 @@ namespace GIP.Controls
                 return;
             }
         }
+
+        string ITreeNodePath.Path => Data?.FilePath?.Value;
 
         private void Data_ShaderSources_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
