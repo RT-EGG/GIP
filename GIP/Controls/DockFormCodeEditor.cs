@@ -72,7 +72,7 @@ namespace GIP.Controls
 
         private void SaveSource(string inPath)
         {
-            using (StreamWriter writer = new StreamWriter(new FileStream(inPath, FileMode.OpenOrCreate, FileAccess.Write))) {
+            using (StreamWriter writer = new StreamWriter(new FileStream(inPath, FileMode.Create, FileAccess.Write))) {
                 writer.Write(TextBoxCodeEditor.Text);
             }
             return;
