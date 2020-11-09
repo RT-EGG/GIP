@@ -10,7 +10,6 @@ namespace GIP.Controls
     class TreeNodeComputeShader : DockFormProjectFileView.FileTreeNode, IPathExistenceWatchReactioner, ITreeNodePath
     {
         public TreeNodeComputeShader(TreeNode inParent, ComputeShader inData)
-            : this()
         {
             inParent.Nodes.Add(this);
             Data = inData;
@@ -19,7 +18,6 @@ namespace GIP.Controls
         }
 
         public TreeNodeComputeShader(TreeNodeCollection inParent, ComputeShader inData)
-            : this()
         {
             inParent.Add(this);
             Data = inData;
@@ -27,9 +25,9 @@ namespace GIP.Controls
             return;
         }
 
-        private TreeNodeComputeShader()
+        public override void DisposePathWatch()
         {
-            ImageIndex = (int)DockFormProjectFileView.NodeIcon.ExistTextFile;
+            PathExistenceWatcher.Singleton.UnregisterWatcher(Data.FilePath.Value, this);
             return;
         }
 
@@ -56,6 +54,30 @@ namespace GIP.Controls
         }
 
         string ITreeNodePath.Path => Data?.FilePath?.Value;
+        void ITreeNodePath.ChangePathName(string inName)
+        {
+            string oldPath = Data.FilePath.Value;
+            string newPath = StringExtensions.JoinPath(DirectoryPath, inName);
+
+            if (!File.Exists(oldPath)) {
+                throw new OldPathNotFoundException($"Original path \"{oldPath}\" is not found.");
+            }
+
+            if (File.Exists(newPath)) {
+                throw new PathAlreadyExistException($"File \"{inName}\" already exists.");
+            }
+
+            Data.FilePath.Value = newPath;
+            try {
+                File.Move(oldPath, newPath);
+                PathExistenceWatcher.Singleton.UnregisterWatcher(oldPath, this);
+                PathExistenceWatcher.Singleton.RegisterWatcher(newPath, this);
+            } catch (Exception e) {
+                Data.FilePath.Value = oldPath;
+                throw e;
+            }
+            return;
+        }
 
         void IPathExistenceWatchReactioner.OnDelete(string inPath)
         {

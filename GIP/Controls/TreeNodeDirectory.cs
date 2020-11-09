@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using GIP.Common;
 
@@ -10,7 +12,7 @@ namespace GIP.Controls
             : this(inPath)
         {
             inParent.Add(this);
-            PathExistenceWatcher.Singleton.RegisterWatcher(DirectoryPath, this);            
+            PathExistenceWatcher.Singleton.RegisterWatcher(Path, this);            
             return;
         }
 
@@ -18,14 +20,20 @@ namespace GIP.Controls
             : this(inPath)
         {
             inParent.Nodes.Add(this);
-            PathExistenceWatcher.Singleton.RegisterWatcher(DirectoryPath, this);
+            PathExistenceWatcher.Singleton.RegisterWatcher(Path, this);
             return;
         }
 
         private TreeNodeDirectory(string inPath)
         {
-            DirectoryPath = inPath;
+            Path = inPath;
             Text = DirectoryPath.Split('\\').Last();
+            return;
+        }
+
+        public override void DisposePathWatch()
+        {
+            PathExistenceWatcher.Singleton.UnregisterWatcher(Path, this);
             return;
         }
 
@@ -46,9 +54,32 @@ namespace GIP.Controls
             return;
         }
 
-        public string DirectoryPath
+        public string Path
         { get; private set; } = "";
 
-        string ITreeNodePath.Path => DirectoryPath;
+        void ITreeNodePath.ChangePathName(string inName)
+        {
+            string oldPath = Path;
+            string newPath = StringExtensions.JoinPath(DirectoryPath, inName);
+
+            if (!Directory.Exists(oldPath)) {
+                throw new OldPathNotFoundException($"Original path \"{oldPath}\" is not found.");
+            }
+
+            if (Directory.Exists(newPath)) {
+                throw new PathAlreadyExistException($"File \"{inName}\" already exists.");
+            }
+
+            Path = newPath;
+            try {
+                Directory.Move(oldPath, newPath);
+                PathExistenceWatcher.Singleton.UnregisterWatcher(oldPath, this);
+                PathExistenceWatcher.Singleton.RegisterWatcher(newPath, this);
+            } catch (Exception e) {
+                Path = oldPath;
+                throw e;
+            }
+            return;
+        }
     }
 }

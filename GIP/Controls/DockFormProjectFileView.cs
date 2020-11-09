@@ -59,6 +59,17 @@ namespace GIP.Controls
             }
         }
 
+        private void RemoveFile(TreeNode inNode)
+        {
+            if (!(inNode is TreeNodeComputeShader)) {
+                return;
+            }
+
+            (inNode as TreeNodeComputeShader).Data.GLDispose();
+            Data.ComputeShaders.Remove((inNode as TreeNodeComputeShader).Data);
+            return;
+        }
+
         protected override string GetPersistString()
         {
             return MainDockFormType.ProjectFiles.ToPersistString();
@@ -94,7 +105,7 @@ namespace GIP.Controls
             while (File.Exists(path)) {
                 path = $"{directory}\\new_file{++index}.txt";
             }
-            File.Create(path);
+            File.Create(path).Close();
             m_Project.ComputeShaders.Add(new ComputeShader(ComputeShaderFileType.Text, path));
 
             TreeViewFiles.SelectedNode.Expand();
@@ -139,13 +150,7 @@ namespace GIP.Controls
 
         private void MenuItem_RemoveFile_Click(object sender, EventArgs e)
         {
-            var node = TreeViewFiles.SelectedNode;
-            if (!(node is TreeNodeComputeShader)) {
-                return;
-            }
-
-            (node as TreeNodeComputeShader).Data.GLDispose();
-            Data.ComputeShaders.Remove((node as TreeNodeComputeShader).Data);
+            RemoveFile(TreeViewFiles.SelectedNode);
             return;
         }
 
@@ -158,7 +163,10 @@ namespace GIP.Controls
                 case TreeNodeDirectory d:
                     FileSystem.DeleteDirectory(d.DirectoryPath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                     break;
+                default:
+                    return;
             }
+            RemoveFile(TreeViewFiles.SelectedNode);
             return;
         }
 
@@ -177,49 +185,28 @@ namespace GIP.Controls
 
         private void TreeViewFiles_BeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
-            e.CancelEdit = true;
+            e.CancelEdit = !(e.Node is TreeNodeComputeShader);
             return;
         }
 
-        private void TreeViewFiles_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+        private void TreeViewFiles_AfterLabelEdit(object sender, NodeLabelEditEventArgs args)
         {
-            if (e.Label == null) {
+            if (args.Label == null) {
                 return;
             }
-            bool isFile = true;
-            string path;
-            switch (e.Node) {
-                case TreeNodeComputeShader source:
-                    path = source.Data.FilePath.Value;
-                    break;
-                case TreeNodeProjectFile project:
-                    path = project.Data.FilePath.Value;
-                    break;
-                case TreeNodeDirectory directory:
-                    path = directory.DirectoryPath;
-                    isFile = false;
-                    break;
-                default:
-                    throw new InvalidProgramException($"Invalid node type \"{e.Node.GetType()}\".");
+            if (!(args.Node is ITreeNodePath)) {
+                return;
             }
-            string parentDirectory = Path.GetDirectoryName(path);
-            string newPath = $"{parentDirectory}\\{e.Label}";
-            if (isFile) {
-                if (File.Exists(newPath)) {
-                    MessageBox.Show($"File \"{newPath}\" has already existed.", "GIP");
-                    e.CancelEdit = true;
-                    return;
-                } 
-                File.Move(path, newPath);
-                
-            } else {
-                if (Directory.Exists(newPath)) {
-                    MessageBox.Show($"Directory \"{newPath}\" has already existed.", "GIP");
-                    e.CancelEdit = true;
-                    return;
-                }
 
-                Directory.Move(path, newPath);
+            try {
+                args.CancelEdit = true;
+                (args.Node as ITreeNodePath).ChangePathName(args.Label);
+                args.CancelEdit = false;
+
+            } catch (ChangePathException e) {
+                MessageBox.Show(e.Message, "GIP");
+            } catch (Exception e) {
+                Logger.DefaultLogger.PushLog(this, new LogExceptionData(e));
             }
             return;
         }
@@ -264,8 +251,10 @@ namespace GIP.Controls
 
         private Project m_Project = null;
 
-        public class FileTreeNode : TreeNode
+        public abstract class FileTreeNode : TreeNode
         {
+            public abstract void DisposePathWatch();
+
             public void SetIcon(NodeIcon inValue)
             {
                 TreeView.InvokeOnUIThread(() => {
@@ -274,6 +263,23 @@ namespace GIP.Controls
                     TreeView.Invalidate();
                 });
                 return;
+            }
+
+            public string DirectoryPath
+            {
+                get {
+                    if (this is ITreeNodePath) {
+                        return Path.GetDirectoryName((this as ITreeNodePath).Path);
+                    }
+
+                    switch (Parent) {
+                        case TreeNodeProjectFile project:
+                            return project.DirectoryPath;
+                        case TreeNodeDirectory directory:
+                            return directory.Path;
+                    }
+                    throw new InvalidProgramException("The node must have parent as project or directory, or be project.");
+                }
             }
         }
     }

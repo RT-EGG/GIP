@@ -21,16 +21,9 @@ namespace GIP.Core
     public partial class ComputeShader : DataObjectBase
     {
         public ComputeShader(ComputeShaderFileType inFileType, string inFilePath)
-            : this()
         {
             FileType = inFileType;
-            m_FilePath.Value = inFilePath;
-            return;
-        }
-
-        private ComputeShader()
-        {
-            FilePath = m_FilePath.ToReadOnlyReactiveProperty();
+            FilePath.Value = inFilePath;
             return;
         }
 
@@ -68,9 +61,7 @@ namespace GIP.Core
 
         public ComputeShaderFileType FileType
         { get; } = ComputeShaderFileType.Text;
-        public ReadOnlyReactiveProperty<string> FilePath
-        { get; } = null;
-        private ReactiveProperty<string> m_FilePath
+        public ReactiveProperty<string> FilePath
         { get; } = new ReactiveProperty<string>("");
 
         public int ProgramID
@@ -134,7 +125,7 @@ namespace GIP.Core
 
             GL.GetShader(shader.ID, ShaderParameter.CompileStatus, out int state);
             if (state == 0) {
-                string error = GL.GetShaderInfoLog(shader.ID);
+                string error = GL.GetShaderInfoLog(shader.ID).Replace("\n", Environment.NewLine);
                 inLogger?.PushLog(this, new LogData(LogLevel.Error, "=====Compile error=====" + Environment.NewLine + error));
                 return false;
             }
@@ -143,7 +134,7 @@ namespace GIP.Core
             GL.LinkProgram(ProgramID);
             GL.GetProgram(ProgramID, GetProgramParameterName.LinkStatus, out state);
             if (state == 0) {
-                string error = GL.GetProgramInfoLog(ProgramID);
+                string error = GL.GetProgramInfoLog(ProgramID).Replace("\n", Environment.NewLine);
                 inLogger?.PushLog(this, new LogData(LogLevel.Error, "=====Link error=====" + Environment.NewLine + error));
                 return false;
             }

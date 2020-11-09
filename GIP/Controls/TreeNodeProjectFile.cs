@@ -19,6 +19,12 @@ namespace GIP.Controls
             return;
         }
 
+        public override void DisposePathWatch()
+        {
+            PathExistenceWatcher.Singleton.UnregisterWatcher(Data.FilePath.Value, this);
+            return;
+        }
+
         public Project Data
         {
             get => m_Data;
@@ -43,6 +49,31 @@ namespace GIP.Controls
         }
 
         string ITreeNodePath.Path => Data?.FilePath?.Value;
+
+        void ITreeNodePath.ChangePathName(string inName)
+        {
+            string oldPath = Data.FilePath.Value;
+            string newPath = StringExtensions.JoinPath(DirectoryPath, inName);
+
+            if (!File.Exists(oldPath)) {
+                throw new OldPathNotFoundException($"Original path \"{oldPath}\" is not found.");
+            }
+
+            if (File.Exists(newPath)) {
+                throw new PathAlreadyExistException($"File \"{inName}\" already exists.");
+            }
+
+            Data.FilePath.Value = newPath;
+            try {
+                File.Move(oldPath, newPath);
+                PathExistenceWatcher.Singleton.UnregisterWatcher(oldPath, this);
+                PathExistenceWatcher.Singleton.RegisterWatcher(newPath, this);
+            } catch (Exception e) {
+                Data.FilePath.Value = oldPath;
+                throw e;
+            }
+            return;
+        }
 
         private void Data_ShaderSources_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -72,7 +103,7 @@ namespace GIP.Controls
         {
             string path = inShader.FilePath.Value.UnifyPathDelimitter().RemoveExtraDelimitter();
             TreeNode parent = FindOrCreateNodeForDirectory(Path.GetDirectoryName(path));
-            if (parent == null) {
+            if (parent == this) {
                 new TreeNodeComputeShader(Nodes, inShader);
                 Expand();
             } else {
@@ -101,6 +132,13 @@ namespace GIP.Controls
 
         private bool FindNodeFor(string inPath, out IList<(string, TreeNode)> outPath)
         {
+            if ((inPath == Data.FilePath.Value) || (inPath == Path.GetDirectoryName(Data.FilePath.Value))) {
+                outPath = new List<(string, TreeNode)> {
+                    ("", this)
+                };
+                return true;
+            }
+
             inPath = Data.FilePath.Value.PathAbsoluteToRelative(inPath);
             outPath = new List<(string, TreeNode)>();
 

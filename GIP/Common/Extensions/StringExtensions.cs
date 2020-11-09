@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text;
 
 namespace GIP.Common
 {
@@ -38,6 +39,23 @@ namespace GIP.Common
 
             } while (tmp != result);
             return result;
+        }
+
+        public static string JoinPath(params string[] inArgs)
+        {
+            if (inArgs.Length == 0) {
+                return "";
+            }
+
+            int capacity = 0;
+            inArgs.ForEach(s => capacity += s.Length);
+            capacity += inArgs.Length - 1;
+            StringBuilder builder = new StringBuilder(capacity);
+            builder.Append(inArgs.First());
+            foreach (var str in inArgs.Skip(1)) {
+                builder.Append($"\\{str}");
+            }
+            return builder.ToString().UnifyPathDelimitter().RemoveExtraDelimitter();
         }
 
         public static string PathRelativeToAbsolute(this string inBase, string inOther)
