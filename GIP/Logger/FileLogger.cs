@@ -33,8 +33,9 @@ namespace GIP
             return;
         }
 
-        public void ClearLog(object inSource)
+        public void NewSession(string inName)
         {
+            // do nothing now.
             return;
         }
 

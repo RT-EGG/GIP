@@ -54,25 +54,16 @@ namespace GIP
 
     public interface ILogger
     {
-        void ClearLog(object inSource);
+        void NewSession(string inName);
         void PushLog(object inSource, LogData inData);
     }
 
     public class LoggerCollection : List<ILogger>, ILogger
     {
-        public void ClearLog(object inSource)
-        {
-            this.ForEach((i) => i.ClearLog(inSource));
-            return;
-        }
-
+        public void NewSession(string inName)
+            => ForEach(l => l.NewSession(inName));
         public void PushLog(object inSource, LogData inData)
-        {
-            this.ForEach((i) => i.PushLog(inSource, inData));
-            return;
-        }
-
-        private int m_IndentLevel = 0;
+            => ForEach(l => l.PushLog(inSource, inData));
     }
 
     public static class Logger

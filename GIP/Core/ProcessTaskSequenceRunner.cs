@@ -14,7 +14,7 @@ namespace GIP.Core
         public bool Run(ProcessTaskSequence inTasks, ILogger inLogger = null)
         {
             bool result = true;
-            inLogger?.ClearLog(this);
+            inLogger?.NewSession("RunTask");
 
             foreach (var shader in Project.ComputeShaders) {
                 shader.GLDispose();

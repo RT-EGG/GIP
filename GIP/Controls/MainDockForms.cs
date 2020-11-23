@@ -42,7 +42,10 @@ namespace GIP.Controls
 
     public class MainDockForms
     {
-        public MainDockForms()
+        public static MainDockForms Instance
+        { get; } = new MainDockForms();
+        
+        private MainDockForms()
         {
             m_FormList.Add(MainDockFormType.ProjectFiles, new DockFormProjectFileView());
             m_FormList.Add(MainDockFormType.CodeEditor, new DockFormCodeEditor());

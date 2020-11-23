@@ -1,5 +1,5 @@
-﻿using System.IO;
-using GIP.Core;
+﻿using GIP.Core;
+using System.IO;
 
 namespace GIP.Controls
 {
@@ -56,6 +56,17 @@ namespace GIP.Controls
             return;
         }
 
+        public void CompileCurrentSource(ILogger inLogger)
+        {
+            if ((m_Shader == null) || (m_Shader.FileType != ComputeShaderFileType.Text)) {
+                return;
+            }
+
+            Logger.DefaultLogger.NewSession($"Compile shader file \"{Path.GetFileName(m_Shader.FilePath.Value)}\".");
+            m_Shader.CompileAndLink(inLogger);
+            return;
+        }
+
         private void LoadSource(string inPath)
         {
             if (File.Exists(inPath)) {
@@ -85,11 +96,7 @@ namespace GIP.Controls
 
         private void ButtonCompile_Click(object sender, System.EventArgs e)
         {
-            if (m_Shader == null) {
-                return;
-            }
-
-            m_Shader.CompileAndLink(Logger.DefaultLogger);
+            CompileCurrentSource(Logger.DefaultLogger);
             return;
         }
 

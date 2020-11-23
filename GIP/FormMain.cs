@@ -63,7 +63,7 @@ namespace GIP
 
         private void SaveShaderFile()
         {
-            m_DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor)?.SaveCurrentSource();
+            DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor)?.SaveCurrentSource();
             return;
         }
 
@@ -98,8 +98,6 @@ namespace GIP
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            m_DockForms = new MainDockForms();
-
             JsonWindowLayout layout;
             if (File.Exists(LayoutFilePath)) {
                 layout = JsonSerializable.ImportFromFile<JsonWindowLayout>(LayoutFilePath);
@@ -115,12 +113,12 @@ namespace GIP
             }
             if (layout.DockFormLayout != null) {
                 using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(layout.DockFormLayout))) {
-                    PanelDockMain.LoadFromXml(stream, new DeserializeDockContent(m_DockForms.Find));
+                    PanelDockMain.LoadFromXml(stream, new DeserializeDockContent(DockForms.Find));
                 }
             }
 
-            UIEventBridge.Register(m_DockForms);
-            Logger.DefaultLogger.Add(m_DockForms.Get<DockFormConsole>(MainDockFormType.Console));
+            UIEventBridge.Register(DockForms);
+            Logger.DefaultLogger.Add(DockForms.Get<DockFormConsole>(MainDockFormType.Console));
             return;
         }
 
@@ -185,19 +183,19 @@ namespace GIP
         private void MenuItem_ShowWindow_Click(object sender, EventArgs e)
         {
             if (sender == MenuItem_ProjectFiles) {
-                ShowWindow(m_DockForms.Get<DockFormProjectFileView>(MainDockFormType.ProjectFiles));
+                ShowWindow(DockForms.Get<DockFormProjectFileView>(MainDockFormType.ProjectFiles));
             } else if (sender == MenuItem_Code) {
-                ShowWindow(m_DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor));
+                ShowWindow(DockForms.Get<DockFormCodeEditor>(MainDockFormType.CodeEditor));
             } else if (sender == MenuItem_TaskEditor) {
-                ShowWindow(m_DockForms.Get<DockFormTaskEditor>(MainDockFormType.TaskEditor));
+                ShowWindow(DockForms.Get<DockFormTaskEditor>(MainDockFormType.TaskEditor));
             } else if (sender == MenuItem_TaskSequence) {
-                ShowWindow(m_DockForms.Get<DockFormTaskSequence>(MainDockFormType.TaskSequence));
+                ShowWindow(DockForms.Get<DockFormTaskSequence>(MainDockFormType.TaskSequence));
             } else if (sender == MenuItem_Compile) {
-                ShowWindow(m_DockForms.Get<DockFormConsole>(MainDockFormType.Console));
+                ShowWindow(DockForms.Get<DockFormConsole>(MainDockFormType.Console));
             } else if (sender == MenuItem_VariableList) {
-                ShowWindow(m_DockForms.Get<DockFormVariableList>(MainDockFormType.VariableList));
+                ShowWindow(DockForms.Get<DockFormVariableList>(MainDockFormType.VariableList));
             } else if (sender == MenuItem_TextureView) {
-                ShowWindow(m_DockForms.Get<DockFormTextureView>(MainDockFormType.TextureView));
+                ShowWindow(DockForms.Get<DockFormTextureView>(MainDockFormType.TextureView));
             }
             return;
         }
@@ -224,11 +222,11 @@ namespace GIP
                     return;
                 }
                 m_Project = value;
-                m_DockForms.Get<DockFormProjectFileView>(MainDockFormType.ProjectFiles).Data = m_Project;
-                m_DockForms.Get<DockFormTaskSequence>(MainDockFormType.TaskSequence).Project = m_Project;
-                m_DockForms.Get<DockFormVariableList>(MainDockFormType.VariableList).Data = m_Project.Variables;
-                m_DockForms.Get<DockFormTaskEditor>(MainDockFormType.TaskEditor).Project = m_Project;
-                m_DockForms.Get<DockFormTextureView>(MainDockFormType.TextureView).Project = m_Project;
+                DockForms.Get<DockFormProjectFileView>(MainDockFormType.ProjectFiles).Data = m_Project;
+                DockForms.Get<DockFormTaskSequence>(MainDockFormType.TaskSequence).Project = m_Project;
+                DockForms.Get<DockFormVariableList>(MainDockFormType.VariableList).Data = m_Project.Variables;
+                DockForms.Get<DockFormTaskEditor>(MainDockFormType.TaskEditor).Project = m_Project;
+                DockForms.Get<DockFormTextureView>(MainDockFormType.TextureView).Project = m_Project;
 
                 return;
             } 
@@ -236,8 +234,7 @@ namespace GIP
 
         private Arguments Arguments
         { get; } = null;
-        private MainDockForms m_DockForms
-        { get; set; } = null;
+        private MainDockForms DockForms => MainDockForms.Instance;
         private MainFormEventBridge UIEventBridge
         { get; set; } = new MainFormEventBridge();
         private Project m_Project = null;

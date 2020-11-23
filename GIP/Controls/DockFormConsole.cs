@@ -9,13 +9,19 @@ namespace GIP.Controls
             InitializeComponent();
         }
 
+        public void NewSession(string inName)
+        {
+            ClearLog();
+            return;
+        }
+
         public void PushLog(object inSource, LogData logData)
         {
             ConsoleText += logData.Message;
             return;
         }
 
-        public void ClearLog(object inSource)
+        public void ClearLog()
         {
             TextBoxState.Text = "";
             return;

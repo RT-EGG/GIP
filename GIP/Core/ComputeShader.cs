@@ -139,6 +139,7 @@ namespace GIP.Core
                 return false;
             }
 
+            inLogger?.PushLog(this, new LogData(LogLevel.Information, "=====Compile successed.====="));
             return true;
         }
 
