@@ -15,9 +15,10 @@ namespace GIP.Common
             return true;
         }
 
-        public static IEnumerable<(int, T)> Enumerate<T>(this IList<T> inList)
+        public static IEnumerable<(int, T)> Enumerate<T>(this IList<T> inList, int inStart = 0, int inEnd = -1)
         {
-            for (int i = 0; i < inList.Count; ++i) {
+            int end = (inEnd == -1) ? inList.Count : Math.Min(inList.Count, inEnd);
+            for (int i = inStart; i < end; ++i) {
                 yield return (i, inList[i]);
             }
         }

@@ -72,5 +72,39 @@ namespace GIP.Common
 
             return @base.MakeRelativeUri(other).ToString().UnifyPathDelimitter();
         }
+
+        public static IEnumerable<(int, char)> Enumerate(this string inText, int inStart = 0, int inEnd = -1)
+        {
+            int end = (inEnd == -1) ? inText.Length : Math.Min(inText.Length, inEnd);
+            for (int i = inStart; i < end; ++i) {
+                yield return (i, inText[i]);
+            }
+        }
+
+        public static int CountLineBreakAllPattern(this string inText, int inFrom = 0, int inTo = -1)
+        {
+            int result = 0;
+
+            int end = (inTo == -1) ? inText.Length : Math.Min(inText.Length, inTo);
+            for (int i = Math.Max(0, inFrom); i < end; ++i) {
+                char c = inText[i];
+                switch (c) {
+                    case '\r':
+                        if (i < (end - 1)) {
+                            if(inText[i + 1] == '\n') {
+                                ++i;
+                                ++result;
+                            }
+                        }
+                        ++result;
+                        break;
+                    case '\n':
+                        ++result;
+                        break;
+                }
+            }
+
+            return result;
+        }
     }
 }

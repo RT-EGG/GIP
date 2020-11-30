@@ -27,10 +27,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.PanelCompile = new System.Windows.Forms.Panel();
             this.ButtonCompile = new System.Windows.Forms.Button();
-            this.TextBoxCodeEditor = new GIP.Controls.ComputeShaderCodeBox(this.components);
+            this.CodeEditor = new GIP.Controls.Ctrl_ComputeShaderCodeEditor();
             this.PanelCompile.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,33 +54,29 @@
             this.ButtonCompile.UseVisualStyleBackColor = true;
             this.ButtonCompile.Click += new System.EventHandler(this.ButtonCompile_Click);
             // 
-            // TextBoxCodeEditor
+            // CodeEditor
             // 
-            this.TextBoxCodeEditor.AcceptsTab = true;
-            this.TextBoxCodeEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TextBoxCodeEditor.Location = new System.Drawing.Point(0, 0);
-            this.TextBoxCodeEditor.Multiline = true;
-            this.TextBoxCodeEditor.Name = "TextBoxCodeEditor";
-            this.TextBoxCodeEditor.Size = new System.Drawing.Size(328, 266);
-            this.TextBoxCodeEditor.TabIndex = 0;
+            this.CodeEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CodeEditor.Location = new System.Drawing.Point(0, 0);
+            this.CodeEditor.Name = "CodeEditor";
+            this.CodeEditor.Size = new System.Drawing.Size(328, 266);
+            this.CodeEditor.TabIndex = 2;
             // 
             // DockFormCodeEditor
             // 
             this.ClientSize = new System.Drawing.Size(328, 295);
-            this.Controls.Add(this.TextBoxCodeEditor);
+            this.Controls.Add(this.CodeEditor);
             this.Controls.Add(this.PanelCompile);
             this.Name = "DockFormCodeEditor";
             this.Text = "CodeEditor";
             this.PanelCompile.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private ComputeShaderCodeBox TextBoxCodeEditor;
         private System.Windows.Forms.Panel PanelCompile;
         private System.Windows.Forms.Button ButtonCompile;
+        private Ctrl_ComputeShaderCodeEditor CodeEditor;
     }
 }

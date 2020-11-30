@@ -21,7 +21,7 @@ namespace GIP.Controls
                     //}
 
                     if (m_Shader != null) {
-                        if ((m_Shader != value) && TextBoxCodeEditor.Enabled &&
+                        if ((m_Shader != value) && CodeEditor.Enabled &&
                             (m_Shader.FileType == ComputeShaderFileType.Text)) {
                             SaveSource(m_Shader.FilePath.Value);
                         }
@@ -29,7 +29,7 @@ namespace GIP.Controls
 
                     m_Shader = value;
                     if (m_Shader == null) {
-                        TextBoxCodeEditor.Text = "";
+                        CodeEditor.Text = "";
 
                     } else {
                         if (m_Shader.FileType == ComputeShaderFileType.Text) {
@@ -44,7 +44,7 @@ namespace GIP.Controls
         }
 
         public string Code
-        { get => TextBoxCodeEditor.Text; }
+        { get => CodeEditor.Text; }
 
         public void SaveCurrentSource()
         {
@@ -71,12 +71,12 @@ namespace GIP.Controls
         {
             if (File.Exists(inPath)) {
                 using (StreamReader reader = new StreamReader(new FileStream(inPath, FileMode.Open, FileAccess.Read))) {
-                    TextBoxCodeEditor.Text = reader.ReadToEnd();
+                    CodeEditor.Text = reader.ReadToEnd();
                 }
-                TextBoxCodeEditor.Enabled = true;
+                CodeEditor.Enabled = true;
             } else {
-                TextBoxCodeEditor.Text = "File is missed.";
-                TextBoxCodeEditor.Enabled = false;
+                CodeEditor.Text = "File is missed.";
+                CodeEditor.Enabled = false;
             }
             return;
         }
@@ -84,7 +84,7 @@ namespace GIP.Controls
         private void SaveSource(string inPath)
         {
             using (StreamWriter writer = new StreamWriter(new FileStream(inPath, FileMode.Create, FileAccess.Write))) {
-                writer.Write(TextBoxCodeEditor.Text);
+                writer.Write(CodeEditor.Text);
             }
             return;
         }
