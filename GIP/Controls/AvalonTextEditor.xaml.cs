@@ -10,6 +10,7 @@ namespace GIP.Controls
         {
             InitializeComponent();
             Editor.SyntaxHighlighting = new GlslSyntaxHighlightingDefinition();
+            Editor.Options.ConvertTabsToSpaces = true;
             return;
         }
 
