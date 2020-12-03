@@ -4,6 +4,7 @@
     {
         string Path { get; }
         void ChangePathName(string inName);
+        bool PathExist { get; }
     }
 
     public class ChangePathException : System.Exception

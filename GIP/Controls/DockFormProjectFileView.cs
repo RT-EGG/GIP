@@ -242,7 +242,7 @@ namespace GIP.Controls
             MenuItem_AddExistingDirectory.Visible = (inNode is TreeNodeDirectory) | (inNode is TreeNodeProjectFile);
             MenuItem_CreateNewTextFile.Visible = (inNode is TreeNodeDirectory) | (inNode is TreeNodeProjectFile);
             MenuItem_RemoveFile.Visible = inNode is TreeNodeComputeShader;
-            MenuItem_Delete.Visible = !(inNode is TreeNodeProjectFile);
+            MenuItem_Delete.Visible = !(inNode is TreeNodeProjectFile) && (inNode as ITreeNodePath).PathExist;
             MenuItem_OpenInExplorer.Visible = inNode is ITreeNodePath;
 
             MenuTreeNodePopup.Show(inLocation);
@@ -269,7 +269,7 @@ namespace GIP.Controls
             {
                 get {
                     if (this is ITreeNodePath) {
-                        return Path.GetDirectoryName((this as ITreeNodePath).Path);
+                        return Path.GetDirectoryName((this as ITreeNodePath).Path) ?? "";
                     }
 
                     switch (Parent) {

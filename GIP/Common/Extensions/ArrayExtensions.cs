@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -7,7 +8,7 @@ namespace GIP.Common
 {
     public static class ArrayExtensions
     {
-        public static bool Empty<T>(this IEnumerable<T> inList)
+        public static bool Empty(this IEnumerable inList)
         {
             foreach (var _ in inList) {
                 return false;

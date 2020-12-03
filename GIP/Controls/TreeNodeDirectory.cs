@@ -27,7 +27,7 @@ namespace GIP.Controls
         private TreeNodeDirectory(string inPath)
         {
             Path = inPath;
-            Text = DirectoryPath.Split('\\').Last();
+            Text = Path.Split('\\').Last();
             return;
         }
 
@@ -56,6 +56,7 @@ namespace GIP.Controls
 
         public string Path
         { get; private set; } = "";
+        bool ITreeNodePath.PathExist => Directory.Exists(Path);
 
         void ITreeNodePath.ChangePathName(string inName)
         {

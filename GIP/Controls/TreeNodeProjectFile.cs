@@ -41,7 +41,6 @@ namespace GIP.Controls
                     m_Data.ComputeShaders.SubscribeCollectionChanged((s, e) => Data_ShaderSources_CollectionChanged(s, e));
 
                     Nodes.Clear();
-                    AddNodesInDirectory();
                     m_Data.ComputeShaders.ForEach(item => { AddFile(item); });
                 }
                 return;
@@ -49,6 +48,7 @@ namespace GIP.Controls
         }
 
         string ITreeNodePath.Path => Data?.FilePath?.Value;
+        bool ITreeNodePath.PathExist => File.Exists((this as ITreeNodePath).Path);
 
         void ITreeNodePath.ChangePathName(string inName)
         {
@@ -117,7 +117,30 @@ namespace GIP.Controls
         {
             if (FindNodeFor(inShader.FilePath.Value, out var nodePath)) {
                 var node = nodePath.Last().Item2;
-                TreeView.InvokeOnUIThread(() => node.Parent.Nodes.Remove(node));
+                TreeView.InvokeOnUIThread(() => {
+                    var parent = node.Parent;
+                    parent.Nodes.Remove(node);
+                    do {
+                        if (parent is TreeNodeDirectory) {
+                            if (parent.Nodes.Empty()) {
+                                var newParent = parent.Parent;
+                                if (newParent == null) {
+                                    // absolute directory
+                                    TreeView.Nodes.Remove(parent);
+                                } else {
+                                    // under the project node
+                                    newParent.Nodes.Remove(parent);
+                                }
+                                parent = newParent;
+                            } else {
+                                break;
+                            }
+                        } else {
+                            break;
+                        }
+
+                    } while (parent != null);
+                });
             }
             return;
         }
@@ -138,29 +161,31 @@ namespace GIP.Controls
                 };
                 return true;
             }
-
-            inPath = Data.FilePath.Value.PathAbsoluteToRelative(inPath);
             outPath = new List<(string, TreeNode)>();
 
+            inPath = Data.FilePath.Value.PathAbsoluteToRelative(inPath);
             var split = inPath.Split('\\');
             if (split.Length <= 0) {
                 return false;
             }
-            if (split[0].EndsWith(":")) {
-                return false;
-            }
 
-            TreeNode node = this;
-            outPath.Add((".", node));
+            TreeNode node = this, next = null;
             foreach (var (i, name) in split.Enumerate()) {
-                if (name == ".") {
-                    // means current directory
-                    continue;
+                if (name.EndsWith(":")) {
+                    // find drive from parent's collection
+                    next = TreeView.Nodes.FindByText(name, false).FirstOrDefault();
+                } else {
+                    // TODO
+                    // support ".."
+                    if (name == ".") {
+                        // means current directory
+                        continue;
+                    }
+
+                    next = (node == null) ? null : FindNodeIn(node, name);
                 }
 
-                TreeNode next = (node == null) ? null : FindNodeIn(node, name);
                 outPath.Add((name, next));
-
                 node = next;
             }
 
@@ -170,17 +195,26 @@ namespace GIP.Controls
         private TreeNode FindOrCreateNodeForDirectory(string inDirectory)
         {
             if (!FindNodeFor(inDirectory, out var nodePath)) {
-                string path = Path.GetDirectoryName(Data.FilePath.Value);
-                TreeNode parent = null;
+                string path;
+                TreeNode parent = this; ;
+                if (nodePath.First().Item1.EndsWith(":")) {
+                    path = "";
+
+                } else {
+                    path = Path.GetDirectoryName(Data.FilePath.Value);
+                    parent = this;
+                }
+
                 foreach (var d in nodePath) {
                     var (name, node) = d;
 
                     if (name != ".") {
-                        path += $"\\{name}";
-
-                        if (node == null) {
+                        if (path == "") {
+                            path = name;
+                            node = new TreeNodeDirectory(TreeView.Nodes, path);
+                        } else {
+                            path = string.Join("\\", path, name);
                             node = new TreeNodeDirectory(parent, path);
-                            continue;
                         }
                     }
 
@@ -200,15 +234,6 @@ namespace GIP.Controls
                 }
             }
             return null;
-        }
-
-        private void AddNodesInDirectory()
-        {
-            Nodes.Clear();
-            foreach (var file in Directory.GetDirectories(Path.GetDirectoryName(Data.FilePath.Value), "*", SearchOption.TopDirectoryOnly)) {
-                new TreeNodeDirectory(this, file);
-            }
-            return;
         }
 
         void IPathExistenceWatchReactioner.OnDelete(string inPath)

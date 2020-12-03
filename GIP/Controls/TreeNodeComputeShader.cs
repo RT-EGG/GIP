@@ -54,6 +54,7 @@ namespace GIP.Controls
         }
 
         string ITreeNodePath.Path => Data?.FilePath?.Value;
+        bool ITreeNodePath.PathExist => File.Exists((this as ITreeNodePath).Path);
         void ITreeNodePath.ChangePathName(string inName)
         {
             string oldPath = Data.FilePath.Value;

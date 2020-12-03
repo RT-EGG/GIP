@@ -60,7 +60,7 @@ namespace GIP.Core
                 return false;
             }
 
-            return inTasks.Execute(inLogger); ;
+            return inTasks.Execute(inLogger);
         }
 
         public Project Project

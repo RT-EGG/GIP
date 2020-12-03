@@ -154,6 +154,7 @@
     <Compile Include="Common\DisposableObject.cs" />
     <Compile Include="Common\Extensions\DockPanelSuiteExtensions.cs" />
     <Compile Include="Common\Exception.cs" />
+    <Compile Include="Common\Extensions\TreeNodeExtensions.cs" />
     <Compile Include="Common\ExternalNamedAttribute.cs" />
     <Compile Include="Common\PathExistenceWatcher.cs" />
     <Compile Include="Common\GLDisposable.cs" />
