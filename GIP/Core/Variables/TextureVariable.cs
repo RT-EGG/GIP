@@ -59,6 +59,9 @@ namespace GIP.Core.Variables
 
             if (TextureID == 0) {
                 TextureID = GL.GenTexture();
+#if DEBUG
+                Logger.DefaultLogger.PushLog(this, new LogData(LogLevel.Information, $"{Name.Value}-{TextureID}{Environment.NewLine}"));
+#endif
             }
             GlTexImage2D();
             return;

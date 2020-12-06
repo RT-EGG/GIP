@@ -32,6 +32,10 @@ namespace GIP.Core.Uniforms
 
         public override void Bind(int inLocation, ComputeShader inTarget)
         {
+#if DEBUG
+            Logger.DefaultLogger.PushLog(this, new LogData(LogLevel.Information, $"Bind {Texture.Value.Name.Value}({Texture.Value.TextureID}) to {inLocation}.{Environment.NewLine}"));
+#endif
+
             int unit = inTarget.NextBindableTextureUnit++;
             GL.BindImageTexture(unit, Texture.Value.TextureID, 0, false, 0, Access.Value, InternalFormat.Value);
             GL.Uniform1(inLocation, unit);
