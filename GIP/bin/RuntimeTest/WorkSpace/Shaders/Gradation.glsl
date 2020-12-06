@@ -1,6 +1,6 @@
 #version 430
 
-layout (binding = 0) writeonly uniform image2D outTexture;
+layout (location = 0) writeonly uniform image2D outTexture;
 
 layout (local_size_x = 32, local_size_y = 32) in;
 
