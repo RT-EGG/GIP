@@ -62,7 +62,7 @@ namespace GIP.Controls
                 return;
             }
 
-            Logger.DefaultLogger.NewSession($"Compile shader file \"{Path.GetFileName(m_Shader.FilePath.Value)}\".");
+            Logger.DefaultLogger.NewSession($"Compile shader file \"{Path.GetFileName(m_Shader.FilePath.Value)}\"...");
             m_Shader.CompileAndLink(inLogger);
             return;
         }

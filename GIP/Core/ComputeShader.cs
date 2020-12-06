@@ -126,7 +126,7 @@ namespace GIP.Core
             GL.GetShader(shader.ID, ShaderParameter.CompileStatus, out int state);
             if (state == 0) {
                 string error = GL.GetShaderInfoLog(shader.ID).Replace("\n", Environment.NewLine);
-                inLogger?.PushLog(this, new LogData(LogLevel.Error, "=====Compile error=====" + Environment.NewLine + error));
+                inLogger?.PushLog(this, new LogData(LogLevel.Error, "compile error" + Environment.NewLine + error));
                 return false;
             }
 
@@ -135,11 +135,11 @@ namespace GIP.Core
             GL.GetProgram(ProgramID, GetProgramParameterName.LinkStatus, out state);
             if (state == 0) {
                 string error = GL.GetProgramInfoLog(ProgramID).Replace("\n", Environment.NewLine);
-                inLogger?.PushLog(this, new LogData(LogLevel.Error, "=====Link error=====" + Environment.NewLine + error));
+                inLogger?.PushLog(this, new LogData(LogLevel.Error, "link error" + Environment.NewLine + error));
                 return false;
             }
 
-            inLogger?.PushLog(this, new LogData(LogLevel.Information, "=====Compile successed.====="));
+            inLogger?.PushLog(this, new LogData(LogLevel.Information, "successed" + Environment.NewLine));
             return true;
         }
 
