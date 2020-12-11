@@ -2,12 +2,11 @@
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL4;
-using rtUtility.rtMath;
 using GIP.Common;
 using GIP.IO.Project;
 using GIP.IO.Json;
-using System.Collections.Generic;
 
 namespace GIP.Core
 {
@@ -34,8 +33,8 @@ namespace GIP.Core
 
         public class Color : DataObjectBase, ITexturePixelInitializer
         {
-            public TColorRGB RGB
-            { get; set; } = new TColorRGB();
+            public ColorRGB RGB
+            { get; set; } = new ColorRGB();
             public float Alpha
             { get; set; } = 1.0f;
 
@@ -53,7 +52,7 @@ namespace GIP.Core
                         IntPtr result = Marshal.AllocCoTaskMem(TextureWidth * TextureHeight * 4);
                         byte[] buffer = new byte[TextureWidth * TextureHeight * 4];
                         byte[] pixel = new byte[4] {
-                            RGB.Rb, RGB.Gb, RGB.Bb,  (byte)Math.Truncate((Alpha * 255.0f) + 0.5f)
+                            RGB.R, RGB.G, RGB.B,  (byte)Math.Truncate((Alpha * 255.0f) + 0.5f)
                         };
                         for (int i = 0; i < buffer.Length; i += 4) {
                             Array.Copy(pixel, 0, buffer, i, 4);

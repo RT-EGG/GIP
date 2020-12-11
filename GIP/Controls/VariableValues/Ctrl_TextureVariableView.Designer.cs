@@ -39,14 +39,14 @@
             this.PanelSourceColorOptions = new System.Windows.Forms.Panel();
             this.PanelColorInitializeColors = new System.Windows.Forms.TableLayoutPanel();
             this.LabelColorInitializeRGB = new System.Windows.Forms.Label();
-            this.UdColorInitializeAlpha = new rtUtility.rtControl.CustomNumericUpDown(this.components);
+            this.UdColorInitializeAlpha = new System.Windows.Forms.NumericUpDown();
             this.LabelColorInitializeAlpha = new System.Windows.Forms.Label();
             this.ButtonColorInitializeRGB = new System.Windows.Forms.Button();
             this.PanelColorInitializeDimensions = new System.Windows.Forms.TableLayoutPanel();
-            this.UdColorInitializeHeight = new rtUtility.rtControl.CustomNumericUpDown(this.components);
+            this.UdColorInitializeHeight = new System.Windows.Forms.NumericUpDown();
             this.LabelTextureInitializeColorHeight = new System.Windows.Forms.Label();
             this.LabelTextureInitializeColorWidth = new System.Windows.Forms.Label();
-            this.UdColorInitializeWidth = new rtUtility.rtControl.CustomNumericUpDown(this.components);
+            this.UdColorInitializeWidth = new System.Windows.Forms.NumericUpDown();
             this.PanelSourceFileOptions = new System.Windows.Forms.Panel();
             this.TextBoxFileInitializePath = new System.Windows.Forms.TextBox();
             this.ButtonFileInitializeChoosePath = new System.Windows.Forms.Button();
@@ -212,7 +212,6 @@
             this.UdColorInitializeAlpha.Name = "UdColorInitializeAlpha";
             this.UdColorInitializeAlpha.Size = new System.Drawing.Size(58, 19);
             this.UdColorInitializeAlpha.TabIndex = 3;
-            this.UdColorInitializeAlpha.Tail = " %";
             this.UdColorInitializeAlpha.Value = new decimal(new int[] {
             100,
             0,
@@ -279,7 +278,6 @@
             this.UdColorInitializeHeight.Name = "UdColorInitializeHeight";
             this.UdColorInitializeHeight.Size = new System.Drawing.Size(64, 19);
             this.UdColorInitializeHeight.TabIndex = 4;
-            this.UdColorInitializeHeight.Tail = "";
             this.UdColorInitializeHeight.Value = new decimal(new int[] {
             2048,
             0,
@@ -326,7 +324,6 @@
             this.UdColorInitializeWidth.Name = "UdColorInitializeWidth";
             this.UdColorInitializeWidth.Size = new System.Drawing.Size(64, 19);
             this.UdColorInitializeWidth.TabIndex = 2;
-            this.UdColorInitializeWidth.Tail = "";
             this.UdColorInitializeWidth.Value = new decimal(new int[] {
             2048,
             0,
@@ -420,7 +417,7 @@
         private System.Windows.Forms.ComboBox ComboSource;
         private System.Windows.Forms.Label LabelSource;
         private System.Windows.Forms.Panel PanelSourceColorOptions;
-        private rtUtility.rtControl.CustomNumericUpDown UdColorInitializeAlpha;
+        private System.Windows.Forms.NumericUpDown UdColorInitializeAlpha;
         private System.Windows.Forms.Label LabelColorInitializeAlpha;
         private System.Windows.Forms.Button ButtonColorInitializeRGB;
         private System.Windows.Forms.Label LabelColorInitializeRGB;
@@ -430,9 +427,9 @@
         private System.Windows.Forms.Label LabelFileInitializeFile;
         private System.Windows.Forms.TableLayoutPanel PanelColorInitializeColors;
         private System.Windows.Forms.TableLayoutPanel PanelColorInitializeDimensions;
-        private rtUtility.rtControl.CustomNumericUpDown UdColorInitializeHeight;
+        private System.Windows.Forms.NumericUpDown UdColorInitializeHeight;
         private System.Windows.Forms.Label LabelTextureInitializeColorHeight;
         private System.Windows.Forms.Label LabelTextureInitializeColorWidth;
-        private rtUtility.rtControl.CustomNumericUpDown UdColorInitializeWidth;
+        private System.Windows.Forms.NumericUpDown UdColorInitializeWidth;
     }
 }

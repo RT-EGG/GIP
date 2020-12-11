@@ -3,7 +3,6 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using OpenTK.Graphics.OpenGL4;
-using rtUtility.rtMath;
 using GIP.Core;
 using GIP.Common;
 using GIP.Core.Variables;
@@ -145,7 +144,7 @@ namespace GIP.Controls.VariableValues
             if (dialog.ShowDialog() == DialogResult.OK) {
                 ButtonColorInitializeRGB.BackColor = dialog.Color;
                 if (Data != null) {
-                    (Data.PixelInitializer as TexturePixelInitializer.Color).RGB = new TColorRGB(dialog.Color);
+                    (Data.PixelInitializer as TexturePixelInitializer.Color).RGB = new ColorRGB(dialog.Color);
                 }
             }
             return;

@@ -1,5 +1,4 @@
-﻿using rtUtility.rtMath;
-using GIP.Common;
+﻿using GIP.Common;
 
 namespace GIP.Core.Condition
 {
@@ -39,9 +38,9 @@ namespace GIP.Core.Condition
         {
             switch (inComparer) {
                 case ComparisonOperator.Equals:
-                    return inLeft.AlmostEqual(inRight);
+                    return inLeft.AlmostEquals(inRight);
                 case ComparisonOperator.NotEquals:
-                    return !inLeft.AlmostEqual(inRight);
+                    return !inLeft.AlmostEquals(inRight);
                 case ComparisonOperator.Greater:
                     return inLeft > inRight;
                 case ComparisonOperator.GreaterOrEquals:
@@ -59,9 +58,9 @@ namespace GIP.Core.Condition
         {
             switch (inComparer) {
                 case ComparisonOperator.Equals:
-                    return inLeft.AlmostEqual(inRight);
+                    return inLeft.AlmostEquals(inRight);
                 case ComparisonOperator.NotEquals:
-                    return !inLeft.AlmostEqual(inRight);
+                    return !inLeft.AlmostEquals(inRight);
                 case ComparisonOperator.Greater:
                     return inLeft > inRight;
                 case ComparisonOperator.GreaterOrEquals:

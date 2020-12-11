@@ -31,12 +31,12 @@
             this.Ctrl_UniformVariables = new GIP.Controls.Ctrl_UniformVariableListView();
             this.PanelDispatchGroupSize = new System.Windows.Forms.Panel();
             this.PanelDispatchGroupSizeValues = new System.Windows.Forms.TableLayoutPanel();
-            this.UdDispatchGroupSizeZ = new rtUtility.rtControl.CustomNumericUpDown(this.components);
+            this.UdDispatchGroupSizeZ = new System.Windows.Forms.NumericUpDown();
             this.LabelDispatchGroupSizeZ = new System.Windows.Forms.Label();
-            this.UdDispatchGroupSizeY = new rtUtility.rtControl.CustomNumericUpDown(this.components);
+            this.UdDispatchGroupSizeY = new System.Windows.Forms.NumericUpDown();
             this.LabelDispatchGroupSizeY = new System.Windows.Forms.Label();
             this.LabelDispatchGroupSizeX = new System.Windows.Forms.Label();
-            this.UdDispatchGroupSizeX = new rtUtility.rtControl.CustomNumericUpDown(this.components);
+            this.UdDispatchGroupSizeX = new System.Windows.Forms.NumericUpDown();
             this.LabelDispatchGroupSize = new System.Windows.Forms.Label();
             this.PanelSource = new System.Windows.Forms.TableLayoutPanel();
             this.LabelShaderSource = new System.Windows.Forms.Label();
@@ -109,7 +109,6 @@
             this.UdDispatchGroupSizeZ.Name = "UdDispatchGroupSizeZ";
             this.UdDispatchGroupSizeZ.Size = new System.Drawing.Size(95, 19);
             this.UdDispatchGroupSizeZ.TabIndex = 5;
-            this.UdDispatchGroupSizeZ.Tail = "";
             this.UdDispatchGroupSizeZ.Value = new decimal(new int[] {
             1,
             0,
@@ -145,7 +144,6 @@
             this.UdDispatchGroupSizeY.Name = "UdDispatchGroupSizeY";
             this.UdDispatchGroupSizeY.Size = new System.Drawing.Size(94, 19);
             this.UdDispatchGroupSizeY.TabIndex = 3;
-            this.UdDispatchGroupSizeY.Tail = "";
             this.UdDispatchGroupSizeY.Value = new decimal(new int[] {
             64,
             0,
@@ -192,7 +190,6 @@
             this.UdDispatchGroupSizeX.Name = "UdDispatchGroupSizeX";
             this.UdDispatchGroupSizeX.Size = new System.Drawing.Size(94, 19);
             this.UdDispatchGroupSizeX.TabIndex = 1;
-            this.UdDispatchGroupSizeX.Tail = "";
             this.UdDispatchGroupSizeX.Value = new decimal(new int[] {
             64,
             0,
@@ -277,12 +274,12 @@
         private Ctrl_UniformVariableListView Ctrl_UniformVariables;
         private System.Windows.Forms.Panel PanelDispatchGroupSize;
         private System.Windows.Forms.TableLayoutPanel PanelDispatchGroupSizeValues;
-        private rtUtility.rtControl.CustomNumericUpDown UdDispatchGroupSizeZ;
+        private System.Windows.Forms.NumericUpDown UdDispatchGroupSizeZ;
         private System.Windows.Forms.Label LabelDispatchGroupSizeZ;
-        private rtUtility.rtControl.CustomNumericUpDown UdDispatchGroupSizeY;
+        private System.Windows.Forms.NumericUpDown UdDispatchGroupSizeY;
         private System.Windows.Forms.Label LabelDispatchGroupSizeY;
         private System.Windows.Forms.Label LabelDispatchGroupSizeX;
-        private rtUtility.rtControl.CustomNumericUpDown UdDispatchGroupSizeX;
+        private System.Windows.Forms.NumericUpDown UdDispatchGroupSizeX;
         private System.Windows.Forms.Label LabelDispatchGroupSize;
         private System.Windows.Forms.TableLayoutPanel PanelSource;
         private System.Windows.Forms.Label LabelShaderSource;

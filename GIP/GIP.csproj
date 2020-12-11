@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arguments.cs" />
+    <Compile Include="Common\ColorRGB.cs" />
     <Compile Include="Common\Extensions\ArrayExtensions.cs" />
     <Compile Include="Common\Extensions\BitmapExtensions.cs" />
     <Compile Include="Common\CMethods.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Common\DisposableObject.cs" />
     <Compile Include="Common\Extensions\DockPanelSuiteExtensions.cs" />
     <Compile Include="Common\Exception.cs" />
+    <Compile Include="Common\Extensions\NumericExtensions.cs" />
     <Compile Include="Common\Extensions\TreeNodeExtensions.cs" />
     <Compile Include="Common\ExternalNamedAttribute.cs" />
     <Compile Include="Common\PathExistenceWatcher.cs" />
@@ -452,12 +454,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\csOpenGL\rtUtility\rtUtility.csproj">
-      <Project>{268f27dc-3165-4553-b9c0-cc79867fb656}</Project>
-      <Name>rtUtility</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\DefaultLayout.json.txt" />

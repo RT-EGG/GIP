@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using rtUtility.rtMath;
+using GIP.Common;
 
 namespace GIP.IO.Json
 {
@@ -18,12 +18,12 @@ namespace GIP.IO.Json
             return;
         }
 
-        public JsonColorRGBA(IROColorRGB inRGB, byte inA = 255)
-            : this(inRGB.Rb, inRGB.Gb, inRGB.Bb, inA)
+        public JsonColorRGBA(ColorRGB inRGB, byte inA = 255)
+            : this(inRGB.R, inRGB.G, inRGB.B, inA)
         { }
 
-        public JsonColorRGBA(IROColorRGBA inRGBA)
-            : this(inRGBA, inRGBA.Ab)
+        public JsonColorRGBA(ColorRGBA inRGBA)
+            : this(inRGBA, inRGBA.A)
         { }
 
         [JsonProperty(PropertyName = "r")]
@@ -39,9 +39,9 @@ namespace GIP.IO.Json
         public byte A
         { get; set; } = 0;
 
-        public static implicit operator TColorRGBA(JsonColorRGBA inValue)
+        public static implicit operator ColorRGBA(JsonColorRGBA inValue)
         {
-            return new TColorRGBA(inValue.R, inValue.G, inValue.B, inValue.A);
+            return new ColorRGBA(inValue.R, inValue.G, inValue.B, inValue.A);
         }
     }
 }
